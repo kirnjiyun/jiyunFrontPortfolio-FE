@@ -57,7 +57,7 @@ const PortfolioText = styled(animated.div)`
     top: 150vh; /* 스크롤을 내리면 나타나는 위치 */
     width: 100%;
     text-align: center;
-    font-size: 3rem; /* 텍스트 크기 증가 */
+    font-size: 4rem;
     font-weight: bold;
 `;
 
