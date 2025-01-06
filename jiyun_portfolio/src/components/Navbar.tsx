@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSpring, useTrail, animated } from "react-spring";
-
 const NavbarWrapper = styled(animated.nav)`
     position: fixed;
     top: 0;
@@ -13,9 +12,20 @@ const NavbarWrapper = styled(animated.nav)`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 0;
+    padding: 10rem 1rem;
     z-index: 100;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+
+    @media (max-width: 768px) {
+        /* 모바일 스타일 */
+        width: 100%;
+        height: 60px;
+        flex-direction: row;
+        justify-content: space-between; /* 로고와 햄버거 버튼을 양쪽 끝으로 배치 */
+        align-items: center;
+        padding: 0 1rem; /* 좌우 여백 추가 */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
 `;
 
 const Logo = styled.div`
@@ -23,13 +33,9 @@ const Logo = styled.div`
     font-weight: bold;
     color: var(--color-lightest-blue);
     cursor: pointer;
-    margin-bottom: auto;
 `;
 
 const MenuButton = styled.div`
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     width: 40px;
     height: 40px;
     display: flex;
@@ -80,6 +86,18 @@ const MenuItem = styled(animated.div)`
     &:hover {
         font-size: 3.5rem;
     }
+    @media (max-width: 768px) {
+        margin: 1rem 0;
+        font-size: 1rem;
+        font-weight: bold;
+        color: var(--color-dark-blue);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: font-size 0.3s ease-in-out;
+        &:hover {
+            font-size: 1.5rem;
+        }
+    }
 `;
 
 const Navbar: React.FC = () => {
@@ -108,10 +126,10 @@ const Navbar: React.FC = () => {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.4); /* 어두운 배경 */
-        backdrop-filter: blur(10px); /* 흐릿하게 */
-        z-index: 99; /* ModalCircle 아래, Navbar 위 */
-        pointer-events: none; /* 클릭을 막지 않도록 설정 */
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        z-index: 99;
+        pointer-events: none;
     `;
     // 메뉴 항목 애니메이션
     const menuItems = ["Home", "About", "Projects"];
@@ -145,7 +163,7 @@ const Navbar: React.FC = () => {
             {/* Navbar */}
             <NavbarWrapper style={navbarSpring}>
                 {/* 로고 상단 배치 */}
-                <Logo>Y</Logo>
+                <Logo>🏠</Logo>
 
                 {/* 햄버거 버튼 중앙 배치 */}
                 <MenuButton onClick={() => setIsMenuOpen(!isMenuOpen)}>

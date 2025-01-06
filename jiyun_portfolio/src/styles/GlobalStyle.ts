@@ -20,12 +20,15 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   
+  html, body {
+    overflow-x: hidden; /* 좌우 스크롤 제거 */
+  }
+
   body {
     font-family: 'BMDOHYEON', 'Pretendard', sans-serif;
     background-color: var(--color-lightest-blue); 
     color: var(--color-dark-blue); 
   }
-
 
   a {
     text-decoration: none;

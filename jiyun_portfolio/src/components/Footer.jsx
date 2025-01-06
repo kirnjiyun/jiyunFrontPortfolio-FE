@@ -4,8 +4,8 @@ import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 
 const FooterWrap = styled.footer`
-    width: 100%;
-    padding: 3rem 1rem;
+    width: 100vw;
+    padding: 4rem 1rem;
     background-color: var(--color-dark-blue); /* Global CSS 변수 사용 */
     color: var(--color-lightest-blue);
     position: relative;
