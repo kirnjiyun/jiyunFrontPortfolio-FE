@@ -92,7 +92,7 @@ const Navbar: React.FC = () => {
         height: isMenuOpen ? "50vw" : "0px",
         config: { duration: 300 },
     });
-    const backdropSpring = useSpring({
+    const backdropSpring: any = useSpring({
         opacity: isMenuOpen ? 1 : 0,
         pointerEvents: isMenuOpen ? "auto" : "none",
     });
