@@ -7,7 +7,13 @@ const GlobalStyle = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
 }
-  
+:root {
+    --color-dark-blue: #27374D;
+    --color-medium-blue: #526D82;
+    --color-light-blue: #9DB2BF;
+    --color-lightest-blue: #DDE6ED;
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -16,9 +22,10 @@ const GlobalStyle = createGlobalStyle`
   
   body {
     font-family: 'BMDOHYEON', 'Pretendard', sans-serif;
-    background-color: white;
-    color: black;
+    background-color: var(--color-lightest-blue); 
+    color: var(--color-dark-blue); 
   }
+
 
   a {
     text-decoration: none;
@@ -26,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button {
-    font-family: inherit; 
+    font-family: inherit;
     cursor: pointer;
   }
 `;

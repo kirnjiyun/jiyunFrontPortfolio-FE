@@ -1,13 +1,14 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useInView } from "react-intersection-observer";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 
 const FooterWrap = styled.footer`
     width: 100%;
-    padding: 2rem 1rem;
+    padding: 3rem 1rem;
+    background-color: var(--color-dark-blue); /* Global CSS 변수 사용 */
+    color: var(--color-lightest-blue);
     position: relative;
-    background-color: #f8f9fa;
 `;
 
 const Line = styled(animated.div)`
@@ -16,7 +17,7 @@ const Line = styled(animated.div)`
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: black;
+    background-color: var(--color-light-blue);
 `;
 
 const Container = styled.div`
@@ -26,35 +27,42 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
+    gap: 2rem;
 `;
 
 const SocialContainer = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
 `;
 
 const SocialLink = styled(animated.a)`
     text-decoration: none;
-    font-size: 1.1rem;
-    color: black;
+    font-size: 1.2rem;
+    color: var(--color-lightest-blue);
     display: inline-block;
+    transition: color 0.3s ease;
+
     &:hover {
+        color: var(--color-light-blue);
         text-decoration: underline;
     }
 `;
 
 const MenuContainer = styled.nav`
     display: flex;
-    gap: 1rem;
+    gap: 2rem;
 `;
 
 const MenuLink = styled(animated.a)`
     text-decoration: none;
-    font-size: 1.1rem;
-    color: black;
+    font-size: 1.2rem;
+    color: var(--color-lightest-blue);
     display: inline-block;
+    transition: color 0.3s ease;
+
     &:hover {
+        color: var(--color-light-blue);
         text-decoration: underline;
     }
 `;
@@ -63,9 +71,12 @@ const FooterBottom = styled.div`
     width: 100%;
     margin-top: 2rem;
     text-align: center;
+    border-top: 1px solid var(--color-light-blue);
+    padding-top: 1rem;
+
     p {
         font-size: 0.9rem;
-        color: #666;
+        color: var(--color-light-blue);
     }
 `;
 
