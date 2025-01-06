@@ -43,7 +43,7 @@ const MenuButton = styled.div`
 
 const ModalCircle = styled(animated.div).attrs(
     (props: { isMenuOpen?: boolean }) => ({
-        isMenuOpen: undefined, // `isMenuOpen`을 DOM에 전달되지 않도록 필터링
+        // isMenuOpen: any,
     })
 )`
     position: fixed;
@@ -58,7 +58,7 @@ const ModalCircle = styled(animated.div).attrs(
 
     box-shadow: ${(props: { isMenuOpen?: boolean }) =>
         props.isMenuOpen
-            ? "0 0 40px 20px rgba(221, 230, 237, 0.5), 0 0 80px 40px rgba(221, 230, 237, 0.3)"
+            ? "0 0 20px 30px rgba(221, 230, 237, 1), 0 0 80px 40px rgba(221, 230, 237, 0.3)"
             : "none"};
 
     display: flex;
@@ -92,13 +92,27 @@ const Navbar: React.FC = () => {
         height: isMenuOpen ? "50vw" : "0px",
         config: { duration: 300 },
     });
+    const backdropSpring = useSpring({
+        opacity: isMenuOpen ? 1 : 0,
+        pointerEvents: isMenuOpen ? "auto" : "none",
+    });
 
     // Navbar 애니메이션 (스크롤 시 나타남)
     const navbarSpring = useSpring({
         transform: isNavbarVisible ? "translateX(0)" : "translateX(-100%)",
         config: { tension: 200, friction: 20 },
     });
-
+    const Backdrop = styled(animated.div)`
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* 어두운 배경 */
+        backdrop-filter: blur(10px); /* 흐릿하게 */
+        z-index: 99; /* ModalCircle 아래, Navbar 위 */
+        pointer-events: none; /* 클릭을 막지 않도록 설정 */
+    `;
     // 메뉴 항목 애니메이션
     const menuItems = ["Home", "About", "Projects"];
     const trail = useTrail(menuItems.length, {
@@ -138,7 +152,8 @@ const Navbar: React.FC = () => {
                     {isMenuOpen ? "✕" : "☰"}
                 </MenuButton>
             </NavbarWrapper>
-
+            {/* Backdrop */}
+            {isMenuOpen && <Backdrop style={backdropSpring} />}
             {/* Modal Circle */}
             <ModalCircle style={modalCircleSpring} isMenuOpen={isMenuOpen}>
                 {trail.map((props, index) => (

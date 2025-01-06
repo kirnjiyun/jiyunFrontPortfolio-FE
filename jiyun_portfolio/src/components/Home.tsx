@@ -119,8 +119,8 @@ const Home: React.FC = () => {
 
     // 화살표 위치 애니메이션
     const arrowSpring = useSpring({
-        top: mousePosition.y + 20, // 마우스 아래에 위치
-        left: mousePosition.x + 20,
+        top: mousePosition.y + 10, // 마우스 아래에 위치
+        left: mousePosition.x + 10,
         config: { tension: 200, friction: 20 },
     });
 
