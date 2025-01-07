@@ -67,7 +67,12 @@ const Navbar: React.FC = () => {
             {/* Navbar */}
             <NavbarWrapper style={navbarSpring}>
                 {/* 로고 */}
-                <Logo>🏠</Logo>
+                <Logo>
+                    <img
+                        src="/images/house.png"
+                        style={{ width: "100%", height: "100%" }}
+                    />
+                </Logo>
 
                 {/* 햄버거 버튼 */}
                 <MenuButton onClick={() => setismenuopen(!ismenuopen)}>

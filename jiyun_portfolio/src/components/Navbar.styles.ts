@@ -30,9 +30,8 @@ export const NavbarWrapper = styled(animated.nav)`
 
 // 로고
 export const Logo = styled.div`
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--color-lightest-blue);
+    width: 40px;
+    height: 40px;
     cursor: pointer;
 `;
 

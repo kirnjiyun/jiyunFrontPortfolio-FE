@@ -247,7 +247,6 @@ const Home: React.FC = () => {
             <PortfolioText style={portfolioSpring}>
                 김지윤의 포트폴리오입니다.
             </PortfolioText>{" "}
-            ㄴ{/* 맨 아래에 도달했을 때만 깜빡이며 보이는 이미지 */}
             <PromptText style={promptSpring}>
                 <img src="/images/down-left-arrow.png" alt="arrow" />
                 메뉴
