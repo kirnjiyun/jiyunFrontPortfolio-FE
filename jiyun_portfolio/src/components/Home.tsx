@@ -158,7 +158,6 @@
 //     );
 // };
 
-// export default Home;
 import React, { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
@@ -193,7 +192,7 @@ const AnimatedText = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 30vh;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 6rem;
 
     /* 반응형 예시 */
@@ -206,6 +205,27 @@ const AnimatedText = styled.div`
 // 실제 텍스트가 들어갈 div
 const TypingText = styled.div`
     line-height: 1.2;
+    display: inline-block;
+    position: relative;
+    &::after {
+        content: "|";
+        position: absolute;
+        right: -40px; /* 텍스트 바로 뒤에 위치 */
+        animation: blink 1s steps(2, start) infinite;
+        color: currentColor; /* 텍스트 색상과 동일하게 */
+    }
+
+    @keyframes blink {
+        0% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
 `;
 
 // 화살표
@@ -249,7 +269,7 @@ const Home: React.FC = () => {
 
     const [typedText, setTypedText] = useState("");
 
-    const fullText = " WELCOME!";
+    const fullText = " WELCOME";
     const typingSpeed = 150;
     useEffect(() => {
         let index = 0; // 타이핑 위치 초기화
@@ -329,15 +349,10 @@ const Home: React.FC = () => {
     // ==========================
     return (
         <HomeWrapper style={{ backgroundColor, color }}>
-            {/* 배경 애니메이션 */}
             <AnimatedBackground />
-
-            {/* "안녕하세요" 타이핑 텍스트 */}
             <AnimatedText>
                 <TypingText>{typedText}</TypingText>
             </AnimatedText>
-
-            {/* 마우스 따라다니는 화살표 */}
             {showArrow && (
                 <ArrowIndicator style={arrowSpring}>↓</ArrowIndicator>
             )}
