@@ -21,7 +21,7 @@ const Line = styled(animated.div)`
 `;
 
 const Container = styled.div`
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;

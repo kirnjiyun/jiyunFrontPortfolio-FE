@@ -29,13 +29,13 @@ export default function AboutPage() {
             <HeroSection>
                 <IconContainer>
                     <StyledImage
-                        src="/images/man.svg"
-                        alt="man icon"
+                        src="/images/me.png"
+                        alt="me icon"
                         width={150}
                         height={150}
                     />
                 </IconContainer>
-                <Title>A BOUT ME</Title>
+                <Title>ABOUT ME</Title>
             </HeroSection>
 
             <Section>
@@ -91,14 +91,10 @@ const IconContainer = styled.div`
     margin-right: 20px;
 `;
 
-const StyledImage = styled(Image)`
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid var(--color-lightest-blue);
-`;
+const StyledImage = styled(Image)``;
 
 const Title = styled.h1`
-    font-size: 4rem;
+    font-size: 6rem;
     color: var(--color-lightest-blue);
 `;
 
