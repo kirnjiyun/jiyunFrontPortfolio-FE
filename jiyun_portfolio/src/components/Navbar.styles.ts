@@ -66,13 +66,11 @@ export const ModalCircle = styled(animated.div).attrs(
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    box-shadow: ${(props) =>
+    /* box-shadow: ${(props) =>
         props.ismenuopen
             ? "0 0 20px 30px rgba(221, 230, 237, 1), 0 0 80px 40px rgba(221, 230, 237, 0.3)"
-            : "none"};
+            : "none"}; */
 `;
-
-// 메뉴 항목
 export const MenuItem = styled(animated.div)`
     margin: 1rem 0;
     font-size: 3rem;
@@ -80,10 +78,12 @@ export const MenuItem = styled(animated.div)`
     color: var(--color-dark-blue);
     opacity: 0;
     transform: translateY(20px);
-    transition: font-size 0.3s ease-in-out;
+    transition: font-size 0.3s ease-in-out, color 0.3s ease-in-out,
+        text-shadow 0.3s ease-in-out;
 
     &:hover {
         font-size: 3.5rem;
+        text-shadow: 0 0 10px var(--color-brightest-blue);
     }
 
     @media (max-width: 768px) {
@@ -93,10 +93,13 @@ export const MenuItem = styled(animated.div)`
         color: var(--color-dark-blue);
         opacity: 0;
         transform: translateY(20px);
-        transition: font-size 0.3s ease-in-out;
+        /* 모바일에서도 동일하게 트랜지션 적용 */
+        transition: font-size 0.3s ease-in-out, color 0.3s ease-in-out,
+            text-shadow 0.3s ease-in-out;
 
         &:hover {
             font-size: 1.5rem;
+            text-shadow: 0 0 5px var(--color-brightest-blue);
         }
     }
 `;

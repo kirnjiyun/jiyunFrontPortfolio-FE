@@ -12,6 +12,8 @@ const GlobalStyle = createGlobalStyle`
     --color-medium-blue: #526D82;
     --color-light-blue: #9DB2BF;
     --color-lightest-blue: #DDE6ED;
+    --color-brightest-blue: #F0F7FD;
+    
   }
 
   * {

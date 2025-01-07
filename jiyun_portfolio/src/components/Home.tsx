@@ -223,9 +223,6 @@ const Home: React.FC = () => {
         config: { tension: 100, friction: 20 },
     });
 
-    // (중요) 맨 아래 도달 시에만 깜빡이며 표시할 화살표 애니메이션
-    //   -> isAtBottom === true 면 나타남
-    //   -> opacity와 transform을 이용해 페이드 인
     const promptSpring = useSpring({
         opacity: isAtBottom ? 1 : 0,
         transform: isAtBottom ? "translateY(0)" : "translateY(20px)",
@@ -243,7 +240,6 @@ const Home: React.FC = () => {
                     <img src="/images/down-arrow.png" alt="downarrow" />
                 </ArrowIndicator>
             )}
-            {/* 스크롤 후 "김지윤의 포트폴리오입니다." */}
             <PortfolioText style={portfolioSpring}>
                 김지윤의 포트폴리오입니다.
             </PortfolioText>{" "}

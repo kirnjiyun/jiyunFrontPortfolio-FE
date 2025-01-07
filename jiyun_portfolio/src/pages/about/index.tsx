@@ -1,31 +1,51 @@
+import React, { useState, useEffect } from "react";
 import IntroductionSection from "../../components/IntroductionSection";
 import CertificationSection from "../../components/CertificationSection";
 import EducationSection from "../../components/EducationSection";
-import React, { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
-import Image from "next/image";
-export default function AboutPage() {
-    const [typedText, setTypedText] = useState("");
-    const fullText = "ABOUT ME";
-    const typingSpeed = 150; // 타이핑 속도 (밀리초)
 
-    useEffect(() => {
-        let index = 0;
+import {
+    HeroSection,
+    IconContainer,
+    StyledImage,
+    Title,
+    TypingText,
+    Section,
+    SectionTitle,
+    List,
+} from "../../styles/about/AboutPageStyles";
 
-        const typingInterval = setInterval(() => {
-            if (index < fullText.length) {
-                setTypedText((prev) => prev + fullText.charAt(index));
-                index++;
-            } else {
-                clearInterval(typingInterval); // 타이핑 완료 후 Interval 제거
-            }
-        }, typingSpeed);
+export async function getStaticProps() {
+    // json-server API에서 데이터 가져오기
+    const baseUrl = "http://localhost:4000"; // json-server 주소
+    const [introductionRes, educationRes, certificationRes] = await Promise.all(
+        [
+            fetch(`${baseUrl}/introductionData`),
+            fetch(`${baseUrl}/educationData`),
+            fetch(`${baseUrl}/certificationData`),
+        ]
+    );
 
-        return () => clearInterval(typingInterval); // 컴포넌트 언마운트 시 정리
-    }, [fullText]);
+    const introductionData = await introductionRes.json();
+    const educationData = await educationRes.json();
+    const certificationData = await certificationRes.json();
 
+    return {
+        props: {
+            introductionData,
+            educationData,
+            certificationData,
+        },
+    };
+}
+
+export default function AboutPage({
+    introductionData,
+    educationData,
+    certificationData,
+}) {
     return (
         <>
+            {/* Hero Section */}
             <HeroSection>
                 <IconContainer>
                     <StyledImage
@@ -38,92 +58,76 @@ export default function AboutPage() {
                 <Title>ABOUT ME</Title>
             </HeroSection>
 
+            {/* Introduction Section */}
             <Section>
-                <IntroductionSection />
+                <IntroductionSection data={introductionData} />
             </Section>
 
+            {/* Education Section */}
             <Section>
-                <EducationSection />
-                <SectionTitle>Education</SectionTitle>
-                <List>
-                    <li>
-                        <strong>중앙대학교</strong>
-                        <br />
-                        공공인재학부 (2018.03 ~ 2024.02)
-                    </li>
-                    <li>
-                        <strong>국비지원교육 수료</strong>
-                        <ul>
-                            <li>
-                                멋쟁이사자처럼 프론트엔드 스쿨 (2023.07 ~
-                                2023.11)
-                            </li>
-                            <li>
-                                코드잇 스프린트 FE 단기심화 트랙 (2025.01 ~
-                                2025.03)
-                            </li>
-                        </ul>
-                    </li>
-                </List>
+                <EducationSection data={educationData} />
             </Section>
 
+            {/* Certification Section */}
             <Section>
-                <CertificationSection />
+                <CertificationSection data={certificationData} />
             </Section>
         </>
     );
 }
+// export default function AboutPage() {
+//     const [typedText, setTypedText] = useState("");
+//     const fullText = "ABOUT ME";
+//     const typingSpeed = 150;
+//     useEffect(() => {
+//         let index = 0;
+//         const interval = setInterval(() => {
+//             if (index < fullText.length) {
+//                 // 1) 한 글자씩 추가하기 직전에 콘솔 찍기
+//                 console.log("현재 index:", index);
+//                 console.log("추가될 문자:", fullText[index]);
 
-const blink = keyframes`
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
-`;
-const HeroSection = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-dark-blue);
-    height: 100vh;
-`;
+//                 setTypedText((prev) => {
+//                     // 2) 실제로 추가된 문자열도 확인하기
+//                     const nextText = prev + fullText[index];
+//                     console.log("타이핑 중인 결과:", nextText);
+//                     return nextText;
+//                 });
 
-const IconContainer = styled.div`
-    margin-right: 20px;
-`;
+//                 index++;
+//             } else {
+//                 clearInterval(interval);
+//             }
+//         }, typingSpeed);
 
-const StyledImage = styled(Image)``;
+//         return () => clearInterval(interval);
+//     }, [fullText]);
 
-const Title = styled.h1`
-    font-size: 6rem;
-    color: var(--color-lightest-blue);
-`;
+//     return (
+//         <>
+//             <HeroSection>
+//                 <IconContainer>
+//                     <StyledImage
+//                         src="/images/me.png"
+//                         alt="me icon"
+//                         width={150}
+//                         height={150}
+//                     />
+//                 </IconContainer>
+//                 <Title>ABOUT ME</Title>
+//             </HeroSection>
 
-const Cursor = styled.span`
-    font-weight: normal;
-    animation: ${blink} 1s steps(2, start) infinite;
-`;
+//             <Section>
+//                 <IntroductionSection />
+//             </Section>
 
-const Section = styled.div`
-    padding: 40px 20px;
-    background-color: var(--color-lightest-blue);
-    color: var(--color-dark-blue);
-    border-radius: 12px;
-    margin: 20px auto;
-    max-width: 900px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`;
+//             <Section>
+//                 <EducationSection />
+//             </Section>
 
-const SectionTitle = styled.h2`
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 16px;
-    text-align: center;
-    color: var(--color-medium-blue);
-`;
-
-const List = styled.ul`
-    list-style: none;
-    padding: 0;
-    line-height: 1.8;
-    font-size: 16px;
-`;
+//             <Section>
+//                 <CertificationSection />
+//             </Section>
+//         </>
+//     );
+// }
