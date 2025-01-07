@@ -13,6 +13,7 @@ import {
     SectionTitle,
     List,
 } from "../../styles/about/AboutPageStyles";
+import InfiniteScrollText from "@/components/InfiniteScroll";
 
 export async function getStaticProps() {
     // json-server API에서 데이터 가져오기
@@ -57,7 +58,7 @@ export default function AboutPage({
                 </IconContainer>
                 <Title>ABOUT ME</Title>
             </HeroSection>
-
+            <InfiniteScrollText />
             {/* Introduction Section */}
             <Section>
                 <IntroductionSection data={introductionData} />

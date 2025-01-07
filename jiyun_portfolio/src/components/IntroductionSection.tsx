@@ -1,7 +1,7 @@
 import React from "react";
 import { useSpring, useInView } from "react-spring";
 import * as S from "../styles/about/IntroSection.styles";
-import InfiniteScrollText from "./InfiniteScroll";
+
 export default function IntroductionSection() {
     const [ref, inView] = useInView({
         triggerOnce: true, // 원하는 옵션
@@ -19,9 +19,6 @@ export default function IntroductionSection() {
 
     return (
         <S.MainSection ref={ref}>
-            <InfiniteScrollText />
-
-            {/* Introduction 아래 부분 */}
             <S.Section>
                 <S.ImageContainer>
                     <S.ProfileImage
