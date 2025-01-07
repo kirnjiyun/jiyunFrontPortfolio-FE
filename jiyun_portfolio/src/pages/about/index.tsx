@@ -48,14 +48,14 @@ export default function AboutPage({
         <>
             {/* Hero Section */}
             <HeroSection>
-                <IconContainer>
+                {/* <IconContainer>
                     <StyledImage
                         src="/images/me.png"
                         alt="me icon"
                         width={150}
                         height={150}
                     />
-                </IconContainer>
+                </IconContainer> */}
                 <Title>ABOUT ME</Title>
             </HeroSection>
             <InfiniteScrollText />

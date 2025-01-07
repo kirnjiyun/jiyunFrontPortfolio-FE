@@ -7,34 +7,20 @@ export const Title = styled.h1`
     margin: 0;
     white-space: nowrap;
     text-align: center;
-    animation: zoomIn 1.5s ease-out, colorChange 3s linear infinite;
+    animation: zoomIn 1.5s ease-out forwards; /* forwards로 애니메이션 마지막 상태 유지 */
 
     @keyframes zoomIn {
         0% {
-            transform: scale(0.5);
-            opacity: 0;
+            transform: scale(0.5); /* 시작 크기 */
+            opacity: 0; /* 시작 상태: 투명 */
+        }
+        70% {
+            transform: scale(1.5); /* 최대 확대 */
+            opacity: 1; /* 완전히 나타남 */
         }
         100% {
-            transform: scale(1);
+            transform: scale(1.2); /* 살짝 줄어든 상태로 멈춤 */
             opacity: 1;
-        }
-    }
-
-    @keyframes colorChange {
-        0% {
-            color: var(--color-lightest-blue);
-        }
-        25% {
-            color: var(--color-light-blue);
-        }
-        50% {
-            color: var(--color-medium-blue);
-        }
-        75% {
-            color: var(--color-dark-blue);
-        }
-        100% {
-            color: var(--color-lightest-blue);
         }
     }
 `;

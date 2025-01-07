@@ -4,16 +4,22 @@ import styled from "styled-components";
 
 export default function ScrollMoveText() {
     const [scrollY, setScrollY] = useState(0);
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+
     useEffect(() => {
         const handleScroll = () => {
             // 현재 스크롤 위치를 상태로 저장
             setScrollY(window.scrollY);
         };
 
-        window.addEventListener("scroll", handleScroll);
+        if (typeof window !== "undefined") {
+            window.addEventListener("scroll", handleScroll);
+        }
+
         return () => {
-            window.removeEventListener("scroll", handleScroll);
+            if (typeof window !== "undefined") {
+                window.removeEventListener("scroll", handleScroll);
+            }
         };
     }, []);
 
@@ -24,27 +30,27 @@ export default function ScrollMoveText() {
 
     const rightScroll = useSpring({
         transform: `translateX(${
-            scrollY * (isMobile ? 0.3 : 1) - window.innerWidth
+            scrollY * (isMobile ? 0.3 : 1) -
+            (typeof window !== "undefined" ? window.innerWidth : 0)
         }px)`,
         config: { tension: 200, friction: 20 },
     });
 
     return (
         <ScrollContainer>
-            {" "}
             <ScrollRow>
                 <ScrollText style={leftScroll}>
                     안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                     안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                     안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                    안녕하세요 안녕하세요 안녕하세요
+                    안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                 </ScrollText>
             </ScrollRow>
             <ScrollRow>
                 <ScrollTextLight style={rightScroll}>
                     반갑습니다 반갑습니다 반갑습니다 반갑습니다 반갑습니다
                     반갑습니다 반갑습니다 반갑습니다 반갑습니다 반갑습니다
-                    반갑습니다 반갑습니다
+                    반갑습니다 반갑습니다 반갑습니다 반갑습니다 반갑습니다
                 </ScrollTextLight>
             </ScrollRow>
             <ScrollRow>
@@ -52,14 +58,14 @@ export default function ScrollMoveText() {
                     안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                     안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                     안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                    안녕하세요 안녕하세요 안녕하세요
+                    안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                 </ScrollText>
             </ScrollRow>
             <ScrollRow>
                 <ScrollTextLight style={rightScroll}>
                     반갑습니다 반갑습니다 반갑습니다 반갑습니다 반갑습니다
                     반갑습니다 반갑습니다 반갑습니다 반갑습니다 반갑습니다
-                    반갑습니다 반갑습니다
+                    반갑습니다 반갑습니다 반갑습니다 반갑습니다 반갑습니다
                 </ScrollTextLight>
             </ScrollRow>
             <ScrollRow>
@@ -67,14 +73,14 @@ export default function ScrollMoveText() {
                     안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                     안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                     안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
-                    안녕하세요 안녕하세요 안녕하세요
+                    안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                 </ScrollText>
             </ScrollRow>
             <ScrollRow>
                 <ScrollTextLight style={rightScroll}>
                     반갑습니다 반갑습니다 반갑습니다 반갑습니다 반갑습니다
                     반갑습니다 반갑습니다 반갑습니다 반갑습니다 반갑습니다
-                    반갑습니다 반갑습니다
+                    반갑습니다 반갑습니다 반갑습니다 반갑습니다 반갑습니다
                 </ScrollTextLight>
             </ScrollRow>
         </ScrollContainer>
