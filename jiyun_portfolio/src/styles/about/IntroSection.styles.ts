@@ -9,10 +9,9 @@ const colors = {
     brightestBlue: "var(--color-brightest-blue)",
 };
 
-// 메인 섹션: 상단 100vh를 차지
 export const MainSection = styled.div`
     width: 100%;
-    height: 100vh; // 화면 높이만큼 차지
+    height: 200%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,6 +67,9 @@ export const Section = styled.section`
         flex-direction: row;
         padding: 48px;
     }
+    &:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
 `;
 
 // 이미지 컨테이너 스타일
@@ -83,9 +85,9 @@ export const ImageContainer = styled.div`
 
 // 프로필 이미지 스타일
 export const ProfileImage = styled.img`
-    width: 200px;
-    height: 200px;
-    border-radius: 30px; /* 테두리 둥근 정도 조정 */
+    width: 180px;
+    height: 240px;
+    border-radius: 12px;
     object-fit: cover;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 4px solid ${colors.mediumBlue};
@@ -102,9 +104,9 @@ export const TextContainer = styled.div`
 
 // 섹션 제목 스타일
 export const Title = styled.h2`
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
     color: ${colors.darkBlue};
 `;
 

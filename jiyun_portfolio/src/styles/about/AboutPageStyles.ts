@@ -73,11 +73,14 @@ export const StyledImage = styled(Image)`
 
 // 콘텐츠 영역
 export const Section = styled.div`
-    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 40px;
+    gap: 2rem;
     background-color: var(--color-lightest-blue);
     color: var(--color-dark-blue);
     border-radius: 12px;
-    margin: 20px auto;
+    margin: 1rem auto;
     max-width: 900px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
@@ -96,61 +99,3 @@ export const List = styled.ul`
     line-height: 1.8;
     font-size: 16px;
 `;
-
-// export const HeroSection = styled.div`
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     justify-content: center;
-//     height: 100vh; /* 화면 전체 높이 */
-//     background-color: var(--color-lightest-blue);
-//     text-align: center;
-// `;
-
-// export const IconContainer = styled.div`
-//     margin-bottom: 16px;
-// `;
-
-// export const StyledImage = styled.img`
-//     border-radius: 50%;
-//     border: 3px solid var(--color-medium-blue);
-//     width: 150px;
-//     height: 150px;
-// `;
-
-// export const Title = styled.h1`
-//     font-size: 2.5rem;
-//     font-weight: bold;
-//     color: var(--color-dark-blue);
-//     text-transform: uppercase;
-// `;
-
-// export const Section = styled.section`
-//     padding: 40px;
-//     background-color: #fff;
-//     margin: 20px auto;
-//     border-radius: 8px;
-//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-// `;
-
-// export const SectionTitle = styled.h2`
-//     font-size: 1.8rem;
-//     color: var(--color-dark-blue);
-//     margin-bottom: 16px;
-// `;
-
-// export const List = styled.ul`
-//     font-size: 1.2rem;
-//     color: var(--color-medium-blue);
-//     list-style: none;
-//     padding: 0;
-
-//     li {
-//         margin-bottom: 12px;
-//     }
-
-//     strong {
-//         font-weight: bold;
-//         color: var(--color-dark-blue);
-//     }
-// `;

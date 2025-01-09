@@ -1,14 +1,37 @@
 import styled from "styled-components";
 
-// 타임라인 전체 컨테이너
+// 공통 색상 정의
+const colors = {
+    darkBlue: "var(--color-dark-blue)",
+    mediumBlue: "var(--color-medium-blue)",
+    lightestBlue: "var(--color-lightest-blue)",
+    brightestBlue: "var(--color-brightest-blue)",
+};
 export const TimelineContainer = styled.div`
     display: flex;
+    gap: 20px;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100px;
+    height: 240px;
     padding: 20px;
-    background: var(--color-brightest-blue);
+    border-radius: 12px;
+    background: linear-gradient(
+        135deg,
+        ${colors.lightestBlue},
+        ${colors.brightestBlue}
+    );
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    @media (max-width: 768px) {
+        flex-direction: column; /* 모바일에서 세로 레이아웃 */
+        align-items: center;
+        height: 200%;
+    }
+    &:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
 `;
 
 // 타임라인
@@ -106,4 +129,10 @@ export const TimelineItem = styled.div`
         margin: 20px 0; /* 항목 간 간격 추가 */
         transform: translateX(-50%); /* 가운데 정렬 */
     }
+`;
+export const Title = styled.h2`
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 3rem;
+    color: ${colors.darkBlue};
 `;

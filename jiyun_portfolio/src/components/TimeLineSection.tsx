@@ -2,6 +2,7 @@ import React from "react";
 import {
     TimelineContainer,
     Timeline,
+    Title,
     TimelineItem,
     Line,
     Point,
@@ -39,6 +40,7 @@ const TimelineComponent: React.FC = () => {
     const endYear = timelineData[timelineData.length - 1].year;
     return (
         <TimelineContainer>
+            <Title>TimeLine</Title>
             <Timeline>
                 <Line />
                 {timelineData.map((item, index) => (
