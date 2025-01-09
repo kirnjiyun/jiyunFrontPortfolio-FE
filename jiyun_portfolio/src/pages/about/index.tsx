@@ -14,6 +14,7 @@ import {
     List,
 } from "../../styles/about/AboutPageStyles";
 import InfiniteScrollText from "@/components/InfiniteScroll";
+import TimelineComponent from "@/components/\bTimeLineSection";
 
 export async function getStaticProps() {
     // json-server API에서 데이터 가져오기
@@ -62,6 +63,7 @@ export default function AboutPage({
             {/* Introduction Section */}
             <Section>
                 <IntroductionSection data={introductionData} />
+                <TimelineComponent />
             </Section>
 
             {/* Education Section */}

@@ -1,132 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useSpring, animated } from "react-spring";
-import styled from "styled-components";
-
-/* --- styled-components는 컴포넌트 함수 밖에서 선언 --- */
-
-// 전체 래퍼
-const HomeWrapper = styled(animated.div)`
-    width: 100vw;
-    height: 200vh; /* 스크롤 가능 높이 */
-    overflow-x: hidden;
-    position: relative;
-`;
-
-// 배경
-const AnimatedBackground = styled(animated.div)`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        135deg,
-        var(--color-lightest-blue) 50%,
-        var(--color-dark-blue) 50%
-    );
-    z-index: -1;
-`;
-
-// 타이핑(혹은 글자) 영역
-const AnimatedText = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: 30vh;
-    font-weight: normal;
-    font-size: 6rem;
-
-    /* 반응형 예시 */
-    @media (max-width: 768px) {
-        font-size: 3rem;
-        margin-top: 20vh;
-    }
-`;
-
-// 실제 텍스트가 들어갈 div
-const TypingText = styled.div`
-    line-height: 1.2;
-    display: inline-block;
-    position: relative;
-    &::after {
-        content: "|";
-        position: absolute;
-        right: -40px; /* 텍스트 바로 뒤에 위치 */
-        animation: blink 1s steps(2, start) infinite;
-        color: currentColor; /* 텍스트 색상과 동일하게 */
-    }
-
-    @keyframes blink {
-        0% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-`;
-
-// 화살표
-const ArrowIndicator = styled(animated.div)`
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    animation: bounce 1.5s infinite;
-    pointer-events: none;
-
-    @keyframes bounce {
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-        50% {
-            transform: translateY(10px);
-        }
-    }
-`;
-
-// 스크롤 후 보여줄 텍스트
-const PortfolioText = styled(animated.div)`
-    position: absolute;
-    top: 150vh; /* 스크롤을 내리면 나타나는 위치 */
-    width: 100%;
-    text-align: center;
-    font-size: 4rem;
-    font-weight: bold;
-
-    /* 모바일 반응형 */
-    @media (max-width: 768px) {
-        font-size: 2rem;
-    }
-`;
-const PromptText = styled(animated.div)`
-    position: absolute;
-    bottom: 1vh;
-    left: 80px;
-    width: 200px;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: lighter;
-
-    /* 깜박이는 효과 */
-    @keyframes blinkText {
-        0%,
-        100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0;
-        }
-    }
-    animation: blinkText 1.2s infinite;
-
-    /* 반응형 */
-    @media (max-width: 768px) {
-        font-size: 1.5rem;
-    }
-`;
+import { useSpring } from "react-spring";
+import {
+    HomeWrapper,
+    AnimatedBackground,
+    AnimatedText,
+    TypingText,
+    ArrowIndicator,
+    PortfolioText,
+    PromptText,
+} from "../styles/Home.styles";
 
 const Home: React.FC = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -165,26 +47,20 @@ const Home: React.FC = () => {
         };
 
         const handleScroll = () => {
-            // (1) 전체 스크롤 진행도 (기존)
-            const progress = Math.min(
-                1,
-                window.scrollY / (window.innerHeight * 0.5)
-            );
+            const scrollTop = window.scrollY;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+
+            const progress = scrollTop / (scrollHeight - clientHeight); // 스크롤 진행도 계산
             setScrollProgress(progress);
 
-            // (2) 스크롤 위치가 맨 아래 도달했는지 여부
             const scrolledToBottom =
-                window.innerHeight + window.scrollY >=
-                document.body.offsetHeight - 1;
-
+                scrollTop + clientHeight >= scrollHeight - 1; // 맨 아래 여부
             setIsAtBottom(scrolledToBottom);
 
-            // (3) 기존 화살표 on/off 로직
-            if (window.scrollY > 100) {
-                setShowArrow(false);
-            } else {
-                setShowArrow(typedText.length === fullText.length);
-            }
+            setShowArrow(
+                scrollTop <= 100 && typedText.length === fullText.length
+            );
         };
 
         window.addEventListener("mousemove", handleMouseMove);
@@ -218,8 +94,8 @@ const Home: React.FC = () => {
 
     // (기존) “김지윤의 포트폴리오입니다.” 애니메이션
     const portfolioSpring = useSpring({
-        opacity: scrollProgress > 0.9 ? 1 : 0,
-        transform: scrollProgress > 0.9 ? "translateY(0)" : "translateY(20px)",
+        opacity: scrollProgress > 0.95 ? 1 : 0,
+        transform: scrollProgress > 0.95 ? "translateY(0)" : "translateY(20px)",
         config: { tension: 100, friction: 20 },
     });
 
@@ -228,7 +104,6 @@ const Home: React.FC = () => {
         transform: isAtBottom ? "translateY(0)" : "translateY(20px)",
         config: { tension: 200, friction: 20 },
     });
-
     return (
         <HomeWrapper style={{ backgroundColor, color }}>
             <AnimatedBackground />
@@ -242,7 +117,7 @@ const Home: React.FC = () => {
             )}
             <PortfolioText style={portfolioSpring}>
                 김지윤의 포트폴리오입니다.
-            </PortfolioText>{" "}
+            </PortfolioText>
             <PromptText style={promptSpring}>
                 <img src="/images/down-left-arrow.png" alt="arrow" />
                 메뉴
