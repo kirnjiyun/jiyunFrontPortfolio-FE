@@ -32,9 +32,14 @@ export const Line = styled.div`
     height: 4px;
     background: var(--color-light-blue);
     z-index: 0;
+    @media (max-width: 768px) {
+        top: 0;
+        left: 50%;
+        width: 4px;
+        height: 100%;
+        transform: translateX(-50%);
+    }
 `;
-
-// 점(Point)
 export const Point = styled.div`
     position: relative;
     top: -5px; /* 중앙에 위치하도록 조정 */
@@ -48,7 +53,7 @@ export const Point = styled.div`
         border 0.3s ease-in-out;
 
     &:hover {
-        transform: scale(1.5);
+        transform: scale(1.2);
         background: var(--color-medium-blue);
         border: 4px solid var(--color-dark-blue);
     }
@@ -56,7 +61,7 @@ export const Point = styled.div`
     &:hover::after {
         content: attr(data-event);
         position: absolute;
-        top: -40px;
+        top: -40px; /* 툴팁 위치 조정 */
         left: 50%;
         transform: translateX(-50%);
         background: var(--color-dark-blue);
@@ -64,9 +69,16 @@ export const Point = styled.div`
         padding: 5px 10px;
         border-radius: 5px;
         white-space: nowrap;
-        font-size: 0.9rem;
+        font-size: 0.8rem; /* 툴팁 글자 크기 */
+    }
+
+    @media (max-width: 768px) {
+        top: auto;
+        left: 50%; /* 중앙 정렬 */
+        transform: translateX(-50%); /* 점을 세로선 중심에 맞춤 */
     }
 `;
+
 // 날짜(DateLabel)
 export const DateLabel = styled.div`
     margin-top: 10px;
@@ -75,8 +87,9 @@ export const DateLabel = styled.div`
     color: var(--color-dark-blue);
 
     @media (max-width: 768px) {
-        margin-top: 10px;
-        margin-left: 10px;
+        margin-top: 0;
+        margin-left: 10px; /* 점과 날짜 간격 추가 */
+        white-space: nowrap; /* 텍스트 줄바꿈 방지 */
     }
 `;
 
@@ -86,11 +99,11 @@ export const TimelineItem = styled.div`
     flex-direction: column;
     align-items: center;
     z-index: 1;
-    background-color: green;
     @media (max-width: 768px) {
-        position: static;
-        flex-direction: row;
-        align-items: center;
-        margin: 20px 0;
+        position: relative;
+        flex-direction: row; /* 세로 레이아웃에서는 점과 날짜를 가로 정렬 */
+        align-items: flex-start; /* 점과 날짜 정렬 */
+        margin: 20px 0; /* 항목 간 간격 추가 */
+        transform: translateX(-50%); /* 가운데 정렬 */
     }
 `;
