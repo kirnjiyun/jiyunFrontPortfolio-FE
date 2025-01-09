@@ -52,10 +52,10 @@ export default function AboutPage({
             </HeroSection>
             <InfiniteScrollText />
             <Section>
-                <IntroductionSection data={introductionData} />
+                <IntroductionSection introductionData={introductionData} />
                 <TimelineComponent />
-                <EducationSection data={educationData} />
-                <CertificationSection data={certificationData} />
+                <EducationSection educationData={educationData} />
+                <CertificationSection certificationData={certificationData} />
             </Section>
         </>
     );

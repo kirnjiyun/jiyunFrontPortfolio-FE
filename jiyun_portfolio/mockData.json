@@ -1,12 +1,18 @@
 {
     "introductionData": {
         "name": "김지윤",
-        "description": "안녕하세요! 제 이름은 김지윤입니다. 저는 사용자에게 최적의 경험(UX)을 제공하는 UI에 큰 관심을 갖고 여러 프론트엔드 프로젝트를 수행해 왔습니다 이 과정에서 TypeScript를 중심으로 안정성과 코드 품질을 높이는 방법을 익혔고 백엔드 공부 경험도        있습니다 앞으로도 사용자의 편의와 만족도를 최우선으로 고려하며 더욱 성장하는 개발자가 되겠습니다 감사합니다"
+        "description": "안녕하세요! 제 이름은 김지윤입니다. 저는 사용자에게 최적의 경험(UX)을 제공하는 UI에 큰 관심을 갖고 여러 프론트엔드 프로젝트를 수행해 왔습니다. 이 과정에서 TypeScript를 중심으로 안정성과 코드 품질을 높이는 방법을 익혔고 백엔드 공부 경험도 있습니다. 앞으로도 사용자의 편의와 만족도를 최우선으로 고려하며 더욱 성장하는 개발자가 되겠습니다. 감사합니다."
     },
     "educationData": [
         {
+            "school": "과천여자고등학교",
+            "location": "경기",
+            "period": "2014.03 ~ 2017.02"
+        },
+        {
             "school": "중앙대학교",
             "major": "공공인재학부",
+            "location": "서울",
             "period": "2018.03 ~ 2024.02"
         },
         {
@@ -18,7 +24,29 @@
         }
     ],
     "certificationData": [
-        { "name": "SQLD", "date": "2023.12" },
-        { "name": "정보처리기사", "date": "2024.06" }
+        {
+            "imageSrc": "/images/책표지.webp",
+            "alt": "TypeScript Book",
+            "title": "타입스크립트 책 집필",
+            "description": "GitHub 링크: https://github.com/kirnjiyun/typescript-essentials, \n\n E-book 링크: https://ridibooks.com/books/2773000094?srsltid=AfmBOoqdSqJoFsamt572DFvp1x0aoO5T4FcT8ZcTesMp5_2Sd8hVffA1\n\n\n- 1. 객체 타입의 호환성: TypeScript의 구조적 타이핑을 통해, 객체의 프로퍼티와 타입이 같으면 호환될 수 있음을 설명했습니다.\n- 2. 함수 오버로딩: 같은 함수명으로 다양한 매개변수를 처리할 수 있다는 점을 예시를 통해 설명했고, 각 호출의 동작을 쉽게 이해할 수 있도록 했습니다.\n- 3. 인덱스드 엑세스: 객체의 특정 프로퍼티 타입을 추출하는 인덱스드 엑세스를 배열 인덱싱과 유사한 개념으로 설명하여, 초보자들이 쉽게 이해할 수 있도록 했습니다."
+        },
+        {
+            "imageSrc": "/images/정보처리기사이미지.webp",
+            "alt": "정보처리기사",
+            "title": "정보처리기사",
+            "description": "취득일: 2024.09.10"
+        },
+        {
+            "imageSrc": "/images/sql.webp",
+            "alt": "SQLD",
+            "title": "SQLD (SQL 개발자 자격증)",
+            "description": "취득일: 2024.06.21"
+        },
+        {
+            "imageSrc": "/images/toeicspeaking.webp",
+            "alt": "TOEIC Speaking",
+            "title": "토익스피킹",
+            "description": "Level: IH"
+        }
     ]
 }

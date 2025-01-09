@@ -81,7 +81,7 @@ export const Section = styled.div`
     color: var(--color-dark-blue);
     border-radius: 12px;
     margin: 1rem auto;
-    max-width: 900px;
+    max-width: 1000px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 

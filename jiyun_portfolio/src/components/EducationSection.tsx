@@ -1,25 +1,39 @@
 import React from "react";
 import { Section, SectionTitle, List } from "../styles/about/Education.styles";
 
-export default function EducationSection() {
+export default function EducationSection({ educationData }) {
     return (
         <Section>
             <SectionTitle>Education</SectionTitle>
             <List>
                 <ul>
-                    <strong>고등학교(경기)</strong>
+                    {educationData.map((item, index) => (
+                        <React.Fragment key={index}>
+                            {/* 학교 이름 및 위치 */}
+                            {item.school && (
+                                <strong>
+                                    {item.school}
+                                    {item.location && ` (${item.location})`}
+                                </strong>
+                            )}
 
-                    <li>과천여자고등학교 (2014.03 ~ 2017.02)</li>
-                    <strong>중앙대학교(서울)</strong>
+                            {/* 기간 */}
+                            {item.period && <li>{item.period}</li>}
 
-                    <li>공공인재학부 (2018.03 ~ 2024.02)</li>
+                            {/* 전공 */}
+                            {item.major && <li>{item.major}</li>}
 
-                    <strong>KDT 수료</strong>
-
-                    <li>멋쟁이사자처럼 프론트엔드 스쿨 (2023.07 ~ 2023.11)</li>
-                    <li>
-                        코드잇 스프린트 FE 단기심화 트랙 (2025.01 ~ 2025.03)
-                    </li>
+                            {/* 교육 프로그램 */}
+                            {item.education && (
+                                <>
+                                    <strong>{item.education}</strong>
+                                    {item.programs.map((program, idx) => (
+                                        <li key={idx}>{program}</li>
+                                    ))}
+                                </>
+                            )}
+                        </React.Fragment>
+                    ))}
                 </ul>
             </List>
         </Section>

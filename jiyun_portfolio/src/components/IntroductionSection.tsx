@@ -2,7 +2,7 @@ import React from "react";
 import { useSpring, useInView } from "react-spring";
 import * as S from "../styles/about/IntroSection.styles";
 
-export default function IntroductionSection() {
+export default function IntroductionSection({ introductionData }) {
     const [ref, inView] = useInView({
         triggerOnce: true, // 원하는 옵션
         threshold: 0.5, // 원하는 옵션
