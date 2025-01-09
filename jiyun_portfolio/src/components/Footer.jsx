@@ -282,7 +282,7 @@ const Footer = () => {
                         href="/projects"
                         aria-label="Projects"
                     >
-                        Project
+                        Projects
                     </MenuLink>
                     <MenuLink style={fadeIn} href="/about" aria-label="About">
                         About

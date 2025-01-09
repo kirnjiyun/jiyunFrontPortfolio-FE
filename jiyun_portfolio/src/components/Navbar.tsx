@@ -34,8 +34,8 @@ const Navbar: React.FC = () => {
     // 메뉴 항목 애니메이션
     const menuItems = [
         { label: "Home", path: "/" },
+        { label: "Projects", path: "/projects" },
         { label: "About", path: "/about" },
-        { label: "Project", path: "/project" },
     ];
     const trail = useTrail(menuItems.length || 1, {
         opacity: ismenuopen ? 1 : 0,
