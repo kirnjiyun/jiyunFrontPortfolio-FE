@@ -55,6 +55,7 @@
             "id": 1,
             "category": "팀",
             "name": "Feel My Rhythm",
+            "title": "feel-my-rhythm",
             "description": "유저가 음악을 통해 감정을 표현할 수 있는 소셜 플랫폼.",
             "techStack": [
                 "React",
@@ -76,6 +77,7 @@
             "id": 2,
             "category": "개인",
             "name": "팔북정",
+            "title": "palbokjeong",
             "description": "책 검색 및 주문 웹 애플리케이션.",
             "techStack": ["React", "React Query", "Express", "Cloudtype"],
             "role": "Fullstack Developer",
@@ -91,7 +93,8 @@
         {
             "id": 3,
             "category": "개인",
-            "name": "Yunflix",
+            "name": "yunflix",
+            "title": "yunflix",
             "description": "TV, 영화, 배우 등을 검색할 수 있는 사이트입니다.",
             "techStack": [
                 "React",
