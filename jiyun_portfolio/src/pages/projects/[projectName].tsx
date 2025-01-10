@@ -28,7 +28,12 @@ const colorMapping = {
 };
 
 const ProjectDetails = ({ project }) => {
-    console.log("Fff", project);
+    if (!project) {
+        console.error("Project data is undefined");
+        return <div>프로젝트 데이터를 불러오지 못했습니다.</div>;
+    }
+
+    console.log("Project data:", project); // 디버깅 확인
     return (
         <>
             <HeroSection>

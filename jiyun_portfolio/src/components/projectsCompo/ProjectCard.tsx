@@ -8,11 +8,16 @@ import {
 
 const ProjectCard = ({ project }) => {
     const router = useRouter();
+    console.log("Router query:", router.query);
 
     const handleCardClick = () => {
-        router.push(`/projects/${project.name.toLowerCase()}`); // 프로젝트 이름을 경로로 사용
+        console.log(
+            "Navigating to:",
+            `/projects/${project.name.toLowerCase()}`
+        );
+        router.push(`/projects/${project.name.toLowerCase()}`);
     };
-    console.log("프프", project);
+
     return (
         <ProjectCardContainer onClick={handleCardClick}>
             <ProjectImage
