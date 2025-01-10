@@ -90,9 +90,9 @@
         },
         {
             "id": 3,
-            "category": "팀",
-            "name": "ShopEase",
-            "description": "소비자와 판매자를 연결하는 전자 상거래 플랫폼.",
+            "category": "개인",
+            "name": "Yunflix",
+            "description": "tv, 영화, 배우등을 검색할 수 있는 사이트",
             "techStack": ["Vue.js", "Tailwind CSS", "Node.js", "MongoDB"],
             "role": "Frontend Developer",
             "duration": "2024-02 ~ 2024-04",
@@ -101,6 +101,13 @@
                 "실시간 상품 검색 및 카테고리 필터링",
                 "장바구니 및 결제 시스템 구현",
                 "반응형 디자인을 통해 모바일 및 데스크톱 지원"
+            ],
+            "screenshots": [
+                "/images/projects/yunflix/1.png",
+                "/images/projects/yunflix/2.png",
+                "/images/projects/yunflix/3.png",
+                "/images/projects/yunflix/4.png",
+                "/images/projects/yunflix/5.png"
             ],
             "isMajor": false
         }
