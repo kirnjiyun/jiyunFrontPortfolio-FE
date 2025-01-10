@@ -6,44 +6,29 @@ import {
     StyledLink,
     Features,
     Screenshots,
-    Screenshot,
-    FeatureItem,
     ScreenshotTitle,
-    Gallery,
     HeroSection,
 } from "@/styles/projects/ProjectDetails.styles";
+import {
+    TechStackContainer,
+    TechBadge,
+} from "@/styles/projects/TechStack.styles";
 import ScreenshotGallery from "../../components/projectsCompo/ScreenshotGallery";
-export async function getStaticPaths() {
-    const baseUrl = "http://localhost:4000/projectsData"; // JSON 서버 주소
-    const res = await fetch(baseUrl);
-    const projects = await res.json();
 
-    const paths = projects.map((project) => ({
-        params: { projectName: project.name.toLowerCase() },
-    }));
-
-    return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }) {
-    const baseUrl = "http://localhost:4000/projectsData"; // JSON 서버 주소
-    const res = await fetch(baseUrl);
-    const projects = await res.json();
-
-    const project = projects.find(
-        (proj) => proj.name.toLowerCase() === params.projectName.toLowerCase()
-    );
-
-    if (!project) {
-        return { notFound: true };
-    }
-
-    return {
-        props: { project },
-    };
-}
+const colorMapping = {
+    JavaScript: "var(--color-dark-blue)",
+    TypeScript: "var(--color-medium-blue)",
+    React: "var(--color-light-blue)",
+    "styled-components": "var(--color-lightest-blue)",
+    Axios: "var(--color-brightest-blue)",
+    "React Router": "var(--color-medium-blue)",
+    Bootstrap: "var(--color-lightest-blue)",
+    "React Multi Carousel": "var(--color-brightest-blue)",
+    "React YouTube": "var(--color-light-blue)",
+};
 
 const ProjectDetails = ({ project }) => {
+    console.log("Fff", project);
     return (
         <>
             <HeroSection>
@@ -51,17 +36,13 @@ const ProjectDetails = ({ project }) => {
             </HeroSection>
 
             <Container>
-                {project.screenshots && project.screenshots.length > 0 && (
-                    <Screenshots>
-                        <ScreenshotTitle>스크린샷</ScreenshotTitle>
-                        {project.screenshots &&
-                            project.screenshots.length > 0 && (
-                                <ScreenshotGallery
-                                    screenshots={project.screenshots}
-                                />
-                            )}
-                    </Screenshots>
-                )}
+                <Screenshots>
+                    <ScreenshotTitle>스크린샷</ScreenshotTitle>
+                    {project.screenshots && (
+                        <ScreenshotGallery screenshots={project.screenshots} />
+                    )}
+                </Screenshots>
+
                 <Info>
                     <strong>카테고리:</strong> {project.category}
                 </Info>
@@ -71,24 +52,44 @@ const ProjectDetails = ({ project }) => {
                 <Info>
                     <strong>역할:</strong> {project.role}
                 </Info>
+
                 <Info>
-                    <strong>기술 스택:</strong> {project.techStack.join(", ")}
+                    <strong>기술 스택:</strong>
+                    <TechStackContainer>
+                        {project.techStack.map((tech, index) => (
+                            <TechBadge key={index} color={colorMapping[tech]}>
+                                {tech}
+                            </TechBadge>
+                        ))}
+                    </TechStackContainer>
                 </Info>
+
                 <Info>
-                    <strong>링크:</strong>{" "}
+                    <strong>배포 링크:</strong>{" "}
                     <StyledLink
-                        href={project.link}
+                        href={project.projectLinks.deployment}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {project.link}
+                        {project.projectLinks.deployment}
                     </StyledLink>
                 </Info>
+                <Info>
+                    <strong>GitHub 링크:</strong>{" "}
+                    <StyledLink
+                        href={project.projectLinks.repository}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {project.projectLinks.repository}
+                    </StyledLink>
+                </Info>
+
                 <Features>
                     <strong>주요 기능:</strong>
                     <ul>
                         {project.features.map((feature, index) => (
-                            <FeatureItem key={index}>{feature}</FeatureItem>
+                            <li key={index}>{feature}</li>
                         ))}
                     </ul>
                 </Features>

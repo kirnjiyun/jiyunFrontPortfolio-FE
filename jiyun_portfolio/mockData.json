@@ -92,14 +92,27 @@
             "id": 3,
             "category": "개인",
             "name": "Yunflix",
-            "description": "tv, 영화, 배우등을 검색할 수 있는 사이트",
-            "techStack": ["Vue.js", "Tailwind CSS", "Node.js", "MongoDB"],
+            "description": "TV, 영화, 배우 등을 검색할 수 있는 사이트입니다.",
+            "techStack": [
+                "React",
+                "Styled-components",
+                "Bootstrap",
+                "@tanstack/react-query",
+                "React Router",
+                "Axios"
+            ],
             "role": "Frontend Developer",
             "duration": "2024-02 ~ 2024-04",
-            "link": "https://github.com/username/shopease",
+            "projectLinks": {
+                "deployment": "https://yunflix-global.netlify.app/",
+                "repository": "https://github.com/kirnjiyun/JiyuneeNetflix"
+            },
             "features": [
-                "실시간 상품 검색 및 카테고리 필터링",
-                "장바구니 및 결제 시스템 구현",
+                "실시간 영화 및 TV 프로그램 검색",
+                "YouTube API를 활용한 예고편 보기",
+                "장르별 콘텐츠 탐색",
+                "React Multi Carousel을 이용한 추천 콘텐츠 스크롤",
+                "React Paginate로 페이지네이션 구현",
                 "반응형 디자인을 통해 모바일 및 데스크톱 지원"
             ],
             "screenshots": [
