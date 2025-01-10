@@ -66,12 +66,18 @@ const Navbar: React.FC = () => {
         <>
             {/* Navbar */}
             <NavbarWrapper style={navbarSpring}>
-                {/* 로고 */}
                 <Logo>
-                    <img
-                        src="/images/house.png"
-                        style={{ width: "100%", height: "100%" }}
-                    />
+                    <Link href="/">
+                        <img
+                            src="/images/house.png"
+                            alt="Logo"
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                cursor: "pointer",
+                            }}
+                        />
+                    </Link>
                 </Logo>
 
                 {/* 햄버거 버튼 */}
