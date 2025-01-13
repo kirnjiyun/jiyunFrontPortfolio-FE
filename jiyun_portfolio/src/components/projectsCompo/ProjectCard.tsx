@@ -10,7 +10,7 @@ const ProjectCard = ({ project }) => {
     const handleCardClick = () => {
         console.log(
             "Navigating to:",
-            `/projects/${project.name.toLowerCase()}`
+            `/projects/${project.title.toLowerCase()}`
         );
         console.log("zzz", project.name);
         console.log("zzz", project);
@@ -18,8 +18,11 @@ const ProjectCard = ({ project }) => {
 
     return (
         <ProjectCardContainer onClick={handleCardClick}>
-            {" "}
-            <Link href={`/projects/${project.title}`}>
+            <Link
+                href={`/projects/${project.title
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`}
+            >
                 <ProjectImage
                     src={
                         project.screenshots && project.screenshots.length > 0

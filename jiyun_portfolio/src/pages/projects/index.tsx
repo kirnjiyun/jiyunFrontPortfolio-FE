@@ -1,14 +1,18 @@
+// pages/projects/index.js
+import React from "react";
+import { HeroSection, Title } from "@/styles/about/AboutPageStyles";
 import ProjectCarousel from "@/components/projectsCompo/ProjectCarousel";
-import { HeroSection, Title } from "../../styles/about/AboutPageStyles";
 import ProjectContainer from "@/components/projectsCompo/ProjectContainer";
-export async function getStaticProps() {
-    // json-server API에서 데이터 가져오기
-    const baseUrl = "http://localhost:4000"; // json-server 주소
-    const [projectsDataRes] = await Promise.all([
-        fetch(`${baseUrl}/projectsData`),
-    ]);
 
-    const projectsData = await projectsDataRes.json();
+export async function getStaticProps() {
+    const baseUrl = "http://localhost:4000"; // json-server 주소
+    const res = await fetch(`${baseUrl}/projectsData`);
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch projectsData");
+    }
+
+    const projectsData = await res.json();
 
     return {
         props: {
@@ -17,13 +21,15 @@ export async function getStaticProps() {
     };
 }
 
-export default function ProjectPage({ projectsData }) {
-    console.log("Projects data received in ProjectPage:", projectsData); // 디버깅용
+export default function ProjectsPage({ projectsData }) {
+    console.log("Projects data received in ProjectsPage:", projectsData); // 디버깅용
+
     return (
         <>
             <HeroSection>
                 <Title>Projects</Title>
             </HeroSection>
+
             <ProjectCarousel />
             <ProjectContainer projectsData={projectsData} />
         </>

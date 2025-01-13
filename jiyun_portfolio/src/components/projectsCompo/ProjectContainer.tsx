@@ -5,7 +5,7 @@ import ProjectCard from "./ProjectCard";
 const ProjectContainer = ({ projectsData }) => {
     return (
         <ProjectsContainer>
-            {projectsData?.map((project) => (
+            {projectsData.map((project) => (
                 <ProjectCard key={project.id} project={project} />
             ))}
         </ProjectsContainer>
