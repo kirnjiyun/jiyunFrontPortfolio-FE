@@ -29,35 +29,49 @@ import {
     LinkLabel,
     LinkAnchor,
 } from "../../styles/projects/projectTitle.styles";
-import FancyImageGallery from "@/components/projectsCompo/FancyImgGallery";
+import Fancy16to9Gallery from "@/components/projectsCompo/FancyImgGallery";
 
-/**
- * 1) 모든 동적 경로(프로젝트 slug) 정의 (SSG)
- */
-export async function getStaticPaths() {
-    // 예시: json-server에서 프로젝트 목록을 가져온다고 가정
-    const baseUrl = "http://localhost:4000";
-    const res = await fetch(`${baseUrl}/projectsData`);
-    const allProjects = await res.json();
+// async function getStaticPaths() {
+//     // 예시: json-server에서 프로젝트 목록을 가져온다고 가정
+//     const baseUrl = "http://localhost:4000";
+//     const res = await fetch(`${baseUrl}/projectsData`);
+//     const allProjects = await res.json();
 
-    // 2. 각 프로젝트의 title을 slug로 변환
-    const paths = allProjects.map((project) => ({
-        params: {
-            projectTitle: project.title.toLowerCase().replace(/\s+/g, "-"),
-        },
-    }));
+//     // 2. 각 프로젝트의 title을 slug로 변환
+//     const paths = allProjects.map((project) => ({
+//         params: {
+//             projectTitle: project.title.toLowerCase().replace(/\s+/g, "-"),
+//         },
+//     }));
 
-    // fallback: false -> paths에 없는 slug는 404
-    return {
-        paths,
-        fallback: false,
-    };
-}
+//     return {
+//         paths,
+//         fallback: false,
+//     };
+// }
 
-/**
- * 2) 각 slug별 실제 데이터 가져오기 (SSG)
- */
-export async function getStaticProps({ params }) {
+// export async function getStaticProps({ params }) {
+//     const slug = params.projectTitle;
+//     const baseUrl = "http://localhost:4000";
+//     const res = await fetch(`${baseUrl}/projectsData`);
+//     const allProjects = await res.json();
+
+//     const foundProject = allProjects.find(
+//         (proj) => proj.title.toLowerCase().replace(/\s+/g, "-") === slug
+//     );
+
+//     if (!foundProject) {
+//         return { notFound: true };
+//     }
+
+//     return {
+//         props: {
+//             project: foundProject,
+//         },
+//     };
+// }
+
+export async function getServerSideProps({ params }) {
     const slug = params.projectTitle;
     const baseUrl = "http://localhost:4000";
     const res = await fetch(`${baseUrl}/projectsData`);
@@ -78,9 +92,6 @@ export async function getStaticProps({ params }) {
     };
 }
 
-/**
- * 3) 실제 UI 구현
- */
 export default function ProjectDetailPage({ project }) {
     const router = useRouter();
 
@@ -93,11 +104,10 @@ export default function ProjectDetailPage({ project }) {
                 <ProjectHeader>
                     {/* 좀 더 크게 / 스타일리시한 프로젝트 타이틀 */}
                     <ProjectTitle>{project.name}</ProjectTitle>
-                    <ProjectSubtitle>{project.category}</ProjectSubtitle>
                 </ProjectHeader>
                 {/* 이미지는 상단에 크게 노출 (사용자 지정 FancyImageGallery) */}
                 <GallerySection>
-                    <FancyImageGallery />
+                    <Fancy16to9Gallery images={project.screenshots} />
                 </GallerySection>
                 {/* 2컬럼 레이아웃으로 프로젝트 상세 정보 */}
                 <InfoSection>
@@ -105,6 +115,12 @@ export default function ProjectDetailPage({ project }) {
                     <LeftColumn>
                         <Description>{project.description}</Description>
 
+                        <InfoGroup>
+                            {" "}
+                            <ProjectSubtitle>
+                                {project.category} 프로젝트
+                            </ProjectSubtitle>
+                        </InfoGroup>
                         <InfoGroup>
                             <InfoLabel>기간</InfoLabel>
                             <InfoValue>{project.duration}</InfoValue>

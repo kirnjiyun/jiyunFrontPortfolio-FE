@@ -1,22 +1,14 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-export default function Fancy16to9Gallery() {
-    // 안내 문구 (배너)
-    // 필요 없으면 <HoverBanner> 부분만 지우면 됩니다.
-
-    // 테스트용 이미지 4장
-    const images = [
-        "/images/projects/yunflix/1.png",
-        "/images/projects/yunflix/2.png",
-        "/images/projects/yunflix/3.png",
-        "/images/projects/yunflix/4.png",
-    ];
+export default function Fancy16to9Gallery({ images }) {
+    // 만약 이미지가 없거나 빈 배열이면 null 처리
+    if (!images || images.length === 0) return null;
 
     return (
         <Container>
             {/* 안내 배너 */}
-            <HoverBanner>마우스를 올려보세요!</HoverBanner>
+            <HoverBanner>스크린샷에 마우스를 올려보세요!</HoverBanner>
 
             {/* 갤러리 */}
             <GalleryContainer>
@@ -59,19 +51,14 @@ const floatAnim = keyframes`
 const HoverBanner = styled.div`
     width: 100%;
     padding: 1rem;
-    background-color: var(--color-light-blue);
-    color: #fff;
+    color: var(--color-light-blue);
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
     margin-bottom: 1.5rem;
     animation: ${floatAnim} 2s ease-in-out infinite;
 `;
 
-/**
- * 전체 갤러리: 2x2 그리드
- * overflow: visible => hover 시 확대된 이미지가 잘리지 않도록
- */
 const GalleryContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -128,9 +115,12 @@ const StyledImg = styled.img`
     transform: scale(1);
     transition: filter 0.3s ease, transform 0.3s ease;
 
-    /* 부모가 hover일 때(Wrapper: &:hover), 이미지 자체를 크게 + 필터 제거 */
     ${ImageWrapper}:hover & {
         filter: none; /* blur, 어둡기 해제 */
-        transform: scale(1.2); /* 더 크게 */
+        transform: scale(1.5); /* 더 크게 */
+        border-radius: 12px;
+        @media (max-width: 600px) {
+            transform: scale(1.1);
+        }
     }
 `;

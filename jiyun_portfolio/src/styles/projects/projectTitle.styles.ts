@@ -20,7 +20,7 @@ export const BackButton = styled.button`
     height: 40px;
     background-color: var(--color-dark-blue);
     border: none;
-    border-radius: 50%;
+    border-radius: 12px;
     cursor: pointer;
     z-index: 10; /* 위에 표시 */
 
@@ -45,7 +45,6 @@ export const ArrowSymbol = styled.span`
     color: #fff;
     font-size: 1.2rem;
     line-height: 1;
-
     @media (max-width: 600px) {
         font-size: 1rem;
     }
@@ -75,8 +74,8 @@ export const ProjectHeader = styled.div`
 
 /** 더 크고 세련된 타이틀 */
 export const ProjectTitle = styled.h1`
-    font-size: 2.4rem;
-    font-weight: 800;
+    font-size: 3rem;
+    font-weight: bolder;
     letter-spacing: 1px;
     color: var(--color-dark-blue);
     margin-bottom: 0.5rem;
@@ -86,11 +85,16 @@ export const ProjectTitle = styled.h1`
     }
 `;
 
-export const ProjectSubtitle = styled.h2`
-    font-size: 1.2rem;
-    font-weight: 400;
+export const ProjectSubtitle = styled.div`
+    min-width: 60px;
+    font-weight: 600;
     color: var(--color-medium-blue);
-    margin: 0 auto;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+
+    @media (max-width: 500px) {
+        margin-bottom: 0;
+    }
 `;
 
 /** 이미지(갤러리) 섹션 */
@@ -134,8 +138,10 @@ export const Description = styled.p`
 /** 인포(기간, 역할, TechStack 등) */
 export const InfoGroup = styled.div`
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: start;
+    justify-content: center;
 `;
 
 /** Label / Value 짝 (예: '기간: 2023-01 ~ 2023-03') */
@@ -164,7 +170,7 @@ export const BadgesWrapper = styled.div`
 `;
 
 export const TechBadge = styled.span`
-    background-color: var(--color-light-blue);
+    background-color: var(--color-dark-blue);
     color: #fff;
     font-size: 0.85rem;
     border-radius: 4px;
