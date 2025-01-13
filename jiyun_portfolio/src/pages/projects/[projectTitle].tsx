@@ -1,11 +1,41 @@
 // pages/projects/[projectTitle].js
 import React from "react";
+import { useRouter } from "next/router";
+import {
+    PageContainer,
+    BackButton,
+    ArrowSymbol,
+    ContentWrapper,
+    ProjectHeader,
+    ProjectTitle,
+    ProjectSubtitle,
+    GallerySection,
+    InfoSection,
+    LeftColumn,
+    RightColumn,
+    Description,
+    InfoGroup,
+    InfoLabel,
+    InfoValue,
+    BadgesWrapper,
+    TechBadge,
+    FeaturesCard,
+    FeaturesTitle,
+    FeaturesList,
+    FeatureItem,
+    LinkCard,
+    LinkRow,
+    LinksTitle,
+    LinkLabel,
+    LinkAnchor,
+} from "../../styles/projects/projectTitle.styles";
+import FancyImageGallery from "@/components/projectsCompo/FancyImgGallery";
 
 /**
  * 1) 모든 동적 경로(프로젝트 slug) 정의 (SSG)
  */
 export async function getStaticPaths() {
-    // 1. json-server에서 프로젝트 목록을 가져온다고 가정
+    // 예시: json-server에서 프로젝트 목록을 가져온다고 가정
     const baseUrl = "http://localhost:4000";
     const res = await fetch(`${baseUrl}/projectsData`);
     const allProjects = await res.json();
@@ -17,7 +47,7 @@ export async function getStaticPaths() {
         },
     }));
 
-    // 3. fallback: false -> paths에 없는 slug는 404
+    // fallback: false -> paths에 없는 slug는 404
     return {
         paths,
         fallback: false,
@@ -44,71 +74,113 @@ export async function getStaticProps({ params }) {
     return {
         props: {
             project: foundProject,
-            // 만약 다른 props가 필요하면 여기서 추가
         },
     };
 }
 
 /**
- * 3) 단일 파일에서 UI까지 전부 작성
+ * 3) 실제 UI 구현
  */
 export default function ProjectDetailPage({ project }) {
-    // 만약 slug가 "yunflix"라면 project는 { title: "YunFlix", name: ..., screenshots: [...], ... } 이 될 것
+    const router = useRouter();
 
-    // 간단한 예시 UI
     return (
-        <div style={{ padding: "2rem" }}>
-            <h1>프로젝트 상세</h1>
-            <h2>{project.name}</h2>
-            <p>설명: {project.description}</p>
-            <p>카테고리: {project.category}</p>
-            <p>기간: {project.duration}</p>
+        <PageContainer>
+            <ContentWrapper>
+                <BackButton onClick={() => router.back()}>
+                    <ArrowSymbol>←</ArrowSymbol>
+                </BackButton>
+                <ProjectHeader>
+                    {/* 좀 더 크게 / 스타일리시한 프로젝트 타이틀 */}
+                    <ProjectTitle>{project.name}</ProjectTitle>
+                    <ProjectSubtitle>{project.category}</ProjectSubtitle>
+                </ProjectHeader>
+                {/* 이미지는 상단에 크게 노출 (사용자 지정 FancyImageGallery) */}
+                <GallerySection>
+                    <FancyImageGallery />
+                </GallerySection>
+                {/* 2컬럼 레이아웃으로 프로젝트 상세 정보 */}
+                <InfoSection>
+                    {/* 왼쪽 컬럼 */}
+                    <LeftColumn>
+                        <Description>{project.description}</Description>
 
-            {/* 스크린샷 */}
-            {project.screenshots && project.screenshots.length > 0 && (
-                <div
-                    style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}
-                >
-                    {project.screenshots.map((src, i) => (
-                        <img
-                            key={i}
-                            src={src}
-                            alt={`screenshot-${i}`}
-                            width="200"
-                        />
-                    ))}
-                </div>
-            )}
+                        <InfoGroup>
+                            <InfoLabel>기간</InfoLabel>
+                            <InfoValue>{project.duration}</InfoValue>
+                        </InfoGroup>
 
-            {/* 링크 */}
-            {project.projectLinks && (
-                <div style={{ marginTop: "1rem" }}>
-                    {project.projectLinks.deployment && (
-                        <p>
-                            배포 링크:{" "}
-                            <a
-                                href={project.projectLinks.deployment}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                {project.projectLinks.deployment}
-                            </a>
-                        </p>
-                    )}
-                    {project.projectLinks.repository && (
-                        <p>
-                            GitHub:{" "}
-                            <a
-                                href={project.projectLinks.repository}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                {project.projectLinks.repository}
-                            </a>
-                        </p>
-                    )}
-                </div>
-            )}
-        </div>
+                        <InfoGroup>
+                            <InfoLabel>역할</InfoLabel>
+                            <InfoValue>{project.role}</InfoValue>
+                        </InfoGroup>
+
+                        {/* 테크스택 - 뱃지 */}
+                        {project.techStack && project.techStack.length > 0 && (
+                            <InfoGroup>
+                                <InfoLabel>Tech Stack</InfoLabel>
+                                <BadgesWrapper>
+                                    {project.techStack.map((stack, idx) => (
+                                        <TechBadge key={idx}>{stack}</TechBadge>
+                                    ))}
+                                </BadgesWrapper>
+                            </InfoGroup>
+                        )}
+                    </LeftColumn>
+
+                    {/* 오른쪽 컬럼 */}
+                    <RightColumn>
+                        {/* 주요 기능 */}
+                        {project.features && project.features.length > 0 && (
+                            <FeaturesCard>
+                                <FeaturesTitle>주요 기능</FeaturesTitle>
+                                <FeaturesList>
+                                    {project.features.map((feature, idx) => (
+                                        <FeatureItem key={idx}>
+                                            • {feature}
+                                        </FeatureItem>
+                                    ))}
+                                </FeaturesList>
+                            </FeaturesCard>
+                        )}
+
+                        {/* 링크 */}
+                        {project.projectLinks && (
+                            <LinkCard>
+                                <LinksTitle>관련 링크</LinksTitle>
+                                {project.projectLinks.deployment && (
+                                    <LinkRow>
+                                        <LinkLabel>배포 링크</LinkLabel>
+                                        <LinkAnchor
+                                            href={
+                                                project.projectLinks.deployment
+                                            }
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            {project.projectLinks.deployment}
+                                        </LinkAnchor>
+                                    </LinkRow>
+                                )}
+                                {project.projectLinks.repository && (
+                                    <LinkRow>
+                                        <LinkLabel>GitHub</LinkLabel>
+                                        <LinkAnchor
+                                            href={
+                                                project.projectLinks.repository
+                                            }
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            {project.projectLinks.repository}
+                                        </LinkAnchor>
+                                    </LinkRow>
+                                )}
+                            </LinkCard>
+                        )}
+                    </RightColumn>
+                </InfoSection>
+            </ContentWrapper>
+        </PageContainer>
     );
 }

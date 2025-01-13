@@ -7,17 +7,8 @@ import {
 } from "../../styles/projects/ProjectCard.styles";
 import Link from "next/link";
 const ProjectCard = ({ project }) => {
-    const handleCardClick = () => {
-        console.log(
-            "Navigating to:",
-            `/projects/${project.title.toLowerCase()}`
-        );
-        console.log("zzz", project.name);
-        console.log("zzz", project);
-    };
-
     return (
-        <ProjectCardContainer onClick={handleCardClick}>
+        <ProjectCardContainer>
             <Link
                 href={`/projects/${project.title
                     .toLowerCase()
