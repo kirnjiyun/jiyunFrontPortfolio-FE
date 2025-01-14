@@ -7,7 +7,7 @@ export const ProjectsContainer = styled.div`
 
     /* 데스크탑에서는 한 줄에 3개 */
     @media (min-width: 768px) {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         margin: auto 120px;
     }
 

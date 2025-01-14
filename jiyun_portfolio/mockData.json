@@ -56,7 +56,7 @@
             "category": "개인",
             "name": "Deluxury",
             "title": "deluxury",
-            "description": "명품 브랜드 의류, 가방, 신발 등을 판매하는 웹사이트입니다.",
+            "description": "명품 브랜드 의류, 잡화 등을 판매하는 편집샵 컨셉의 사이트",
             "techStack": [
                 "React",
                 "Redux",
@@ -65,15 +65,19 @@
                 "Node.js",
                 "Express",
                 "MongoDB",
-                "Cloudinary",
+                "AWS BeanStalk",
                 "Axios"
             ],
             "role": ["Frontend Developer", "Backend Developer"],
             "duration": "2024-07 ~ 2024-08",
-            "link": [
-                "https://github.com/kirnjiyun/deluxury-FE",
-                "https://github.com/kirnjiyun/deluxury-BE"
-            ],
+            "projectLinks": {
+                "repository": [
+                    "https://github.com/kirnjiyun/deluxury-FE",
+                    "https://github.com/kirnjiyun/deluxury-BE"
+                ],
+                "deployment": "https://deluxury-jiyun.netlify.app/"
+            },
+
             "features": [
                 "음악을 들으며 다양한 명품 브랜드 제품을 구경하고 구매할 수 있는 기능 구현",
                 "스크롤 기반 이미지 갤러리를 통해 매력적인 브랜드 이미지를 동적으로 체험 가능",
@@ -90,8 +94,76 @@
             "thumbnail": "/images/projects/deluxury.png",
             "isMajor": true
         },
+
         {
             "id": 1,
+            "category": "팀",
+            "name": "팔북정",
+            "title": "palbokjeong",
+            "description": "온라인 책 검색 및 주문 서비스 프론트엔드 팀 프로젝트",
+            "techStack": ["React", "React Query", "Express", "Cloudtype"],
+            "role": "Frontend Developer",
+            "duration": "2024-04",
+            "projectLinks": {
+                "repository": [
+                    "https://github.com/kirnjiyun/8bookjeong",
+                    "https://github.com/kirnjiyun/8bookjeong-BE"
+                ],
+                "deployment": "https://palbookjeong.netlify.app/"
+            },
+            "features": [
+                "Aladin API를 사용하여 책 정보 검색 및 리뷰 작성",
+                "Skeleton UI를 적용하여 로딩 시간 개선",
+                "반응형 UI로 다양한 디바이스 지원"
+            ],
+            "screenshots": [
+                "/images/projects/8bookjeong/검색.gif",
+                "/images/projects/8bookjeong/메인페이지 스크롤.gif",
+                "/images/projects/8bookjeong/상세.gif",
+                "/images/projects/8bookjeong/카테고리 .gif"
+            ],
+            "thumbnail": "/images/projects/book.jpg",
+            "isMajor": false
+        },
+        {
+            "id": 2,
+            "category": "개인",
+            "name": "yunflix",
+            "title": "yunflix",
+            "description": "TV, 영화, 배우 등을 검색할 수 있는 사이트입니다.",
+            "techStack": [
+                "React",
+                "Styled-components",
+                "Bootstrap",
+                "@tanstack/react-query",
+                "React Router",
+                "Axios"
+            ],
+            "role": "Frontend Developer",
+            "duration": "2024-02 ~ 2024-04",
+            "projectLinks": {
+                "deployment": "https://yunflix-global.netlify.app/",
+                "repository": "https://github.com/kirnjiyun/JiyuneeNetflix"
+            },
+            "features": [
+                "실시간 영화 및 TV 프로그램 검색",
+                "YouTube API를 활용한 예고편 보기",
+                "장르별 콘텐츠 탐색",
+                "React Multi Carousel을 이용한 추천 콘텐츠 스크롤",
+                "React Paginate로 페이지네이션 구현",
+                "반응형 디자인을 통해 모바일 및 데스크톱 지원"
+            ],
+            "screenshots": [
+                "/images/projects/yunflix/1.png",
+                "/images/projects/yunflix/2.png",
+                "/images/projects/yunflix/3.png",
+                "/images/projects/yunflix/4.png"
+            ],
+            "thumbnail": "/images/projects/yunflix.png",
+            "isMajor": false
+        },
+        {
+            "id": 3,
             "category": "팀",
             "name": "Feel My Rhythm",
             "title": "feel-my-rhythm",
@@ -131,67 +203,6 @@
             ],
             "thumbnail": "/images/projects/feelmyrhythm.png",
             "isMajor": true
-        },
-        {
-            "id": 2,
-            "category": "팀",
-            "name": "팔북정",
-            "title": "palbokjeong",
-            "description": "온라인 책 검색 및 주문 서비스 프론트엔드 팀 프로젝트",
-            "techStack": ["React", "React Query", "Express", "Cloudtype"],
-            "role": "Fullstack Developer",
-            "duration": "2023-05 ~ 2023-07",
-            "link": "https://github.com/username/project-repo",
-            "features": [
-                "Aladin API를 사용하여 책 정보 검색 및 리뷰 작성",
-                "Skeleton UI를 적용하여 로딩 시간 개선",
-                "반응형 UI로 다양한 디바이스 지원"
-            ],
-            "screenshots": [
-                "/images/projects/8bookjeong/검색.gif",
-                "/images/projects/8bookjeong/메인페이지 스크롤.gif",
-                "/images/projects/8bookjeong/상세.gif",
-                "/images/projects/8bookjeong/카테고리 .gif"
-            ],
-            "thumbnail": "/images/projects/book.jpg",
-            "isMajor": false
-        },
-        {
-            "id": 3,
-            "category": "개인",
-            "name": "yunflix",
-            "title": "yunflix",
-            "description": "TV, 영화, 배우 등을 검색할 수 있는 사이트입니다.",
-            "techStack": [
-                "React",
-                "Styled-components",
-                "Bootstrap",
-                "@tanstack/react-query",
-                "React Router",
-                "Axios"
-            ],
-            "role": "Frontend Developer",
-            "duration": "2024-02 ~ 2024-04",
-            "projectLinks": {
-                "deployment": "https://yunflix-global.netlify.app/",
-                "repository": "https://github.com/kirnjiyun/JiyuneeNetflix"
-            },
-            "features": [
-                "실시간 영화 및 TV 프로그램 검색",
-                "YouTube API를 활용한 예고편 보기",
-                "장르별 콘텐츠 탐색",
-                "React Multi Carousel을 이용한 추천 콘텐츠 스크롤",
-                "React Paginate로 페이지네이션 구현",
-                "반응형 디자인을 통해 모바일 및 데스크톱 지원"
-            ],
-            "screenshots": [
-                "/images/projects/yunflix/1.png",
-                "/images/projects/yunflix/2.png",
-                "/images/projects/yunflix/3.png",
-                "/images/projects/yunflix/4.png"
-            ],
-            "thumbnail": "/images/projects/yunflix.png",
-            "isMajor": false
         }
     ]
 }
