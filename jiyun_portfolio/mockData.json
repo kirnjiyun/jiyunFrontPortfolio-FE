@@ -52,33 +52,92 @@
 
     "projectsData": [
         {
+            "id": 0,
+            "category": "개인",
+            "name": "Deluxury",
+            "title": "deluxury",
+            "description": "명품 브랜드 의류, 가방, 신발 등을 판매하는 웹사이트입니다.",
+            "techStack": [
+                "React",
+                "Redux",
+                "Styled-components",
+                "React Query",
+                "Node.js",
+                "Express",
+                "MongoDB",
+                "Cloudinary",
+                "Axios"
+            ],
+            "role": ["Frontend Developer", "Backend Developer"],
+            "duration": "2024-07 ~ 2024-08",
+            "link": [
+                "https://github.com/kirnjiyun/deluxury-FE",
+                "https://github.com/kirnjiyun/deluxury-BE"
+            ],
+            "features": [
+                "음악을 들으며 다양한 명품 브랜드 제품을 구경하고 구매할 수 있는 기능 구현",
+                "스크롤 기반 이미지 갤러리를 통해 매력적인 브랜드 이미지를 동적으로 체험 가능",
+                "구매자 및 판매자 계정으로 가입 및 관리 기능 개발",
+                "Cloudinary를 이용한 상품 이미지 업로드 및 관리 기능 구현",
+                "다음 우편번호 API를 사용한 배송지 입력 기능 구현"
+            ],
+            "screenshots": [
+                "/images/projects/deluxury/메인페이지.gif",
+                "/images/projects/deluxury/상품상세.png",
+                "/images/projects/deluxury/카드입력.gif",
+                "/images/projects/deluxury/회원가입약관.gif"
+            ],
+            "thumbnail": "/images/projects/deluxury.png",
+            "isMajor": true
+        },
+        {
             "id": 1,
             "category": "팀",
             "name": "Feel My Rhythm",
             "title": "feel-my-rhythm",
-            "description": "유저가 음악을 통해 감정을 표현할 수 있는 소셜 플랫폼.",
+            "description": "감정과 음악, 그리고 사람을 연결하는 소셜 플랫폼.",
             "techStack": [
                 "React",
+                "JavaScript",
                 "Styled-components",
                 "Recoil",
-                "React Query"
+                "React Query",
+                "Axios",
+                "React Router"
             ],
             "role": "Frontend Developer",
-            "duration": "2023-01 ~ 2023-03",
-            "link": "https://github.com/username/project-repo",
-            "features": [
-                "YouTube API를 사용하여 음악 검색 및 감정 공유",
-                "무한 스크롤을 적용하여 사용자 경험 개선",
-                "다크 모드 기능 지원"
+            "duration": "2023-10 ~ 2023-11",
+            "link": "https://github.com/kirnjiyun/FeelMyRhythm",
+            "features": {
+                "team": [
+                    "YouTube API를 사용하여 음악 검색 및 감정 공유 기능 개발",
+                    "AI 감정 분석 기능으로 사용자 간 감정 공감 지원",
+                    "무한 스크롤을 적용하여 사용자 경험 개선"
+                ],
+                "individual": [
+                    "메인 페이지 UI 설계 및 구현",
+                    "검색 기능 개발",
+                    "다크 모드 토글 기능 지원",
+                    "카테고리 박스 설계 및 스타일링",
+                    "반응형 디자인으로 다양한 디바이스 지원",
+                    "프로젝트 이름과 컨셉 제안 및 확정"
+                ]
+            },
+            "screenshots": [
+                "/images/projects/feel/무한스크롤최종.gif",
+                "/images/projects/feel/스플래시.gif",
+                "/images/projects/feel/우는표정.GIF",
+                "/images/projects/feel/유튜브 영상 상세보기.gif"
             ],
+            "thumbnail": "/images/projects/feelmyrhythm.png",
             "isMajor": true
         },
         {
             "id": 2,
-            "category": "개인",
+            "category": "팀",
             "name": "팔북정",
             "title": "palbokjeong",
-            "description": "책 검색 및 주문 웹 애플리케이션.",
+            "description": "온라인 책 검색 및 주문 서비스 프론트엔드 팀 프로젝트",
             "techStack": ["React", "React Query", "Express", "Cloudtype"],
             "role": "Fullstack Developer",
             "duration": "2023-05 ~ 2023-07",
@@ -88,7 +147,14 @@
                 "Skeleton UI를 적용하여 로딩 시간 개선",
                 "반응형 UI로 다양한 디바이스 지원"
             ],
-            "isMajor": true
+            "screenshots": [
+                "/images/projects/8bookjeong/검색.gif",
+                "/images/projects/8bookjeong/메인페이지 스크롤.gif",
+                "/images/projects/8bookjeong/상세.gif",
+                "/images/projects/8bookjeong/카테고리 .gif"
+            ],
+            "thumbnail": "/images/projects/book.jpg",
+            "isMajor": false
         },
         {
             "id": 3,
@@ -124,6 +190,7 @@
                 "/images/projects/yunflix/3.png",
                 "/images/projects/yunflix/4.png"
             ],
+            "thumbnail": "/images/projects/yunflix.png",
             "isMajor": false
         }
     ]

@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import {
     PageContainer,
     BackButton,
+    FeaturesSubtitle,
     ArrowSymbol,
     ContentWrapper,
     ProjectHeader,
@@ -30,46 +31,6 @@ import {
     LinkAnchor,
 } from "../../styles/projects/projectTitle.styles";
 import Fancy16to9Gallery from "@/components/projectsCompo/FancyImgGallery";
-
-// async function getStaticPaths() {
-//     // 예시: json-server에서 프로젝트 목록을 가져온다고 가정
-//     const baseUrl = "http://localhost:4000";
-//     const res = await fetch(`${baseUrl}/projectsData`);
-//     const allProjects = await res.json();
-
-//     // 2. 각 프로젝트의 title을 slug로 변환
-//     const paths = allProjects.map((project) => ({
-//         params: {
-//             projectTitle: project.title.toLowerCase().replace(/\s+/g, "-"),
-//         },
-//     }));
-
-//     return {
-//         paths,
-//         fallback: false,
-//     };
-// }
-
-// export async function getStaticProps({ params }) {
-//     const slug = params.projectTitle;
-//     const baseUrl = "http://localhost:4000";
-//     const res = await fetch(`${baseUrl}/projectsData`);
-//     const allProjects = await res.json();
-
-//     const foundProject = allProjects.find(
-//         (proj) => proj.title.toLowerCase().replace(/\s+/g, "-") === slug
-//     );
-
-//     if (!foundProject) {
-//         return { notFound: true };
-//     }
-
-//     return {
-//         props: {
-//             project: foundProject,
-//         },
-//     };
-// }
 
 export async function getServerSideProps({ params }) {
     const slug = params.projectTitle;
@@ -102,21 +63,16 @@ export default function ProjectDetailPage({ project }) {
                     <ArrowSymbol>←</ArrowSymbol>
                 </BackButton>
                 <ProjectHeader>
-                    {/* 좀 더 크게 / 스타일리시한 프로젝트 타이틀 */}
                     <ProjectTitle>{project.name}</ProjectTitle>
                 </ProjectHeader>
-                {/* 이미지는 상단에 크게 노출 (사용자 지정 FancyImageGallery) */}
                 <GallerySection>
                     <Fancy16to9Gallery images={project.screenshots} />
                 </GallerySection>
-                {/* 2컬럼 레이아웃으로 프로젝트 상세 정보 */}
                 <InfoSection>
-                    {/* 왼쪽 컬럼 */}
                     <LeftColumn>
                         <Description>{project.description}</Description>
 
                         <InfoGroup>
-                            {" "}
                             <ProjectSubtitle>
                                 {project.category} 프로젝트
                             </ProjectSubtitle>
@@ -131,7 +87,6 @@ export default function ProjectDetailPage({ project }) {
                             <InfoValue>{project.role}</InfoValue>
                         </InfoGroup>
 
-                        {/* 테크스택 - 뱃지 */}
                         {project.techStack && project.techStack.length > 0 && (
                             <InfoGroup>
                                 <InfoLabel>Tech Stack</InfoLabel>
@@ -144,23 +99,60 @@ export default function ProjectDetailPage({ project }) {
                         )}
                     </LeftColumn>
 
-                    {/* 오른쪽 컬럼 */}
                     <RightColumn>
-                        {/* 주요 기능 */}
-                        {project.features && project.features.length > 0 && (
+                        {project.features && (
                             <FeaturesCard>
                                 <FeaturesTitle>주요 기능</FeaturesTitle>
-                                <FeaturesList>
-                                    {project.features.map((feature, idx) => (
-                                        <FeatureItem key={idx}>
-                                            • {feature}
-                                        </FeatureItem>
-                                    ))}
-                                </FeaturesList>
+                                {project.features.team &&
+                                    project.features.team.length > 0 && (
+                                        <>
+                                            <FeaturesSubtitle>
+                                                Team Features
+                                            </FeaturesSubtitle>
+                                            <FeaturesList>
+                                                {project.features.team.map(
+                                                    (feature, idx) => (
+                                                        <FeatureItem key={idx}>
+                                                            • {feature}
+                                                        </FeatureItem>
+                                                    )
+                                                )}
+                                            </FeaturesList>
+                                        </>
+                                    )}
+                                {project.features.individual &&
+                                    project.features.individual.length > 0 && (
+                                        <>
+                                            <FeaturesSubtitle>
+                                                Individual Features
+                                            </FeaturesSubtitle>
+                                            <FeaturesList>
+                                                {project.features.individual.map(
+                                                    (feature, idx) => (
+                                                        <FeatureItem key={idx}>
+                                                            • {feature}
+                                                        </FeatureItem>
+                                                    )
+                                                )}
+                                            </FeaturesList>
+                                        </>
+                                    )}
+                                {!project.features.team &&
+                                    !project.features.individual &&
+                                    project.features.length > 0 && (
+                                        <FeaturesList>
+                                            {project.features.map(
+                                                (feature, idx) => (
+                                                    <FeatureItem key={idx}>
+                                                        • {feature}
+                                                    </FeatureItem>
+                                                )
+                                            )}
+                                        </FeaturesList>
+                                    )}
                             </FeaturesCard>
                         )}
 
-                        {/* 링크 */}
                         {project.projectLinks && (
                             <LinkCard>
                                 <LinksTitle>관련 링크</LinksTitle>

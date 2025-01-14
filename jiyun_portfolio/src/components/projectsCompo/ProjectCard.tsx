@@ -16,9 +16,9 @@ const ProjectCard = ({ project }) => {
             >
                 <ProjectImage
                     src={
-                        project.screenshots && project.screenshots.length > 0
-                            ? project.screenshots[0] // 첫 번째 스크린샷 사용
-                            : "/images/default-image.webp" // 기본 이미지 경로
+                        project.thumbnail
+                            ? project.thumbnail
+                            : "/images/default-image.webp"
                     }
                     alt={project.name}
                 />
@@ -26,11 +26,7 @@ const ProjectCard = ({ project }) => {
                     <h2>{project.name}</h2>
                     <p>{project.description}</p>
                     <p>
-                        <strong>기술 스택:</strong>{" "}
-                        {project.techStack.join(", ")}
-                    </p>
-                    <p>
-                        <strong>기간:</strong> {project.duration}
+                        <strong>{project.category} </strong>프로젝트
                     </p>
                 </ProjectDetails>{" "}
             </Link>

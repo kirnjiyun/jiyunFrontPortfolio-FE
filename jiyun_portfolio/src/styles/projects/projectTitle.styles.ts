@@ -178,31 +178,63 @@ export const TechBadge = styled.span`
     display: inline-block;
     white-space: nowrap;
 `;
-
-/** 주요 기능 */
+/** 주요 기능 카드 */
 export const FeaturesCard = styled.div`
-    background-color: var(--color-lightest-blue);
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* Clean white background */
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e6ecf1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Larger gap for clear separation */
 `;
 
+/** 제목 스타일 */
 export const FeaturesTitle = styled.h3`
-    font-size: 1.1rem;
-    color: var(--color-medium-blue);
-    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    color: var(--color-dark-blue);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
 `;
 
+/** Subsection Title (e.g., Team Features, Individual Features) */
+export const FeaturesSubtitle = styled.h4`
+    font-size: 1.2rem;
+    color: var(--color-medium-blue);
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-transform: uppercase; /* All caps for emphasis */
+    letter-spacing: 0.05em;
+    text-align: left; /* Left-aligned for cleaner layout */
+`;
+
+/** 리스트 스타일 */
 export const FeaturesList = styled.ul`
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Larger spacing for clean look */
 `;
 
+/** 개별 항목 스타일 */
 export const FeatureItem = styled.li`
-    font-size: 0.95rem;
-    color: var(--color-dark-blue);
-    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #4a4a4a;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    background-color: #f9fbfc; /* Subtle background */
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: var(--color-light-blue); /* Highlight hover */
+        color: #ffffff;
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Hover shadow */
+    }
 `;
 
 /** 링크 섹션 */
