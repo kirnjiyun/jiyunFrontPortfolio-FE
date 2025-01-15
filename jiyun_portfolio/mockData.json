@@ -339,10 +339,48 @@
                 ]
             },
             "screenshots": [
-                "/images/projects/lolcham/lolcham_screen1.png",
-                "/images/projects/lolcham/lolcham_screen2.png"
+                "/images/projects/lol/1.png",
+                "/images/projects/lol/2.png",
+                "/images/projects/lol/3.png"
             ],
             "thumbnail": "/images/projects/lol/lolthumb.webp",
+            "isMajor": false
+        },
+        {
+            "id": 9,
+            "category": "개인",
+            "name": "Chat GPT Diet",
+            "title": "chatgptdiet",
+            "description": "ChatGPT와 OpenAI API를 활용한 맞춤형 다이어트 관리 서비스",
+            "techStack": [
+                "React",
+                "JavaScript",
+                "Express",
+                "OpenAI API",
+                "Styled-Components"
+            ],
+            "role": ["Frontend Developer", "Backend Developer"],
+            "projectLinks": {
+                "deployment": "",
+                "repository": [
+                    "https://github.com/kirnjiyun/chatGPTDietFront",
+                    "https://github.com/kirnjiyun/chatGPTDietBack"
+                ]
+            },
+            "features": {
+                "individual": [
+                    "React와 TypeScript를 사용한 안정적이고 직관적인 프론트엔드 구현",
+                    "Express와 OpenAI API를 활용한 사용자 맞춤형 백엔드 개발",
+                    "Styled-Components로 깔끔하고 반응형 UI 디자인"
+                ]
+            },
+            "screenshots": [
+                "/images/projects/gpt/1.png",
+                "/images/projects/gpt//2.png",
+                "/images/projects/gpt/3.png",
+                "/images/projects/gpt/4.png"
+            ],
+            "thumbnail": "/images/projects/gpt/thumb.png",
             "isMajor": false
         }
     ]
