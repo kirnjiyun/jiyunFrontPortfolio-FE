@@ -109,7 +109,7 @@
                     "https://github.com/kirnjiyun/8bookjeong",
                     "https://github.com/kirnjiyun/8bookjeong-BE"
                 ],
-                "deployment": "https://palbookjeong.netlify.app/"
+                "deployment": "https://deluxury-jiyun.netlify.app/"
             },
             "features": [
                 "Aladin API를 사용하여 책 정보 검색 및 리뷰 작성",
@@ -203,6 +203,147 @@
             ],
             "thumbnail": "/images/projects/feelmyrhythm.png",
             "isMajor": true
+        },
+        {
+            "id": 4,
+            "category": "개인",
+            "name": "득근득근 운동일기",
+            "title": "workout",
+            "description": "Redux로 만든 운동일기 컨셉 웹사이트",
+            "techStack": ["React", "JavaScript", "Bootstrap", "Redux"],
+            "role": "Frontend Developer",
+            "projectLinks": {
+                "deployment": "https://jiyunee-redux-diary.netlify.app/",
+                "repository": "https://github.com/kirnjiyun/reduxpractice"
+            },
+            "features": {
+                "individual": ["UI 설계 및 구현", "Redux 사용"]
+            },
+            "screenshots": ["/images/projects/득근득근/득근스크린샷.png"],
+            "thumbnail": "/images/projects/득근득근/득근썸네일.png",
+            "isMajor": false
+        },
+        {
+            "id": 5,
+            "category": "개인",
+            "name": "미야오 미야오",
+            "title": "meowmeow",
+            "description": "귀엽고 깜찍한 컨셉의 잡화점",
+            "techStack": [
+                "React",
+                "React Router",
+                "Firebase",
+                "Bootstrap",
+                "React-Bootstrap",
+                "Styled-Components",
+                "JSON Server"
+            ],
+            "role": "Frontend Developer",
+            "projectLinks": {
+                "deployment": "https://jiyunee-meowmeowmall.netlify.app/",
+                "repository": "https://github.com/kirnjiyun/meowmeowmall"
+            },
+            "features": {
+                "individual": [
+                    "로그인 아이디 abc@naver.com",
+                    "비밀번호 123",
+                    "React를 사용한 SPA 설계 및 구현",
+                    "Firebase Authentication을 통한 사용자 인증",
+                    "JSON Server를 활용한 API Mocking",
+                    "Bootstrap과 React-Bootstrap을 사용한 UI 스타일링",
+                    "Styled-Components로 일부 커스텀 컴포넌트 제작"
+                ]
+            },
+            "screenshots": [
+                "/images/projects/meow/meowscreen.png",
+                "/images/projects/meow/meowscreen2.png"
+            ],
+            "thumbnail": "/images/projects/meow/meoowthumb.png",
+            "isMajor": false
+        },
+        {
+            "id": 6,
+            "category": "개인",
+            "name": "짱구와 가위바위보",
+            "title": "rockscissorpaper",
+            "description": "짱구 컨셉의 컴퓨터와 가위바위보 게임",
+            "techStack": ["TypeScript", "React"],
+            "role": "Frontend Developer",
+            "projectLinks": {
+                "deployment": "https://jiyunee-rockscissorpaper.netlify.app/",
+                "repository": "https://github.com/kirnjiyun/RockScissorsPaper"
+            },
+            "features": {
+                "individual": [
+                    "TypeScript를 활용하여 안정적이고 타입 안정성을 갖춘 코드 작성",
+                    "React를 사용하여 컴포넌트 기반 SPA 설계 및 구현",
+                    "컴퓨터와 사용자 간의 랜덤 가위바위보 게임 로직 구현",
+                    "반응형 디자인으로 모바일 및 데스크톱 최적화"
+                ]
+            },
+            "screenshots": [
+                "/images/projects/rsp/paper.png",
+                "/images/projects/rsp/rock.png",
+                "/images/projects/rsp/same.png",
+                "/images/projects/rsp/sci.png"
+            ],
+            "thumbnail": "/images/projects/rsp/rspthumbnail.png",
+            "isMajor": false
+        },
+        {
+            "id": 7,
+            "category": "개인",
+            "name": "Weather Now",
+            "title": "weathernow",
+            "description": "사용자의 현재 위치를 기반으로 날씨 정보를 제공하는 애플리케이션",
+            "techStack": ["TypeScript", "React", "Recoil", "Axios"],
+            "role": "Frontend Developer",
+            "projectLinks": {
+                "deployment": "https://jiyunee-weather-now.netlify.app/",
+                "repository": "https://github.com/kirnjiyun/WeatherNow"
+            },
+            "features": {
+                "individual": [
+                    "TypeScript를 사용하여 안정적이고 유지보수 가능한 코드 작성",
+                    "React로 컴포넌트 기반 SPA 설계 및 구현",
+                    "OpenWeatherMap API를 사용한 실시간 날씨 데이터 표시",
+                    "Geolocation API를 활용하여 사용자의 현재 위치 기반 날씨 정보 제공"
+                ]
+            },
+            "screenshots": [
+                "/images/projects/weather/1.png",
+                "/images/projects/weather/11.png",
+                "/images/projects/weather/111.png"
+            ],
+            "thumbnail": "/images/projects/weather/날씨썸네일.JPG",
+            "isMajor": false
+        },
+        {
+            "id": 8,
+            "category": "개인",
+            "name": "LOL Champions",
+            "title": "lolcham",
+            "description": "League of Legends 챔피언 검색 및 정보 제공사이트",
+            "techStack": ["Next.js", "TypeScript"],
+            "role": "Frontend Developer",
+            "projectLinks": {
+                "deployment": "",
+                "repository": "https://github.com/kirnjiyun/nextAppRouter"
+            },
+            "features": {
+                "individual": [
+                    "Next.js의 App Router를 사용한 라우팅 구현",
+                    "TypeScript를 적용하여 안정성과 유지보수성을 향상",
+                    "반응형 디자인을 통해 다양한 디바이스 환경 최적화",
+                    "League of Legends API를 이용한 챔피언 검색 및 상세 정보 표시"
+                ]
+            },
+            "screenshots": [
+                "/images/projects/lolcham/lolcham_screen1.png",
+                "/images/projects/lolcham/lolcham_screen2.png"
+            ],
+            "thumbnail": "/images/projects/lol/lolthumb.webp",
+            "isMajor": false
         }
     ]
 }
