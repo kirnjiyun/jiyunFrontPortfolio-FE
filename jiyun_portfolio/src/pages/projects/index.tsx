@@ -3,7 +3,6 @@ import { HeroSection, Title } from "@/styles/about/AboutPageStyles";
 import ProjectCarousel from "@/components/projectsCompo/ProjectCarousel";
 import ProjectContainer from "@/components/projectsCompo/ProjectContainer";
 import styled from "styled-components";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 export async function getStaticProps() {
     const baseUrl = "http://localhost:4000"; // json-server 주소
@@ -21,14 +20,13 @@ export async function getStaticProps() {
         },
     };
 }
-
 const FilterContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
     padding: 1rem;
-    background-color: #f9f9f9;
+    background-color: var(--color-lightest-blue);
     border-radius: 8px;
     margin: 1.5rem 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -40,30 +38,30 @@ const FilterLabel = styled.label`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #333;
+    color: var(--color-dark-blue);
 `;
 
 const FilterSelect = styled.select`
     padding: 0.5rem 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-light-blue);
     border-radius: 4px;
     font-size: 1rem;
-    color: #555;
-    background-color: #fff;
+    color: var(--color-medium-blue);
+    background-color: var(--color-brightest-blue);
     transition: border-color 0.3s;
 
     &:hover {
-        border-color: #aaa;
+        border-color: var(--color-medium-blue);
     }
 
     &:focus {
         outline: none;
-        border-color: #007bff;
+        border-color: var(--color-dark-blue);
     }
 `;
 
 const FilterCheckbox = styled.input`
-    accent-color: #007bff;
+    accent-color: var(--color-dark-blue);
     width: 18px;
     height: 18px;
     cursor: pointer;
@@ -71,9 +69,9 @@ const FilterCheckbox = styled.input`
 
 const ProjectTransitionStyles = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
+    grid-template-columns: repeat(4, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
     justify-content: center;
 
     .project-enter {
@@ -160,17 +158,9 @@ export default function ProjectsPage({ projectsData }) {
             </FilterContainer>
 
             <ProjectTransitionStyles>
-                <TransitionGroup>
-                    {filteredProjects.map((project) => (
-                        <CSSTransition
-                            key={project.id}
-                            timeout={300}
-                            classNames="project"
-                        >
-                            <ProjectContainer projectsData={[project]} />
-                        </CSSTransition>
-                    ))}
-                </TransitionGroup>
+                {filteredProjects.map((project) => (
+                    <ProjectContainer projectsData={[project]} />
+                ))}
             </ProjectTransitionStyles>
         </>
     );

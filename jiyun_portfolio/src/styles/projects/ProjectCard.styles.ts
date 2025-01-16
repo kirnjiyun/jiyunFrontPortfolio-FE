@@ -7,11 +7,10 @@ export const ProjectCardContainer = styled.div`
     justify-content: space-between;
     width: 300px;
     height: 300px;
-    padding: 20px;
     margin: 15px;
     border: 1px solid #eaeaea;
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: var(--color-dark-blue);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
@@ -23,34 +22,32 @@ export const ProjectCardContainer = styled.div`
 `;
 
 export const ProjectImage = styled.img`
+    /* 이미지가 가득 차도록 설정 */
     width: 100%;
-    height: auto;
+    border-radius: 8px 8px 0 0;
+    height: 180px;
     object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 15px;
 `;
 
 export const ProjectDetails = styled.div`
-    text-align: center;
+    /* 텍스트 컨테이너 스타일 */
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+`;
 
-    h2 {
-        font-size: 1.5rem;
-        margin-bottom: 10px;
-        color: #333;
-    }
+export const ProjectTitle = styled.h2`
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-brightest-blue);
+    transition: color 0.3s ease;
+`;
 
-    p {
-        font-size: 1rem;
-        color: #666;
-        margin-bottom: 5px;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
-
-    strong {
-        font-weight: 600;
-        color: #444;
-    }
+export const ProjectDescription = styled.p`
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+    color: var(--color-lightest-blue);
+    transition: color 0.3s ease;
 `;
