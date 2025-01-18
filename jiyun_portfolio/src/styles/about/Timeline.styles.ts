@@ -135,4 +135,5 @@ export const Title = styled.h2`
     font-weight: bold;
     margin-bottom: 3rem;
     color: ${colors.darkBlue};
+    font-family: "SBAggroB";
 `;

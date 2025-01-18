@@ -27,7 +27,8 @@ export const Title = styled.h2`
     font-weight: bold;
     color: var(--color-dark-blue);
     text-align: center;
-    margin-bottom: 1rem; /* Title 아래 간격 */
+    margin-bottom: 1rem;
+    font-family: "SBAggroB";
 `;
 
 export const CardGrid = styled.div`

@@ -37,6 +37,7 @@ export const SectionTitle = styled.h2`
     color: ${colors.darkBlue};
     margin-bottom: 20px;
     text-align: center;
+    font-family: "SBAggroB";
 `;
 
 export const List = styled.ul`

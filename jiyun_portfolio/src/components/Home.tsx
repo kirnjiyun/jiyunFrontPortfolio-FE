@@ -19,8 +19,8 @@ const Home: React.FC = () => {
     // 스크롤이 맨 아래에 도달했는지 여부
     const [isAtBottom, setIsAtBottom] = useState(false);
 
-    const fullText = " WELCOME";
-    const typingSpeed = 150;
+    const fullText = "  WELCOME";
+    const typingSpeed = 100;
 
     useEffect(() => {
         let index = 0;

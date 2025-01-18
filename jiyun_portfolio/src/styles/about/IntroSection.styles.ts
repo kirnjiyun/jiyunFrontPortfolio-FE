@@ -108,6 +108,7 @@ export const Title = styled.h2`
     font-weight: bold;
     margin-bottom: 1rem;
     color: ${colors.darkBlue};
+    font-family: "SBAggroB";
 `;
 
 // 본문 텍스트 스타일

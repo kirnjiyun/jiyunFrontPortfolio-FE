@@ -7,6 +7,12 @@ const GlobalStyle = createGlobalStyle`
      font-weight: normal;
      font-style: normal;
 }
+@font-face {
+    font-family: 'SBAggroB';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 :root {
     --color-dark-blue: #27374D;
     --color-medium-blue: #526D82;
@@ -27,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'S-CoreDream-3Light', 'Pretendard', sans-serif;
+    font-family: 'S-CoreDream-3Light', 'SBAggroB','Pretendard', sans-serif;
     background-color: var(--color-lightest-blue); 
     color: var(--color-dark-blue); 
   }

@@ -108,7 +108,8 @@ const ScrollRow = styled.div`
 const ScrollText = styled(animated.div)`
     display: inline-block;
     font-size: 4rem;
-    font-weight: bold;
+    font-weight: 300;
+    font-family: "SBAggroB";
     color: var(--color-dark-blue, #003366);
     white-space: nowrap;
     margin-right: 3rem;
@@ -120,11 +121,12 @@ const ScrollText = styled(animated.div)`
 const ScrollTextLight = styled(animated.div)`
     display: inline-block;
     font-size: 4rem;
-    font-weight: bold;
     color: var(--color-light-blue, #88cfff);
     white-space: nowrap;
     margin-right: 3rem;
     @media (max-width: 768px) {
         font-size: 2rem;
     }
+    font-family: "SBAggroB";
+    font-weight: 400;
 `;

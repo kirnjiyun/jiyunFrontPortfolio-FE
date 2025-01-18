@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import IntroductionSection from "../../components/IntroductionSection";
-import CertificationSection from "../../components/CertificationSection";
-import EducationSection from "../../components/EducationSection";
+import IntroductionSection from "../../components/aboutCompo/IntroductionSection";
+import CertificationSection from "../../components/aboutCompo/CertificationSection";
+import EducationSection from "../../components/aboutCompo/EducationSection";
 
 import {
     HeroSection,

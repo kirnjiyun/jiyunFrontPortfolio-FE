@@ -1,5 +1,9 @@
 import React from "react";
-import { Section, SectionTitle, List } from "../styles/about/Education.styles";
+import {
+    Section,
+    SectionTitle,
+    List,
+} from "../../styles/about/Education.styles";
 
 export default function EducationSection({ educationData }) {
     return (

@@ -73,7 +73,22 @@ const ProjectTransitionStyles = styled.div`
     gap: 1rem;
     padding: 1rem;
     justify-content: center;
+    @media (max-width: 576px) {
+        grid-template-columns: 1fr; /* 1개의 열 */
+        margin: 0 16px; /* 양옆 마진 */
+    }
 
+    /* 태블릿: 한 줄에 2개 */
+    @media (min-width: 577px) and (max-width: 1024px) {
+        grid-template-columns: repeat(2, minmax(250px, 1fr));
+        margin: 0 24px; /* 양옆 마진 */
+    }
+
+    /* 데스크탑: 최대 4개 */
+    @media (min-width: 1025px) {
+        grid-template-columns: repeat(4, 1fr); /* 최대 4개의 열 */
+        margin: 0 120px; /* 양옆 마진 */
+    }
     .project-enter {
         opacity: 0;
         transform: translateY(10px);
