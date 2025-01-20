@@ -22,8 +22,8 @@ export const CardContainer = styled.div`
     justify-content: center;
     align-items: center;
     position: relative;
-    padding-top: 20px;
-    margin-bottom: -120px;
+    padding-top: 10px;
+    margin-bottom: -100px;
 `;
 
 /**
@@ -41,11 +41,6 @@ export const Splash = styled.div`
     );
 `;
 
-/**
- * 이모지 카드
- *  - 여기서 실제로 이모지를 표시
- *  - animated.div를 상속하여 스프링 변환을 수용할 수 있음
- */
 export const EmojiCard = styled(animated.div)`
     font-size: 164px;
     width: 300px;
@@ -54,7 +49,7 @@ export const EmojiCard = styled(animated.div)`
     justify-content: center;
     align-items: center;
     border-radius: 20px;
-    background: #f5f5f5;
+    background: var(--color-lightest-blue);
     box-shadow: 0 0 1px hsl(0deg 0% 0% / 0.075), 0 0 2px hsl(0deg 0% 0% / 0.075),
         0 0 4px hsl(0deg 0% 0% / 0.075), 0 0 8px hsl(0deg 0% 0% / 0.075),
         0 0 16px hsl(0deg 0% 0% / 0.075);

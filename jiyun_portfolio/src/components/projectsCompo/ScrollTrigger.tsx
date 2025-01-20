@@ -30,7 +30,7 @@ function Card({
 }) {
     const [ref, springs] = useInView(() => ({
         from: { y: 300, rotate: 0 },
-        to: { y: 50, rotate: -10 },
+        to: { y: 10, rotate: -10 },
         config: { tension: 180, friction: 12 },
     }));
 
@@ -57,7 +57,7 @@ function Card({
                         src={src}
                         alt={name}
                         style={{
-                            width: "80%",
+                            width: "250px",
                             height: "auto",
                             objectFit: "contain",
                         }}
@@ -68,7 +68,7 @@ function Card({
     );
 }
 
-const hsl = (h: number) => `hsl(${h}, 100%, 55%)`; // 강렬한 색상
+const hsl = (h: number) => `hsl(${h}, 100%, 50%)`; // 강렬한 색상
 
 const techStacks: { src: string; hue: number; name: string }[] = [
     { src: "/images/techstack/html.png", hue: 0, name: "HTML" }, // 빨강
