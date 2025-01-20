@@ -3,6 +3,7 @@ import { HeroSection, Title } from "@/styles/about/AboutPageStyles";
 import ProjectCarousel from "@/components/projectsCompo/ProjectCarousel";
 import ProjectContainer from "@/components/projectsCompo/ProjectContainer";
 import styled from "styled-components";
+import ScrollTriggered from "@/components/projectsCompo/ScrollTrigger";
 
 export async function getStaticProps() {
     const baseUrl = "http://localhost:4000"; // json-server 주소
@@ -146,8 +147,8 @@ export default function ProjectsPage({ projectsData }) {
             <HeroSection>
                 <Title>Projects</Title>
             </HeroSection>
-
-            <ProjectCarousel />
+            <ScrollTriggered />
+            {/* <ProjectCarousel /> */}
             <FilterContainer>
                 <FilterLabel>
                     <FilterCheckbox

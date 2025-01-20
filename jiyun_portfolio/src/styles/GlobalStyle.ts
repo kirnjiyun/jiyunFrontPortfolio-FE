@@ -14,13 +14,22 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
 }
 :root {
-    --color-dark-blue: #27374D;
-    --color-medium-blue: #526D82;
-    --color-light-blue: #9DB2BF;
-    --color-lightest-blue: #DDE6ED;
-    --color-brightest-blue: #F0F7FD;
-    
-  }
+  /* 거의 검정에 가까운 어두운 톤 */
+  --color-dark-blue: #141414;
+
+  /* 중간 정도의 회색 */
+  --color-medium-blue: #555555;
+
+  /* 조금 더 밝은 회색 */
+  --color-light-blue: #aaaaaa;
+
+  /* 거의 흰색에 가까운 밝은 회색 */
+  --color-lightest-blue: #f5f5f5;
+
+  /* 포인트: 형광 연두 (네온 그린) */
+  --color-brightest-blue: #39ff14;
+}
+
 
   * {
     margin: 0;
