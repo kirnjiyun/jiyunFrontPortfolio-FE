@@ -8,25 +8,33 @@ import {
     Card,
     ImageContainer,
     Front,
-    HoverText,
+    // HoverText, // 이제 커스텀 커서로 대체하므로 주석 처리
 } from "@/styles/about/CertificationSection.styles";
 
 Modal.setAppElement("#__next");
 
 export default function CertificationSection({ certificationData }) {
+    // 모달용 상태
     const [modalData, setModalData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // 어떤 카드(index)가 hover 되었는지
+    const [hoveredIndex, setHoveredIndex] = useState(null);
+
+    // 각 카드별 마우스 좌표 { [index]: { x, y } }
+    const [positions, setPositions] = useState({});
+
+    // 모달 열기/닫기
     const handleOpenModal = (cert) => {
         setModalData(cert);
         setIsModalOpen(true);
     };
-
     const handleCloseModal = () => {
         setModalData(null);
         setIsModalOpen(false);
     };
 
+    // 모달에 표시할 description 속 링크 치환
     function formatDescription(description) {
         return description
             .replace(
@@ -39,30 +47,93 @@ export default function CertificationSection({ certificationData }) {
             );
     }
 
+    // 마우스가 카드 위에 들어오면
+    const handleMouseEnter = (index) => {
+        setHoveredIndex(index);
+    };
+
+    // 카드 밖으로 나가면
+    const handleMouseLeave = () => {
+        setHoveredIndex(null);
+    };
+
+    // 카드 위에서 마우스가 움직일 때 좌표 업데이트
+    const handleMouseMove = (e, index) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        setPositions((prev) => ({
+            ...prev,
+            [index]: { x, y },
+        }));
+    };
+
     return (
         <Section>
-            <Title>Certifications & etc</Title>
+            <Title>Certifications &amp; etc</Title>
             <CardGrid>
-                {certificationData.map((cert, index) => (
-                    <Card key={index} onClick={() => handleOpenModal(cert)}>
-                        <ImageContainer>
-                            <Front>
-                                <Image
-                                    src={cert.imageSrc}
-                                    alt={cert.alt}
-                                    layout="fill"
-                                    objectFit="cover"
-                                />
-                            </Front>
+                {certificationData.map((cert, index) => {
+                    const isHovered = hoveredIndex === index;
+                    const pos = positions[index];
 
-                            <HoverText className="hover-text">
-                                눌러보세요
-                            </HoverText>
-                        </ImageContainer>
-                    </Card>
-                ))}
+                    return (
+                        <Card
+                            key={index}
+                            onClick={() => handleOpenModal(cert)}
+                            onMouseEnter={() => handleMouseEnter(index)}
+                            onMouseLeave={handleMouseLeave}
+                            onMouseMove={(e) => handleMouseMove(e, index)}
+                            style={{
+                                position: "relative",
+                                cursor: isHovered ? "none" : "pointer",
+                                // isHovered일 때만 기본 커서 숨김, 아니면 일반 포인터
+                            }}
+                        >
+                            <ImageContainer>
+                                <Front
+                                    style={{
+                                        transition: "filter 0.3s ease",
+                                        // hover된 카드면 어둡게 + 블러 처리
+                                        filter: isHovered
+                                            ? "brightness(0.7) blur(2px)"
+                                            : "none",
+                                    }}
+                                >
+                                    <Image
+                                        src={cert.imageSrc}
+                                        alt={cert.alt}
+                                        layout="fill"
+                                        objectFit="cover"
+                                    />
+                                </Front>
+
+                                {isHovered && pos && (
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            left: pos.x,
+                                            top: pos.y,
+                                            transform: "translate(-50%, -50%)",
+                                            pointerEvents: "none",
+                                            backgroundColor:
+                                                "var(--color-dark-blue)",
+                                            color: "var(--color-brightest-blue)",
+                                            padding: "1rem",
+                                            borderRadius: "8px",
+                                            fontWeight: "bold",
+                                            zIndex: 9999,
+                                        }}
+                                    >
+                                        눌러보세요
+                                    </div>
+                                )}
+                            </ImageContainer>
+                        </Card>
+                    );
+                })}
             </CardGrid>
 
+            {/* 모달 부분 */}
             {modalData && (
                 <Modal
                     isOpen={isModalOpen}
@@ -84,8 +155,8 @@ export default function CertificationSection({ certificationData }) {
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
-                            overflowY: "auto", // Y축 스크롤 활성화
-                            overflowX: "hidden", // X축 스크롤 비활성화
+                            overflowY: "auto",
+                            overflowX: "hidden",
                         },
                         overlay: {
                             backgroundColor: "rgba(0, 0, 0, 0.5)",

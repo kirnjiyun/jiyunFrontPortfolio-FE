@@ -13,8 +13,8 @@ import {
     SectionTitle,
     List,
 } from "../../styles/about/AboutPageStyles";
-import InfiniteScrollText from "@/components/InfiniteScroll";
-import TimelineComponent from "@/components/\bTimeLineSection";
+import InfiniteScrollText from "@/components/aboutCompo/InfiniteScroll";
+import TimelineComponent from "@/components/aboutCompo/TimeLineSection";
 
 export async function getStaticProps() {
     // json-server API에서 데이터 가져오기

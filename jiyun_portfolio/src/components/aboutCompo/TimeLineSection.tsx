@@ -7,7 +7,7 @@ import {
     Line,
     Point,
     DateLabel,
-} from "../styles/about/Timeline.styles";
+} from "../../styles/about/Timeline.styles";
 const timelineData = [
     { year: 1998, month: "04", event: "출생" },
     { year: 2014, month: "03", event: "고등학교 입학" },

@@ -7,7 +7,7 @@ import {
     ModalCircle,
     MenuItem,
     Backdrop,
-} from "./Navbar.styles";
+} from "../../styles/Navbar.styles";
 import Link from "next/link";
 const Navbar: React.FC = () => {
     const [ismenuopen, setismenuopen] = useState(false);
