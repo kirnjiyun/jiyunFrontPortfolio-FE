@@ -28,11 +28,14 @@ function Card({
     name: string;
     i: number;
 }) {
-    const [ref, springs] = useInView(() => ({
-        from: { y: 300, rotate: 0 },
-        to: { y: 10, rotate: -10 },
-        config: { tension: 150, friction: 20 },
-    }));
+    const [ref, springs] = useInView(
+        () => ({
+            from: { y: 300, rotate: 0 },
+            to: { y: 10, rotate: -10 },
+            config: { tension: 150, friction: 20 },
+        }),
+        { rootMargin: "-20% 0px" } // 추가적으로 rootMargin을 설정해 스크롤 범위를 조정할 수 있습니다.
+    );
 
     const complementaryHue1 = hue + 180;
     const complementaryHue = hue + 200;
@@ -67,21 +70,17 @@ function Card({
     );
 }
 
-const hsl = (h: number) => `hsl(${h}, 100%, 50%)`; // 강렬한 색상
+const hsl = (h: number) => `hsl(${h}, 100%, 50%)`; // HSL로 색상 설정
 
 const techStacks: { src: string; hue: number; name: string }[] = [
-    { src: "/images/techstack/html.png", hue: 0, name: "HTML" }, // 빨강
-    { src: "/images/techstack/css.png", hue: 252, name: "CSS" }, // 파랑
-    { src: "/images/techstack/javascript.png", hue: 72, name: "JavaScript" }, // 노랑
-    { src: "/images/techstack/typescript.png", hue: 288, name: "TypeScript" }, // 청록
-    { src: "/images/techstack/react.png", hue: 180, name: "React" }, // 파랑
-    { src: "/images/techstack/next.svg", hue: 324, name: "Next.js" }, // 초록
-    {
-        src: "/images/techstack/styled.png",
-        hue: 36,
-        name: "Styled Components",
-    }, // 자홍
-    { src: "/images/techstack/express.svg", hue: 108, name: "Express" }, // 연두
-    { src: "/images/techstack/mongodb.png", hue: 144, name: "MongoDB" }, // 초록
-    { src: "/images/techstack/figma.png", hue: 216, name: "Figma" }, // 자홍
+    { src: "/images/techstack/html.png", hue: 0, name: "HTML" },
+    { src: "/images/techstack/css.png", hue: 252, name: "CSS" },
+    { src: "/images/techstack/javascript.png", hue: 72, name: "JavaScript" },
+    { src: "/images/techstack/typescript.png", hue: 288, name: "TypeScript" },
+    { src: "/images/techstack/react.png", hue: 180, name: "React" },
+    { src: "/images/techstack/next.svg", hue: 324, name: "Next.js" },
+    { src: "/images/techstack/styled.png", hue: 36, name: "Styled Components" },
+    { src: "/images/techstack/express.svg", hue: 108, name: "Express" },
+    { src: "/images/techstack/mongodb.png", hue: 144, name: "MongoDB" },
+    { src: "/images/techstack/figma.png", hue: 216, name: "Figma" },
 ];

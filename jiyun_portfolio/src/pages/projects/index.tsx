@@ -109,6 +109,10 @@ const ProjectTransitionStyles = styled.div`
         transition: opacity 300ms, transform 300ms;
     }
 `;
+const ScrollSection = styled.div`
+    min-width: 300px;
+    margin-top: -100px;
+`;
 
 export default function ProjectsPage({ projectsData }) {
     const [filteredProjects, setFilteredProjects] = useState(projectsData);
@@ -142,13 +146,50 @@ export default function ProjectsPage({ projectsData }) {
         }));
     };
 
+    // 화살표 위치 및 상태 관리
+    const [isHovering, setIsHovering] = useState(false);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+    const handleMouseEnter = () => setIsHovering(true);
+    const handleMouseLeave = () => setIsHovering(false);
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    // JSX 반환
     return (
         <>
             <HeroSection>
                 <Title>Projects</Title>
             </HeroSection>
-            <ScrollTriggered />
-            {/* <ProjectCarousel /> */}
+
+            <ScrollSection
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onMouseMove={handleMouseMove}
+            >
+                {/* 마우스가 ScrollSection 위에 있을 때만 화살표 이미지 표시 */}
+                {isHovering && (
+                    <img
+                        src="/images/down-arrow.png"
+                        alt="arrow"
+                        style={{
+                            position: "fixed",
+                            top: mousePos.y + 10,
+                            left: mousePos.x + 10,
+                            width: "100px",
+                            pointerEvents: "none",
+                            transform: "translate(-50%, -50%)",
+                            zIndex: 9999,
+                        }}
+                    />
+                )}
+
+                {/* ScrollTriggered 컴포넌트 */}
+                <ScrollTriggered />
+            </ScrollSection>
+
+            {/* 필터 컨테이너 */}
             <FilterContainer>
                 <FilterLabel>
                     <FilterCheckbox
@@ -173,9 +214,13 @@ export default function ProjectsPage({ projectsData }) {
                 </FilterSelect>
             </FilterContainer>
 
+            {/* 프로젝트 리스트 */}
             <ProjectTransitionStyles>
                 {filteredProjects.map((project) => (
-                    <ProjectContainer projectsData={[project]} />
+                    <ProjectContainer
+                        key={project.id}
+                        projectsData={[project]}
+                    />
                 ))}
             </ProjectTransitionStyles>
         </>

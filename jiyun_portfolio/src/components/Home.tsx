@@ -55,7 +55,9 @@ const Home: React.FC = () => {
             window.removeEventListener("mousemove", handleMouseMove);
         };
     }, []);
-
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        setMousePos({ x: e.clientX, y: e.clientY });
+    };
     // ----------------------
     // 3. 스크롤 이벤트 처리 (버벅임 개선)
     // ----------------------
@@ -77,9 +79,7 @@ const Home: React.FC = () => {
                     setIsAtBottom(scrolledToBottom);
 
                     // 타이핑이 끝났고, 스크롤 위치가 상단이면 화살표 보이기
-                    setShowArrow(
-                        scrollTop <= 100 && typedText.length === fullText.length
-                    );
+                    setShowArrow(typedText.length === fullText.length);
 
                     ticking = false;
                 });
@@ -129,6 +129,7 @@ const Home: React.FC = () => {
         transform: isAtBottom ? "translateY(0)" : "translateY(20px)",
         config: { tension: 200, friction: 20 },
     });
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     return (
         <HomeWrapper style={{ backgroundColor, color }}>
@@ -139,7 +140,15 @@ const Home: React.FC = () => {
             {showArrow && (
                 <ArrowIndicator style={arrowSpring}>
                     <img
-                        style={{ width: "10%" }}
+                        style={{
+                            position: "fixed",
+                            top: mousePos.y + 10,
+                            left: mousePos.x + 10,
+                            width: "100px",
+                            pointerEvents: "none",
+                            transform: "translate(-50%, -50%)",
+                            zIndex: 9999,
+                        }}
                         src="/images/down-arrow.png"
                         alt="downarrow"
                     />
