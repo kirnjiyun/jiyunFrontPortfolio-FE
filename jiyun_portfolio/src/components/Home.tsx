@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSpring } from "react-spring";
 import {
     HomeWrapper,
@@ -15,13 +15,14 @@ const Home: React.FC = () => {
     const [showArrow, setShowArrow] = useState(false);
     const [scrollProgress, setScrollProgress] = useState(0);
     const [typedText, setTypedText] = useState("");
-
-    // 스크롤이 맨 아래에 도달했는지 여부
     const [isAtBottom, setIsAtBottom] = useState(false);
 
     const fullText = "  WELCOME";
-    const typingSpeed = 100;
+    const typingSpeed = 120;
 
+    // ----------------------
+    // 1. 텍스트 타이핑 효과
+    // ----------------------
     useEffect(() => {
         let index = 0;
         setTypedText(""); // 초기화
@@ -41,38 +42,61 @@ const Home: React.FC = () => {
         };
     }, [fullText]);
 
+    // ----------------------
+    // 2. 마우스 위치 추적
+    // ----------------------
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
             setMousePosition({ x: e.clientX, y: e.clientY });
         };
-
-        const handleScroll = () => {
-            const scrollTop = window.scrollY;
-            const scrollHeight = document.documentElement.scrollHeight;
-            const clientHeight = document.documentElement.clientHeight;
-
-            const progress = scrollTop / (scrollHeight - clientHeight); // 스크롤 진행도 계산
-            setScrollProgress(progress);
-
-            const scrolledToBottom =
-                scrollTop + clientHeight >= scrollHeight - 1; // 맨 아래 여부
-            setIsAtBottom(scrolledToBottom);
-
-            setShowArrow(
-                scrollTop <= 100 && typedText.length === fullText.length
-            );
-        };
-
         window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("scroll", handleScroll);
 
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("scroll", handleScroll);
         };
-    }, [typedText]);
+    }, []);
 
-    // (기존) 색상 전환 애니메이션
+    // ----------------------
+    // 3. 스크롤 이벤트 처리 (버벅임 개선)
+    // ----------------------
+    useEffect(() => {
+        let ticking = false;
+
+        function onScroll() {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrollTop = window.scrollY;
+                    const scrollHeight = document.documentElement.scrollHeight;
+                    const clientHeight = document.documentElement.clientHeight;
+
+                    const progress = scrollTop / (scrollHeight - clientHeight);
+                    setScrollProgress(progress);
+
+                    const scrolledToBottom =
+                        scrollTop + clientHeight >= scrollHeight - 1;
+                    setIsAtBottom(scrolledToBottom);
+
+                    // 타이핑이 끝났고, 스크롤 위치가 상단이면 화살표 보이기
+                    setShowArrow(
+                        scrollTop <= 100 && typedText.length === fullText.length
+                    );
+
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        window.addEventListener("scroll", onScroll);
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+        };
+    }, [typedText, fullText]);
+
+    // --------------------------
+    // 4. React Spring 애니메이션
+    // --------------------------
+    // (1) 배경색 전환
     const { backgroundColor, color } = useSpring({
         backgroundColor:
             scrollProgress > 0.4
@@ -85,25 +109,27 @@ const Home: React.FC = () => {
         config: { tension: 200, friction: 20 },
     });
 
-    // (기존) 마우스를 따라다니는 화살표 위치
+    // (2) 화살표 위치
     const arrowSpring = useSpring({
-        top: mousePosition.y + 10,
-        left: mousePosition.x + 10,
+        top: mousePosition.y,
+        left: mousePosition.x,
         config: { tension: 200, friction: 20 },
     });
 
-    // (기존) “김지윤의 포트폴리오입니다.” 애니메이션
+    // (3) “김지윤의 포트폴리오입니다.” 텍스트 페이드 인
     const portfolioSpring = useSpring({
         opacity: scrollProgress > 0.95 ? 1 : 0,
         transform: scrollProgress > 0.95 ? "translateY(0)" : "translateY(20px)",
         config: { tension: 100, friction: 20 },
     });
 
+    // (4) 맨 아래 도달 시 “메뉴” 안내
     const promptSpring = useSpring({
         opacity: isAtBottom ? 1 : 0,
         transform: isAtBottom ? "translateY(0)" : "translateY(20px)",
         config: { tension: 200, friction: 20 },
     });
+
     return (
         <HomeWrapper style={{ backgroundColor, color }}>
             <AnimatedBackground />
@@ -112,7 +138,11 @@ const Home: React.FC = () => {
             </AnimatedText>
             {showArrow && (
                 <ArrowIndicator style={arrowSpring}>
-                    <img src="/images/down-arrow.png" alt="downarrow" />
+                    <img
+                        style={{ width: "10%" }}
+                        src="/images/down-arrow.png"
+                        alt="downarrow"
+                    />
                 </ArrowIndicator>
             )}
             <PortfolioText style={portfolioSpring}>
