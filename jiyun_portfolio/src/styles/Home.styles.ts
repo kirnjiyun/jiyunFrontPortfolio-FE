@@ -31,10 +31,10 @@ export const AnimatedText = styled.div`
     justify-content: center;
     margin-top: 30vh;
     font-weight: normal;
-    font-size: 6rem;
+    font-size: 10rem;
 
     @media (max-width: 768px) {
-        font-size: 3rem;
+        font-size: 4rem;
         margin-top: 20vh;
     }
 `;
@@ -90,7 +90,7 @@ export const PortfolioText = styled(animated.div)`
     top: 150vh;
     width: 100%;
     text-align: center;
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: bold;
 
     @media (max-width: 768px) {

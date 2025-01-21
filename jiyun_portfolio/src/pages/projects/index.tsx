@@ -2,9 +2,15 @@ import React, { useState, useEffect } from "react";
 import { HeroSection, Title } from "@/styles/about/AboutPageStyles";
 import ProjectCarousel from "@/components/projectsCompo/ProjectCarousel";
 import ProjectContainer from "@/components/projectsCompo/ProjectContainer";
-import styled from "styled-components";
+import {
+    ScrollSection,
+    FilterContainer,
+    FilterLabel,
+    FilterCheckbox,
+    ProjectTransitionStyles,
+} from "@/styles/projects/ProjectIndex.styles";
 import ScrollTriggered from "@/components/projectsCompo/ScrollTrigger";
-
+import FilterSelect from "@/components/projectsCompo/FilterSelect";
 export async function getStaticProps() {
     const baseUrl = "http://localhost:4000"; // json-server 주소
     const res = await fetch(`${baseUrl}/projectsData`);
@@ -21,98 +27,6 @@ export async function getStaticProps() {
         },
     };
 }
-const FilterContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    padding: 1rem;
-    background-color: var(--color-lightest-blue);
-    border-radius: 8px;
-    margin: 1.5rem 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-`;
-
-const FilterLabel = styled.label`
-    font-size: 1rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-dark-blue);
-`;
-
-const FilterSelect = styled.select`
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--color-light-blue);
-    border-radius: 4px;
-    font-size: 1rem;
-    color: var(--color-medium-blue);
-    background-color: var(--color-brightest-blue);
-    transition: border-color 0.3s;
-
-    &:hover {
-        border-color: var(--color-medium-blue);
-    }
-
-    &:focus {
-        outline: none;
-        border-color: var(--color-dark-blue);
-    }
-`;
-
-const FilterCheckbox = styled.input`
-    accent-color: var(--color-dark-blue);
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-`;
-
-const ProjectTransitionStyles = styled.div`
-    display: grid;
-    grid-template-columns: repeat(4, minmax(300px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
-    justify-content: center;
-    @media (max-width: 576px) {
-        grid-template-columns: 1fr; /* 1개의 열 */
-        margin: 0 16px; /* 양옆 마진 */
-    }
-
-    /* 태블릿: 한 줄에 2개 */
-    @media (min-width: 577px) and (max-width: 1024px) {
-        grid-template-columns: repeat(2, minmax(250px, 1fr));
-        margin: 0 24px; /* 양옆 마진 */
-    }
-
-    /* 데스크탑: 최대 4개 */
-    @media (min-width: 1025px) {
-        grid-template-columns: repeat(4, 1fr); /* 최대 4개의 열 */
-        margin: 0 120px; /* 양옆 마진 */
-    }
-    .project-enter {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    .project-enter-active {
-        opacity: 1;
-        transform: translateY(0);
-        transition: opacity 300ms, transform 300ms;
-    }
-    .project-exit {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    .project-exit-active {
-        opacity: 0;
-        transform: translateY(10px);
-        transition: opacity 300ms, transform 300ms;
-    }
-`;
-const ScrollSection = styled.div`
-    min-width: 300px;
-    margin-top: -100px;
-`;
 
 export default function ProjectsPage({ projectsData }) {
     const [filteredProjects, setFilteredProjects] = useState(projectsData);
@@ -121,6 +35,11 @@ export default function ProjectsPage({ projectsData }) {
         category: "", // "개인", "팀" 또는 빈 문자열 (전체 보기)
     });
 
+    const categoryOptions = [
+        { value: "", label: "전체" },
+        { value: "개인", label: "개인" },
+        { value: "팀", label: "팀" },
+    ];
     // 필터링 로직
     useEffect(() => {
         let filtered = projectsData;
@@ -204,14 +123,9 @@ export default function ProjectsPage({ projectsData }) {
 
                 <FilterSelect
                     value={filterOptions.category}
-                    onChange={(e) =>
-                        handleFilterChange("category", e.target.value)
-                    }
-                >
-                    <option value="">전체</option>
-                    <option value="개인">개인</option>
-                    <option value="팀">팀</option>
-                </FilterSelect>
+                    options={categoryOptions}
+                    onChange={(value) => handleFilterChange("category", value)}
+                />
             </FilterContainer>
 
             {/* 프로젝트 리스트 */}
