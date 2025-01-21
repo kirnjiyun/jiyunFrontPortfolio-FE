@@ -63,11 +63,11 @@ export default function ProjectDetailPage({ project }) {
                     <ArrowSymbol>←</ArrowSymbol>
                 </BackButton>
                 <ProjectHeader>
-                    <ProjectTitle>{project.name}</ProjectTitle>
+                    <ProjectTitle>{project.name}</ProjectTitle>{" "}
                 </ProjectHeader>
-                <GallerySection>
+                {/* <GallerySection>
                     <Fancy16to9Gallery images={project.screenshots} />
-                </GallerySection>
+                </GallerySection> */}{" "}
                 <InfoSection>
                     <LeftColumn>
                         <Description>{project.description}</Description>

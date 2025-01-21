@@ -7,11 +7,8 @@ export const Section = styled.section`
     gap: 1rem; /* Title과 카드 사이 간격 */
     padding: 24px;
     border-radius: 12px;
-    background: linear-gradient(
-        135deg,
-        var(--color-lightest-blue),
-        var(--color-brightest-blue)
-    );
+    background: var(--color-lightest-blue);
+
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
     min-height: 240px;

@@ -31,10 +31,9 @@ function Card({
     const [ref, springs] = useInView(() => ({
         from: { y: 300, rotate: 0 },
         to: { y: 10, rotate: -10 },
-        config: { tension: 180, friction: 12 },
+        config: { tension: 150, friction: 20 },
     }));
 
-    // 보색 계산
     const complementaryHue1 = hue + 180;
     const complementaryHue = hue + 200;
     const background = `linear-gradient(306deg, ${hsl(

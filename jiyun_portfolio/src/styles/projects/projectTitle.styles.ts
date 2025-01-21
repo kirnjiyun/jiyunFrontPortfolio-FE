@@ -54,7 +54,7 @@ export const ContentWrapper = styled.div`
     width: 100%;
     max-width: 1000px;
     margin: 4rem auto 2rem;
-    background-color: var(--color-brightest-blue);
+    background-color: var(--color-lightest-blue);
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 2rem;
@@ -70,6 +70,7 @@ export const ContentWrapper = styled.div`
 export const ProjectHeader = styled.div`
     text-align: center;
     margin-bottom: 2rem;
+    padding-top: 100vh;
 `;
 
 /** 더 크고 세련된 타이틀 */

@@ -17,11 +17,7 @@ export const TimelineContainer = styled.div`
     height: 240px;
     padding: 20px;
     border-radius: 12px;
-    background: linear-gradient(
-        135deg,
-        ${colors.lightestBlue},
-        ${colors.brightestBlue}
-    );
+    background: var(--color-lightest-blue);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
     @media (max-width: 768px) {

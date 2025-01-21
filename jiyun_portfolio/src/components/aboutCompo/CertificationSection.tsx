@@ -104,6 +104,9 @@ export default function CertificationSection({ certificationData }) {
                                         alt={cert.alt}
                                         layout="fill"
                                         objectFit="cover"
+                                        style={{
+                                            filter: "grayscale(100%) contrast(100%)",
+                                        }}
                                     />
                                 </Front>
 
