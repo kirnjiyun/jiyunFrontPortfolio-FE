@@ -123,7 +123,7 @@ export default function CertificationSection({ certificationData }) {
                                             color: "var(--color-brightest-blue)",
                                             padding: "1rem",
                                             borderRadius: "8px",
-                                            fontWeight: "bold",
+                                            fontWeight: "bolder",
                                             zIndex: 9999,
                                         }}
                                     >
@@ -149,10 +149,12 @@ export default function CertificationSection({ certificationData }) {
                             bottom: "auto",
                             marginRight: "-50%",
                             transform: "translate(-50%, -50%)",
-                            width: "400px",
+                            width: "500px",
                             padding: "30px",
                             borderRadius: "8px",
-                            height: "300px",
+                            height: "auto",
+                            overflow: "visible",
+                            scrollY: "auto",
                             backgroundColor: "var(--color-dark-blue)",
                             border: "none",
                             display: "flex",
@@ -186,6 +188,7 @@ export default function CertificationSection({ certificationData }) {
                         style={{
                             color: "var(--color-brightest-blue)",
                             textAlign: "center",
+                            margin: "20px",
                         }}
                     >
                         {modalData.title}
@@ -194,6 +197,7 @@ export default function CertificationSection({ certificationData }) {
                         style={{
                             color: "var(--color-lightest-blue)",
                             textAlign: "center",
+                            margin: "20px 10px",
                         }}
                         dangerouslySetInnerHTML={{
                             __html: formatDescription(modalData.description),
