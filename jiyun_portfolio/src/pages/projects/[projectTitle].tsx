@@ -31,6 +31,7 @@ import {
     LinkAnchor,
 } from "../../styles/projects/projectTitle.styles";
 import Fancy16to9Gallery from "@/components/projectsCompo/FancyImgGallery";
+import Gallery from "@/components/projectsCompo/Gallery";
 
 export async function getServerSideProps({ params }) {
     const slug = params.projectTitle;
@@ -63,11 +64,9 @@ export default function ProjectDetailPage({ project }) {
                     <ArrowSymbol>←</ArrowSymbol>
                 </BackButton>
                 <ProjectHeader>
-                    <ProjectTitle>{project.name}</ProjectTitle>{" "}
+                    <ProjectTitle>{project.name}</ProjectTitle>
                 </ProjectHeader>
-                {/* <GallerySection>
-                    <Fancy16to9Gallery images={project.screenshots} />
-                </GallerySection> */}{" "}
+                <Gallery />
                 <InfoSection>
                     <LeftColumn>
                         <Description>{project.description}</Description>

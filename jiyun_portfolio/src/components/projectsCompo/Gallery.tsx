@@ -1,40 +1,27 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useScroll, animated } from "@react-spring/web";
 
-/* ===== 1) styled-components ===== */
-
-// (A) 전체 페이지/부모 컨테이너
-const Container = styled.section`
-    /* 브라우저가 실제로 500vh 스크롤 가능 */
-    height: 500vh;
-    margin: 0;
-    padding: 0;
+/** 1) 부모 컨테이너 (Gallery 전체 구간 높이) */
+const GallerySection = styled.section`
+    /* 예: 600vh 구간에서 
+     0%~80% (480vh) : sticky로 가로 슬라이드
+     80%~100% (120vh): 일반 세로 스크롤 */
+    height: 600vh;
     position: relative;
-    background: #f0f0f0; /* 배경색(임의) */
+    background: #f0f0f0;
 `;
 
-// (B) StickyWrapper: 화면 1개 높이만큼 차지, 세로 고정
-const StickyWrapper = styled.div`
+/** 2) Gallery가 sticky로 고정될 Wrapper */
+const StickyGallery = styled.div`
     position: sticky;
     top: 0;
     width: 100vw;
     height: 100vh;
-    overflow: hidden; /* 가로로 넘치는 사진 감추기 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #222; /* 임의 배경 */
-
-    /*
-    여기에 pointer-events: none; 을 주면
-    내부에 버튼/링크 등 상호작용이 어려워지므로
-    필요에 따라 조정하세요.
-  */
+    overflow: hidden;
+    background: #222;
 `;
 
-// (C) 헤더 부분 (상단 타이틀 등)
 const Header = styled.header`
     height: 20vh;
     display: flex;
@@ -49,15 +36,12 @@ const TitleH1 = styled.h1`
     font-family: "JetBrains Mono", monospace;
 `;
 
-// (D) 슬라이드 영역 (StickyWrapper 내 아래 부분)
 const SlideArea = styled.div`
-    flex: 1;
     width: 100%;
-    height: 80vh; /* 100vh 중 헤더(20vh) 빼고 나머지 */
+    height: 80vh; /* 전체 100vh 중 헤더 20vh 제외한 나머지 */
     position: relative;
 `;
 
-// (E) 실제 가로 슬라이드(UL)
 const AnimatedImgGroup = styled(animated.ul)`
     display: flex;
     list-style: none;
@@ -67,21 +51,14 @@ const AnimatedImgGroup = styled(animated.ul)`
     height: 100%;
 `;
 
-// (F) 개별 슬라이드(LI)
 const ImgContainer = styled.li`
-    flex: 0 0 100vw; /* 한 화면씩 차지 */
+    flex: 0 0 100vw; /* 화면폭 한 장씩 */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: #fff;
-
-    h3 {
-        margin-top: 1rem;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 2rem;
-        text-shadow: 1px 1px 2px #000;
-    }
+    text-align: center;
 
     img {
         width: 300px;
@@ -89,9 +66,15 @@ const ImgContainer = styled.li`
         object-fit: cover;
         border: 3px solid #fff;
     }
+
+    h3 {
+        margin-top: 1rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 2rem;
+        text-shadow: 1px 1px 2px #000;
+    }
 `;
 
-// (G) 진행 바
 const ProgressBar = styled(animated.div)`
     position: fixed;
     left: 0;
@@ -101,11 +84,10 @@ const ProgressBar = styled(animated.div)`
     background: #ff1199;
     transform-origin: left center;
     transform: scaleX(0);
+    z-index: 9999;
 `;
 
-function App() {
-    const myRef = useRef();
-    // 예시 데이터
+function Gallery() {
     const items = [
         { src: "https://i.imgur.com/yp0DD8g.jpg", label: "#001" },
         { src: "https://i.imgur.com/5Ch79KR.jpg", label: "#002" },
@@ -113,57 +95,78 @@ function App() {
         { src: "https://i.imgur.com/rCx63Pl.jpg", label: "#004" },
         { src: "https://i.imgur.com/68m8b8O.jpg", label: "#005" },
     ];
-    const totalSlides = items.length; // 5
+    const totalSlides = items.length; // 예: 5개
 
-    // useScroll 훅 - 윈도우 스크롤 0~1
+    // scrollYProgress : 전체 스크롤(0 ~ 1)
     const { scrollYProgress } = useScroll();
 
-    const translateX = scrollYProgress.to((val) => {
-        const max = (totalSlides - 1) * 100; // 4*100=400
-        return `translateX(${-max * val}vw)`;
+    /**
+     * 1) 수평 슬라이드
+     *    스크롤 0 ~ 80% (0 ~ 0.8) 구간에서
+     *    0 -> -(totalSlides-1)*100 (예: -400vw) 이동
+     */
+    const translateX = scrollYProgress.to({
+        range: [0, 0.8],
+        output: [0, -(totalSlides - 1) * 100],
+        extrapolate: "clamp",
     });
 
-    // 진행 바: scaleX(0→1)
-    const scaleX = scrollYProgress.to((val) => val);
+    /**
+     * 2) 진행 바
+     *    0~80%에서 scaleX(0~1)
+     */
+    const scaleX = scrollYProgress.to({
+        range: [0, 0.8],
+        output: [0, -(totalSlides - 1) * 100],
+        extrapolate: "clamp",
+    });
     return (
-        <div>
-            {" "}
-            <Container ref={myRef}>
-                {/* StickyWrapper: 화면을 덮고 세로로는 고정 */}
-                <StickyWrapper>
-                    <Header>
-                        <TitleH1>Pinned Horizontal Gallery</TitleH1>
-                    </Header>
+        <GallerySection>
+            {/* Sticky 로 고정된 영역 */}
+            <StickyGallery>
+                <Header>
+                    <TitleH1>Pinned Horizontal Gallery</TitleH1>
+                </Header>
 
-                    <SlideArea>
-                        <AnimatedImgGroup style={{ transform: translateX }}>
-                            {items.map((item, idx) => (
-                                <ImgContainer key={idx}>
-                                    <img
-                                        src={item.src}
-                                        alt={`Slide #${idx + 1}`}
-                                    />
-                                    <h3>{item.label}</h3>
-                                </ImgContainer>
-                            ))}
-                        </AnimatedImgGroup>
-                    </SlideArea>
-                </StickyWrapper>
+                <SlideArea>
+                    <AnimatedImgGroup
+                        style={{
+                            transform: translateX.to(
+                                (x) => `translateX(${x}vw)`
+                            ),
+                        }}
+                    >
+                        {items.map((item, idx) => (
+                            <ImgContainer key={idx}>
+                                <img src={item.src} alt={`Slide #${idx + 1}`} />
+                                <h3>{item.label}</h3>
+                            </ImgContainer>
+                        ))}
+                    </AnimatedImgGroup>
+                </SlideArea>
+            </StickyGallery>
 
-                {/* 진행 바 (화면 하단) */}
-                <ProgressBar
-                    style={{
-                        transform: scaleX.to((s) => `scaleX(${s})`),
-                    }}
-                />
-            </Container>
+            {/* 진행 바 (스크롤 위치 표시) */}
+            <ProgressBar
+                style={{
+                    transform: scaleX.to((s) => `scaleX(${s})`),
+                }}
+            />
+
+            {/* 이 아래 20% 구간(높이 120vh)은 일반 세로 스크롤 */}
             <div
                 style={{
-                    backgroundColor: "white",
-                    height: "500px",
+                    height: "100vh",
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                 }}
-            ></div>
-        </div>
+            >
+                <h2>갤러리 끝! 이제 세로 스크롤 영역</h2>
+            </div>
+        </GallerySection>
     );
 }
-export default App;
+
+export default Gallery;
