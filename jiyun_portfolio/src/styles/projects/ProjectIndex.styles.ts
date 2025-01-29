@@ -3,7 +3,7 @@ export const FilterContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 2rem;
     padding: 1rem;
     background-color: var(--color-lightest-blue);
     border-radius: 8px;
@@ -17,6 +17,7 @@ export const FilterLabel = styled.label`
     display: flex;
     align-items: center;
     gap: 0.5rem;
+
     color: var(--color-dark-blue);
 `;
 
@@ -48,7 +49,7 @@ export const FilterCheckbox = styled.input`
 
 export const ProjectTransitionStyles = styled.div`
     display: grid;
-    grid-template-columns: repeat(4, minmax(300px, 1fr));
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
     gap: 1rem;
     padding: 1rem;
     justify-content: center;

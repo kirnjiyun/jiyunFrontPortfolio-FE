@@ -5,8 +5,7 @@ import styled from "styled-components";
 // Styled Components
 const Container = styled.div`
     position: relative;
-    width: 100px;
-    margin: 20px auto;
+    width: 90px;
 `;
 
 const StyledSelectButton = styled.button`
@@ -39,10 +38,11 @@ const DropdownList = styled(animated.ul)`
     border: 1px solid var(--color-light-blue);
     border-radius: 8px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     list-style: none;
     overflow: hidden;
+    z-index: 100;
 `;
 
 const DropdownItem = styled.li`
@@ -83,7 +83,7 @@ const FilterSelect = ({ value, options, onChange }) => {
 
     const iconAnimation = useSpring({
         transform: isOpen ? "rotate(180deg)" : "rotate(360deg)",
-        config: { tension: 300, friction: 15 },
+        config: { tension: 120, friction: 15 },
     });
 
     const handleSelect = (optionValue) => {

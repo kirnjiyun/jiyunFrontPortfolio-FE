@@ -14,20 +14,11 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
 }
 :root {
-  /* 거의 검정에 가까운 어두운 톤 */
-  --color-dark-blue: #141414;
-
-  /* 중간 정도의 회색 */
-  --color-medium-blue: #555555;
-
-  /* 조금 더 밝은 회색 */
-  --color-light-blue: #aaaaaa;
-
-  /* 거의 흰색에 가까운 밝은 회색 */
-  --color-lightest-blue: #f5f5f5;
-
-  /* 포인트: 형광 연두 (네온 그린) */
-  --color-brightest-blue: #39ff14;
+  --color-dark-blue: #0e0e0e;       /* 완전 검정에 가까운 어두운 톤 */
+  --color-medium-blue: #333333;     /* 중간 톤 회색 */
+  --color-light-blue: #888888;      /* 좀 더 진한 느낌의 밝은 회색 */
+  --color-lightest-blue: #eaeaea;   /* #f5f5f5보다 조금 진함 */
+  --color-brightest-blue: #39ff14;  /* 기존과 동일한 형광 연두 */
 }
 
 
