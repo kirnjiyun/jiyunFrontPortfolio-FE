@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { HeroSection, Title } from "@/styles/about/AboutPageStyles";
-import ProjectCarousel from "@/components/projectsCompo/ProjectCarousel";
 import ProjectContainer from "@/components/projectsCompo/ProjectContainer";
 import {
     ScrollSection,
@@ -11,6 +10,10 @@ import {
 } from "@/styles/projects/ProjectIndex.styles";
 import ScrollTriggered from "@/components/projectsCompo/ScrollTrigger";
 import FilterSelect from "@/components/projectsCompo/FilterSelect";
+
+// 1) react-transition-group import
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+
 export async function getStaticProps() {
     const baseUrl = "http://localhost:4000"; // json-server 주소
     const res = await fetch(`${baseUrl}/projectsData`);
@@ -40,6 +43,7 @@ export default function ProjectsPage({ projectsData }) {
         { value: "개인", label: "개인" },
         { value: "팀", label: "팀" },
     ];
+
     // 필터링 로직
     useEffect(() => {
         let filtered = projectsData;
@@ -65,17 +69,17 @@ export default function ProjectsPage({ projectsData }) {
         }));
     };
 
-    // 화살표 위치 및 상태 관리
+    // 화살표 상태
     const [isHovering, setIsHovering] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     const handleMouseEnter = () => setIsHovering(true);
     const handleMouseLeave = () => setIsHovering(false);
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleMouseMove = (e) => {
         setMousePos({ x: e.clientX, y: e.clientY });
     };
 
-    // JSX 반환
+    // JSX
     return (
         <>
             <HeroSection>
@@ -87,7 +91,6 @@ export default function ProjectsPage({ projectsData }) {
                 onMouseLeave={handleMouseLeave}
                 onMouseMove={handleMouseMove}
             >
-                {/* 마우스가 ScrollSection 위에 있을 때만 화살표 이미지 표시 */}
                 {isHovering && (
                     <img
                         src="/images/down-arrow.png"
@@ -103,8 +106,6 @@ export default function ProjectsPage({ projectsData }) {
                         }}
                     />
                 )}
-
-                {/* ScrollTriggered 컴포넌트 */}
                 <ScrollTriggered />
             </ScrollSection>
 
@@ -128,14 +129,18 @@ export default function ProjectsPage({ projectsData }) {
                 />
             </FilterContainer>
 
-            {/* 프로젝트 리스트 */}
             <ProjectTransitionStyles>
-                {filteredProjects.map((project) => (
-                    <ProjectContainer
-                        key={project.id}
-                        projectsData={[project]}
-                    />
-                ))}
+                <TransitionGroup component={null}>
+                    {filteredProjects.map((project) => (
+                        <CSSTransition
+                            key={project.id}
+                            classNames="project" // CSS 클래스 접두사
+                            timeout={200} // 애니메이션 지속 시간
+                        >
+                            <ProjectContainer projectsData={[project]} />
+                        </CSSTransition>
+                    ))}
+                </TransitionGroup>
             </ProjectTransitionStyles>
         </>
     );

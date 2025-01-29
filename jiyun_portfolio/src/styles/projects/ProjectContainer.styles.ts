@@ -1,8 +1,23 @@
 import styled from "styled-components";
-
 export const ProjectsContainer = styled.div`
     display: grid;
     gap: 16px;
+
+    /* 기본(데스크톱 이상): 4열 + 좌우 마진 */
+    margin: 0 200px;
+    grid-template-columns: repeat(4, 1fr);
+
+    /* 태블릿(가로폭 1024px 이하): 2열로 */
+    @media (max-width: 1024px) {
+        margin: 0 50px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* 모바일(가로폭 576px 이하): 1열로 */
+    @media (max-width: 576px) {
+        margin: 0 15px;
+        grid-template-columns: 1fr;
+    }
 `;
 
 export const ProjectCard = styled.div`
