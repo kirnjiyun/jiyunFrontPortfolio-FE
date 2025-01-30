@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
 export const ProjectCardContainer = styled.div`
-    position: relative; /* 자식 요소(.mac-window-bar)를 absolute로 배치하기 위해 필요 */
-    width: 320px; /* 카드 폭 */
+    position: relative;
+    width: auto;
+    min-width: 220px;
+    @media (max-width: 576px) {
+        width: 220px;
+    }
     margin: 15px;
     border-radius: 8px;
     background-color: #fff;

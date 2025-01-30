@@ -47,7 +47,25 @@ export const FilterCheckbox = styled.input`
     cursor: pointer;
 `;
 export const ProjectTransitionStyles = styled.div`
-    /* Fade 전환 효과 */
+    display: grid;
+    margin: 0 100px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 16px;
+
+    @media (max-width: 1220px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* 화면 너비 900px 이하 → 2열 */
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* 화면 너비 576px 이하 → 1열 */
+    @media (max-width: 576px) {
+        grid-template-columns: 1fr;
+    }
+
     .project-enter {
         opacity: 0;
     }
