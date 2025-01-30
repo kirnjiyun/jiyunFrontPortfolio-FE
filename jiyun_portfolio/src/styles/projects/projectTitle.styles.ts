@@ -1,7 +1,5 @@
 import styled from "styled-components";
-/** ================================
- *   styled-components 정의 영역
- *  ================================ */
+
 export const PageContainer = styled.div`
     width: 100%;
     min-height: 100vh;
@@ -70,7 +68,6 @@ export const ContentWrapper = styled.div`
 export const ProjectHeader = styled.div`
     text-align: center;
     margin-bottom: 2rem;
-    padding-top: 100vh;
 `;
 
 /** 더 크고 세련된 타이틀 */
@@ -88,8 +85,8 @@ export const ProjectTitle = styled.h1`
 
 export const ProjectSubtitle = styled.div`
     min-width: 60px;
-    font-weight: 600;
-    color: var(--color-medium-blue);
+
+    color: var(--color-dark-blue);
     margin-right: 1rem;
     margin-bottom: 0.5rem;
 
@@ -98,9 +95,27 @@ export const ProjectSubtitle = styled.div`
     }
 `;
 
-/** 이미지(갤러리) 섹션 */
-export const GallerySection = styled.div`
+/** 이미지(썸네일) 섹션 */
+export const ThumbnailWrapper = styled.div`
+    margin-top: 2rem;
     margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const ThumbnailImage = styled.img`
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.02);
+    }
 `;
 
 /** 2컬럼 레이아웃 */
@@ -148,8 +163,8 @@ export const InfoGroup = styled.div`
 /** Label / Value 짝 (예: '기간: 2023-01 ~ 2023-03') */
 export const InfoLabel = styled.div`
     min-width: 60px;
-    font-weight: 600;
-    color: var(--color-medium-blue);
+
+    color: var(--color-dark-blue);
     margin-right: 1rem;
     margin-bottom: 0.5rem;
 
@@ -160,6 +175,11 @@ export const InfoLabel = styled.div`
 
 export const InfoValue = styled.div`
     font-size: 0.95rem;
+    margin-bottom: 0.3rem; /* 추가: 역할들이 붙지 않도록 간격 조정 */
+
+    &:last-child {
+        margin-bottom: 0; /* 마지막 요소는 여백 제거 */
+    }
     color: var(--color-dark-blue);
 `;
 
@@ -179,9 +199,10 @@ export const TechBadge = styled.span`
     display: inline-block;
     white-space: nowrap;
 `;
+
 /** 주요 기능 카드 */
 export const FeaturesCard = styled.div`
-    background-color: #ffffff; /* Clean white background */
+    background-color: #ffffff;
     padding: 2rem;
     border-radius: 16px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
@@ -191,7 +212,6 @@ export const FeaturesCard = styled.div`
     gap: 2rem; /* Larger gap for clear separation */
 `;
 
-/** 제목 스타일 */
 export const FeaturesTitle = styled.h3`
     font-size: 1.5rem;
     color: var(--color-dark-blue);
@@ -200,7 +220,6 @@ export const FeaturesTitle = styled.h3`
     margin-bottom: 1rem;
 `;
 
-/** Subsection Title (e.g., Team Features, Individual Features) */
 export const FeaturesSubtitle = styled.h4`
     font-size: 1.2rem;
     color: var(--color-medium-blue);
@@ -211,7 +230,6 @@ export const FeaturesSubtitle = styled.h4`
     text-align: left; /* Left-aligned for cleaner layout */
 `;
 
-/** 리스트 스타일 */
 export const FeaturesList = styled.ul`
     list-style: none;
     margin: 0;
@@ -221,7 +239,6 @@ export const FeaturesList = styled.ul`
     gap: 1rem; /* Larger spacing for clean look */
 `;
 
-/** 개별 항목 스타일 */
 export const FeatureItem = styled.li`
     font-size: 1rem;
     color: #4a4a4a;
@@ -240,10 +257,11 @@ export const FeatureItem = styled.li`
 
 /** 링크 섹션 */
 export const LinkCard = styled.div`
-    background-color: var(--color-lightest-blue);
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e6ecf1;
 `;
 
 export const LinksTitle = styled.h3`

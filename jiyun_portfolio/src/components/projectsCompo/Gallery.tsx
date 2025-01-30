@@ -165,6 +165,61 @@ function Gallery() {
             >
                 <h2>갤러리 끝! 이제 세로 스크롤 영역</h2>
             </div>
+            <div
+                style={{
+                    height: "100vh",
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <h2>갤러리 끝! 이제 세로 스크롤 영역</h2>
+            </div>
+            <div
+                style={{
+                    height: "100vh",
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <h2>갤러리 끝! 이제 세로 스크롤 영역</h2>
+            </div>
+            <div
+                style={{
+                    height: "100vh",
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <h2>갤러리 끝! 이제 세로 스크롤 영역</h2>
+            </div>
+            <div
+                style={{
+                    height: "100vh",
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <h2>갤러리 끝! 이제 세로 스크롤 영역</h2>
+            </div>
+            <div
+                style={{
+                    height: "100vh",
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <h2>갤러리 끝! 이제 세로 스크롤 영역</h2>
+            </div>
         </GallerySection>
     );
 }

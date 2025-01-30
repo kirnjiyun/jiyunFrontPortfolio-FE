@@ -65,18 +65,18 @@ export const ProjectImage = styled.img`
 `;
 
 export const ProjectDetails = styled.div`
-    margin-top: 1rem; /* 이미지 아래에 간격 추가 */
+    margin-top: 1rem;
     padding: 0 1rem 1rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    text-align: center; /* 내용도 가운데 정렬을 원하면 추가 */
+    text-align: center;
 `;
 
 export const ProjectTitle = styled.h2`
     font-size: 1.2rem;
     font-weight: 600;
-    color: #00ff00; /* 예시: 연두색 계열 */
+    color: var(--color-dark-blue);
     margin: 0;
 `;
 

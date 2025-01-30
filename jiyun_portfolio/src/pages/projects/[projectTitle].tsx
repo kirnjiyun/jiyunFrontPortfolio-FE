@@ -10,7 +10,8 @@ import {
     ProjectHeader,
     ProjectTitle,
     ProjectSubtitle,
-    GallerySection,
+    ThumbnailImage,
+    ThumbnailWrapper,
     InfoSection,
     LeftColumn,
     RightColumn,
@@ -31,7 +32,6 @@ import {
     LinkAnchor,
 } from "../../styles/projects/projectTitle.styles";
 import Fancy16to9Gallery from "@/components/projectsCompo/FancyImgGallery";
-import Gallery from "@/components/projectsCompo/Gallery";
 
 export async function getServerSideProps({ params }) {
     const slug = params.projectTitle;
@@ -63,14 +63,29 @@ export default function ProjectDetailPage({ project }) {
                 <BackButton onClick={() => router.back()}>
                     <ArrowSymbol>←</ArrowSymbol>
                 </BackButton>
+
                 <ProjectHeader>
                     <ProjectTitle>{project.name}</ProjectTitle>
+                    {/* 
+                    {project?.screenshots && (
+                        <Fancy16to9Gallery images={project.screenshots} />
+                    )} 
+                */}
+
+                    {/* 썸네일 이미지를 보여주는 부분 */}
+                    {project.thumbnail && (
+                        <ThumbnailWrapper>
+                            <ThumbnailImage
+                                src={project.thumbnail}
+                                alt={`${project.name} thumbnail`}
+                            />
+                        </ThumbnailWrapper>
+                    )}
                 </ProjectHeader>
-                <Gallery />
+
                 <InfoSection>
                     <LeftColumn>
                         <Description>{project.description}</Description>
-
                         <InfoGroup>
                             <ProjectSubtitle>
                                 {project.category} 프로젝트
@@ -80,12 +95,14 @@ export default function ProjectDetailPage({ project }) {
                             <InfoLabel>기간</InfoLabel>
                             <InfoValue>{project.duration}</InfoValue>
                         </InfoGroup>
-
                         <InfoGroup>
                             <InfoLabel>역할</InfoLabel>
-                            <InfoValue>{project.role}</InfoValue>
+                            <div>
+                                {project.role.map((r, idx) => (
+                                    <InfoValue key={idx}>{r}</InfoValue>
+                                ))}
+                            </div>
                         </InfoGroup>
-
                         {project.techStack && project.techStack.length > 0 && (
                             <InfoGroup>
                                 <InfoLabel>Tech Stack</InfoLabel>
@@ -95,6 +112,39 @@ export default function ProjectDetailPage({ project }) {
                                     ))}
                                 </BadgesWrapper>
                             </InfoGroup>
+                        )}{" "}
+                        {project.projectLinks && (
+                            <LinkCard>
+                                <LinksTitle>관련 링크</LinksTitle>
+                                {project.projectLinks.deployment && (
+                                    <LinkRow>
+                                        <LinkLabel>배포</LinkLabel>
+                                        <LinkAnchor
+                                            href={
+                                                project.projectLinks.deployment
+                                            }
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            {project.projectLinks.deployment}
+                                        </LinkAnchor>
+                                    </LinkRow>
+                                )}
+                                {project.projectLinks.repository && (
+                                    <LinkRow>
+                                        <LinkLabel>GitHub</LinkLabel>
+                                        <LinkAnchor
+                                            href={
+                                                project.projectLinks.repository
+                                            }
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            {project.projectLinks.repository}
+                                        </LinkAnchor>
+                                    </LinkRow>
+                                )}
+                            </LinkCard>
                         )}
                     </LeftColumn>
 
@@ -136,6 +186,7 @@ export default function ProjectDetailPage({ project }) {
                                             </FeaturesList>
                                         </>
                                     )}
+
                                 {!project.features.team &&
                                     !project.features.individual &&
                                     project.features.length > 0 && (
@@ -150,40 +201,6 @@ export default function ProjectDetailPage({ project }) {
                                         </FeaturesList>
                                     )}
                             </FeaturesCard>
-                        )}
-
-                        {project.projectLinks && (
-                            <LinkCard>
-                                <LinksTitle>관련 링크</LinksTitle>
-                                {project.projectLinks.deployment && (
-                                    <LinkRow>
-                                        <LinkLabel>배포 링크</LinkLabel>
-                                        <LinkAnchor
-                                            href={
-                                                project.projectLinks.deployment
-                                            }
-                                            target="_blank"
-                                            rel="noreferrer"
-                                        >
-                                            {project.projectLinks.deployment}
-                                        </LinkAnchor>
-                                    </LinkRow>
-                                )}
-                                {project.projectLinks.repository && (
-                                    <LinkRow>
-                                        <LinkLabel>GitHub</LinkLabel>
-                                        <LinkAnchor
-                                            href={
-                                                project.projectLinks.repository
-                                            }
-                                            target="_blank"
-                                            rel="noreferrer"
-                                        >
-                                            {project.projectLinks.repository}
-                                        </LinkAnchor>
-                                    </LinkRow>
-                                )}
-                            </LinkCard>
                         )}
                     </RightColumn>
                 </InfoSection>
