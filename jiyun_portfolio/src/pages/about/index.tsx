@@ -5,25 +5,20 @@ import EducationSection from "../../components/aboutCompo/EducationSection";
 
 import {
     HeroSection,
-    IconContainer,
-    StyledImage,
     Title,
-    TypingText,
     Section,
-    SectionTitle,
-    List,
 } from "../../styles/about/AboutPageStyles";
 import InfiniteScrollText from "@/components/aboutCompo/InfiniteScroll";
 import TimelineComponent from "@/components/aboutCompo/TimeLineSection";
-
 export async function getStaticProps() {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl =
+        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5050";
 
     const [introductionRes, educationRes, certificationRes] = await Promise.all(
         [
-            fetch(`${baseUrl}/api/server/introductionData`),
-            fetch(`${baseUrl}/api/server/educationData`),
-            fetch(`${baseUrl}/api/server/certificationData`),
+            fetch(`${baseUrl}/api/introduction`),
+            fetch(`${baseUrl}/api/education`),
+            fetch(`${baseUrl}/api/certifications`),
         ]
     );
 

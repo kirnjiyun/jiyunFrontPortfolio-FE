@@ -11,17 +11,14 @@ import {
 import ScrollTriggered from "@/components/projectsCompo/ScrollTrigger";
 import FilterSelect from "@/components/projectsCompo/FilterSelect";
 import Image from "next/image";
-// 1) react-transition-group import
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 export async function getStaticProps() {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl =
+        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5050";
 
-    const [projectsRes] = await Promise.all([
-        fetch(`${baseUrl}/api/server/projectsData`),
-    ]);
-
-    const projectsData = await projectsRes.json();
+    const res = await fetch(`${baseUrl}/api/projects`);
+    const projectsData = await res.json();
 
     return {
         props: { projectsData },
@@ -31,8 +28,8 @@ export async function getStaticProps() {
 export default function ProjectsPage({ projectsData }) {
     const [filteredProjects, setFilteredProjects] = useState(projectsData);
     const [filterOptions, setFilterOptions] = useState({
-        isMajor: false, // true: 중요한 프로젝트만 필터링
-        category: "", // "개인", "팀" 또는 빈 문자열 (전체 보기)
+        isMajor: false,
+        category: "",
     });
 
     const categoryOptions = [
@@ -41,7 +38,6 @@ export default function ProjectsPage({ projectsData }) {
         { value: "팀", label: "팀" },
     ];
 
-    // 필터링 로직
     useEffect(() => {
         let filtered = projectsData;
 
@@ -58,7 +54,6 @@ export default function ProjectsPage({ projectsData }) {
         setFilteredProjects(filtered);
     }, [filterOptions, projectsData]);
 
-    // 필터 UI 변경 핸들러
     const handleFilterChange = (key, value) => {
         setFilterOptions((prev) => ({
             ...prev,
@@ -66,7 +61,6 @@ export default function ProjectsPage({ projectsData }) {
         }));
     };
 
-    // 화살표 상태
     const [isHovering, setIsHovering] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -76,7 +70,6 @@ export default function ProjectsPage({ projectsData }) {
         setMousePos({ x: e.clientX, y: e.clientY });
     };
 
-    // JSX
     return (
         <>
             <HeroSection>
@@ -106,7 +99,6 @@ export default function ProjectsPage({ projectsData }) {
                 <ScrollTriggered />
             </ScrollSection>
 
-            {/* 필터 컨테이너 */}
             <FilterContainer>
                 <FilterLabel>
                     <FilterCheckbox
@@ -131,8 +123,8 @@ export default function ProjectsPage({ projectsData }) {
                     {filteredProjects.map((project) => (
                         <CSSTransition
                             key={project.id}
-                            classNames="project" // CSS 클래스 접두사
-                            timeout={200} // 애니메이션 지속 시간
+                            classNames="project"
+                            timeout={200}
                         >
                             <ProjectContainer projectsData={[project]} />
                         </CSSTransition>

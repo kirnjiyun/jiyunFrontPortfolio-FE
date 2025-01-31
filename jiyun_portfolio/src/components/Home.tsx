@@ -141,6 +141,8 @@ const Home: React.FC = () => {
             {showArrow && (
                 <ArrowIndicator style={arrowSpring}>
                     <Image
+                        width={100}
+                        height={100}
                         style={{
                             position: "fixed",
                             top: mousePos.y + 10,
@@ -159,7 +161,13 @@ const Home: React.FC = () => {
                 김지윤의 포트폴리오입니다.
             </PortfolioText>
             <PromptText style={promptSpring}>
-                <Image src="/images/down-left-arrow.png" alt="arrow" />
+                <Image
+                    src="/images/down-left-arrow.png"
+                    alt="arrow"
+                    width={50} // ✅ 숫자로 명확한 크기 설정
+                    height={50} // ✅ 숫자로 명확한 크기 설정
+                    style={{ cursor: "pointer" }}
+                />
                 메뉴
             </PromptText>
         </HomeWrapper>

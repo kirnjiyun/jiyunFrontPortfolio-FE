@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Modal from "react-modal";
 import Fancy16to9Gallery from "@/components/projectsCompo/FancyImgGallery";
+
 Modal.setAppElement("#__next");
+
 import {
     PageContainer,
     BackButton,
@@ -32,14 +34,15 @@ import {
     LinksTitle,
     LinkLabel,
     LinkAnchor,
-    ScreenshotButton, // 추가
+    ScreenshotButton,
 } from "../../styles/projects/projectTitle.styles";
 
 export async function getServerSideProps({ params }) {
     const slug = params.projectTitle;
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl =
+        process.env.NEXT_LOCAL_BACKEND_URL || "http://localhost:5050";
 
-    const res = await fetch(`${baseUrl}/api/server/projectsData`); // ✅ 절대 경로 사용
+    const res = await fetch(`${baseUrl}/api/projects`);
     const allProjects = await res.json();
 
     const foundProject = allProjects.find(
@@ -62,7 +65,6 @@ export default function ProjectDetailPage({ project }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // 이미지 변경 함수
     const nextImage = () => {
         setCurrentIndex((prevIndex) =>
             prevIndex === project.screenshots.length - 1 ? 0 : prevIndex + 1
@@ -213,7 +215,6 @@ export default function ProjectDetailPage({ project }) {
                                         </FeaturesList>
                                     )}
 
-                                {/* "스크린샷 보기" 버튼 추가 */}
                                 {project.screenshots &&
                                     project.screenshots.length > 0 && (
                                         <ScreenshotButton
@@ -228,7 +229,6 @@ export default function ProjectDetailPage({ project }) {
                 </InfoSection>
             </ContentWrapper>
 
-            {/* 스크린샷 모달 */}
             <Modal
                 isOpen={isModalOpen}
                 onRequestClose={() => setIsModalOpen(false)}

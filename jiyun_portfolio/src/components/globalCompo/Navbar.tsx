@@ -72,11 +72,9 @@ const Navbar: React.FC = () => {
                         <Image
                             src="/images/house.png"
                             alt="Logo"
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                cursor: "pointer",
-                            }}
+                            width={40}
+                            height={40}
+                            style={{ objectFit: "contain", cursor: "pointer" }}
                         />
                     </Link>
                 </Logo>
