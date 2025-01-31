@@ -102,9 +102,9 @@ export default function CertificationSection({ certificationData }) {
                                     <Image
                                         src={cert.imageSrc}
                                         alt={cert.alt}
-                                        layout="fill"
-                                        objectFit="cover"
+                                        fill
                                         style={{
+                                            objectFit: "cover",
                                             filter: "grayscale(100%) contrast(100%)",
                                         }}
                                     />

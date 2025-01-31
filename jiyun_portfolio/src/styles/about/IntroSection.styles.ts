@@ -114,3 +114,31 @@ export const Paragraph = styled.p`
     margin-bottom: 24px;
     color: ${colors.mediumBlue};
 `;
+// 추가된 스타일 (기본 스타일 파일 하단에 추가)
+export const InfoContainer = styled.div`
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+`;
+
+export const InfoItem = styled.p`
+    font-size: 16px;
+    color: ${colors.darkBlue};
+`;
+
+export const InfoLink = styled.a`
+    color: ${colors.darkBlue};
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+        text-decoration: underline;
+    }
+`;
+
+export const TechStack = styled.p`
+    font-size: 16px;
+    color: ${colors.mediumBlue};
+    margin-top: 8px;
+`;

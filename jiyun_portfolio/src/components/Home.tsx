@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSpring } from "react-spring";
 import {
     HomeWrapper,
@@ -9,6 +9,7 @@ import {
     PortfolioText,
     PromptText,
 } from "../styles/Home.styles";
+import Image from "next/image";
 
 const Home: React.FC = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -139,7 +140,7 @@ const Home: React.FC = () => {
             </AnimatedText>
             {showArrow && (
                 <ArrowIndicator style={arrowSpring}>
-                    <img
+                    <Image
                         style={{
                             position: "fixed",
                             top: mousePos.y + 10,
@@ -158,7 +159,7 @@ const Home: React.FC = () => {
                 김지윤의 포트폴리오입니다.
             </PortfolioText>
             <PromptText style={promptSpring}>
-                <img src="/images/down-left-arrow.png" alt="arrow" />
+                <Image src="/images/down-left-arrow.png" alt="arrow" />
                 메뉴
             </PromptText>
         </HomeWrapper>

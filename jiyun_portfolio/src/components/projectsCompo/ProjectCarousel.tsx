@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -40,7 +41,7 @@ export default function ProjectCarousel() {
             >
                 {images.map((image, index) => (
                     <ImageWrapper key={index}>
-                        <img src={image} alt={`project-${index}`} />
+                        <Image src={image} alt={`project-${index}`} />
                     </ImageWrapper>
                 ))}
             </StyledCarousel>

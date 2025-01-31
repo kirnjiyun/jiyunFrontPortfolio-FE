@@ -9,6 +9,7 @@ import {
     Backdrop,
 } from "../../styles/Navbar.styles";
 import Link from "next/link";
+import Image from "next/image";
 const Navbar: React.FC = () => {
     const [ismenuopen, setismenuopen] = useState(false);
     const [isNavbarVisible, setIsNavbarVisible] = useState(false);
@@ -68,7 +69,7 @@ const Navbar: React.FC = () => {
             <NavbarWrapper style={navbarSpring}>
                 <Logo>
                     <Link href="/">
-                        <img
+                        <Image
                             src="/images/house.png"
                             alt="Logo"
                             style={{

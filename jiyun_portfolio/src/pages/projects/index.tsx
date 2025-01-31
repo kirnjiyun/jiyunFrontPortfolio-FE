@@ -10,7 +10,7 @@ import {
 } from "@/styles/projects/ProjectIndex.styles";
 import ScrollTriggered from "@/components/projectsCompo/ScrollTrigger";
 import FilterSelect from "@/components/projectsCompo/FilterSelect";
-
+import Image from "next/image";
 // 1) react-transition-group import
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
@@ -92,7 +92,7 @@ export default function ProjectsPage({ projectsData }) {
                 onMouseMove={handleMouseMove}
             >
                 {isHovering && (
-                    <img
+                    <Image
                         src="/images/down-arrow.png"
                         alt="arrow"
                         style={{
