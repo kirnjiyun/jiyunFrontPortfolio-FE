@@ -56,11 +56,11 @@
             "category": "개인",
             "name": "Deluxury",
             "title": "deluxury",
-            "description": "명품 브랜드 의류, 잡화 등을 판매하는 편집샵 컨셉의 사이트",
+            "description": "명품 브랜드 의류, 잡화 등을 판매하는 편집샵 컨셉의 웹사이트",
             "techStack": [
                 "React",
                 "Redux",
-                "Styled-components",
+                "Emotion",
                 "React Query",
                 "Node.js",
                 "Express",
@@ -68,7 +68,7 @@
                 "AWS BeanStalk",
                 "Axios"
             ],
-            "role": ["Frontend Developer", "Backend Developer"],
+            "role": ["프론트엔드 개발자", "백엔드 개발자"],
             "duration": "2024-07 ~ 2024-08",
             "projectLinks": {
                 "repository": [
@@ -78,11 +78,11 @@
                 "deployment": "https://deluxury-jiyun.netlify.app/"
             },
             "features": [
-                "음악을 들으며 다양한 명품 브랜드 제품을 구경하고 구매할 수 있는 기능 구현",
-                "스크롤 기반 이미지 갤러리를 통해 매력적인 브랜드 이미지를 동적으로 체험 가능",
-                "구매자 및 판매자 계정으로 가입 및 관리 기능 개발",
-                "Cloudinary를 이용한 상품 이미지 업로드 및 관리 기능 구현",
-                "다음 우편번호 API를 사용한 배송지 입력 기능 구현"
+                "음악 재생과 함께 다양한 명품 브랜드 상품을 둘러보고 구매할 수 있는 기능",
+                "스크롤 기반 이미지 갤러리로 브랜드 이미지를 동적으로 체험",
+                "구매자와 판매자 계정을 분리하여 회원 가입 및 관리 기능 제공",
+                "Cloudinary를 통한 상품 이미지 업로드 및 관리",
+                "다음 우편번호 API를 사용한 배송지 입력 지원"
             ],
             "screenshots": [
                 "/images/projects/deluxury/메인페이지.gif",
@@ -96,30 +96,28 @@
         {
             "id": 2,
             "category": "개인",
-            "name": "yunflix",
-            "title": "yunflix",
-            "description": "TV, 영화, 배우 등을 검색할 수 있는 사이트입니다.",
+            "name": "Yunflix",
+            "title": "Yunflix",
+            "description": "TV, 영화, 배우 등을 검색할 수 있는 웹사이트",
             "techStack": [
                 "React",
                 "Styled-components",
                 "Bootstrap",
-                "@tanstack/react-query",
-                "React Router",
+                "React Query",
                 "Axios"
             ],
-            "role": ["Frontend Developer"],
-            "duration": "2024-02 ~ 2024-04",
+            "role": ["프론트엔드 개발자"],
+            "duration": "2024-02 ~ 2024-02",
             "projectLinks": {
                 "deployment": "https://yunflix-global.netlify.app/",
                 "repository": ["https://github.com/kirnjiyun/JiyuneeNetflix"]
             },
             "features": [
-                "실시간 영화 및 TV 프로그램 검색",
-                "YouTube API를 활용한 예고편 보기",
-                "장르별 콘텐츠 탐색",
-                "React Multi Carousel을 이용한 추천 콘텐츠 스크롤",
-                "React Paginate로 페이지네이션 구현",
-                "반응형 디자인을 통해 모바일 및 데스크톱 지원"
+                "TMDB API를 사용해 실시간 영화 및 TV 프로그램 검색",
+                "카테고리별 검색 기능 제공",
+                "YouTube API로 트레일러 시청 기능 구현",
+                "캐러셀 기능을 통해 추천 콘텐츠 제공",
+                "반응형 디자인으로 모바일과 데스크톱 모두 지원"
             ],
             "screenshots": [
                 "/images/projects/yunflix/1.png",
@@ -136,8 +134,14 @@
             "name": "팔북정",
             "title": "palbokjeong",
             "description": "온라인 책 검색 및 주문 서비스 프론트엔드 팀 프로젝트",
-            "techStack": ["React", "React Query", "Express", "Cloudtype"],
-            "role": ["Frontend Developer"],
+            "techStack": [
+                "React",
+                "React Query",
+                "Node.js",
+                "Express",
+                "Cloudtype"
+            ],
+            "role": ["프론트엔드 개발자", "백엔드 개발자", "스크럼 마스터"],
             "duration": "2024-04",
             "projectLinks": {
                 "repository": [
@@ -147,9 +151,9 @@
                 "deployment": "https://deluxury-jiyun.netlify.app/"
             },
             "features": [
-                "Aladin API를 사용하여 책 정보 검색 및 리뷰 작성",
-                "Skeleton UI를 적용하여 로딩 시간 개선",
-                "반응형 UI로 다양한 디바이스 지원"
+                "Aladin API를 통한 책 정보 검색 및 리뷰 작성 기능",
+                "Skeleton UI로 로딩 시간 개선",
+                "반응형 메인 배너를 통해 사용자 주목도 향상"
             ],
             "screenshots": [
                 "/images/projects/8bookjeong/검색.gif",
@@ -165,16 +169,15 @@
             "category": "개인",
             "name": "Chat GPT Diet",
             "title": "chatgptdiet",
-            "description": "ChatGPT와 OpenAI API를 활용한 맞춤형 다이어트 관리 서비스",
+            "description": "OpenAI API를 활용한 운동 및 식단 추천 다이어트 웹사이트",
             "techStack": [
                 "React",
-                "JavaScript",
+                "Styled-Components",
                 "Express",
-                "OpenAI API",
-                "Styled-Components"
+                "OpenAI API"
             ],
-            "role": ["Frontend Developer", "Backend Developer"],
-            "duration": "",
+            "role": ["프론트엔드 개발자", "백엔드 개발자"],
+            "duration": "2025-01",
             "projectLinks": {
                 "deployment": "",
                 "repository": [
@@ -183,9 +186,9 @@
                 ]
             },
             "features": [
-                "React와 TypeScript를 사용한 안정적이고 직관적인 프론트엔드 구현",
-                "Express와 OpenAI API를 활용한 사용자 맞춤형 백엔드 개발",
-                "Styled-Components로 깔끔하고 반응형 UI 디자인"
+                "React를 활용한 직관적이고 안정적인 프론트엔드 구현",
+                "백엔드에서 ‘너는 다이어트 전문가다’라는 프롬프트 기반 대화 기능 제공",
+                "Styled-Components를 통한 반응형 UI 디자인"
             ],
             "screenshots": [
                 "/images/projects/gpt/1.png",
@@ -201,19 +204,19 @@
             "category": "개인",
             "name": "LOL Champions",
             "title": "lolcham",
-            "description": "League of Legends 챔피언 검색 및 정보 제공사이트",
+            "description": "League of Legends 챔피언 검색 및 정보 제공 웹사이트",
             "techStack": ["Next.js", "TypeScript"],
-            "role": ["Frontend Developer"],
-            "duration": "",
+            "role": ["프론트엔드 개발자"],
+            "duration": "2024-12",
             "projectLinks": {
                 "deployment": "",
                 "repository": ["https://github.com/kirnjiyun/nextAppRouter"]
             },
             "features": [
-                "Next.js의 App Router를 사용한 라우팅 구현",
-                "TypeScript를 적용하여 안정성과 유지보수성을 향상",
-                "반응형 디자인을 통해 다양한 디바이스 환경 최적화",
-                "League of Legends API를 이용한 챔피언 검색 및 상세 정보 표시"
+                "Next.js App Router를 활용한 라우팅 구성",
+                "TypeScript 적용으로 코드 안정성과 유지보수성 확보",
+                "반응형 디자인으로 다양한 디바이스에서 최적화",
+                "League of Legends API를 이용해 챔피언 검색 및 상세 정보 제공"
             ],
             "screenshots": [
                 "/images/projects/lol/1.png",
@@ -228,19 +231,19 @@
             "category": "개인",
             "name": "Weather Now",
             "title": "weathernow",
-            "description": "사용자의 현재 위치를 기반으로 날씨 정보를 제공하는 애플리케이션",
+            "description": "사용자의 현재 위치를 기반으로 날씨 정보를 제공하는 웹사이트",
             "techStack": ["TypeScript", "React", "Recoil", "Axios"],
-            "role": ["Frontend Developer"],
-            "duration": "",
+            "role": ["프론트엔드 개발자"],
+            "duration": "2024-04",
             "projectLinks": {
                 "deployment": "https://jiyunee-weather-now.netlify.app/",
                 "repository": ["https://github.com/kirnjiyun/WeatherNow"]
             },
             "features": [
-                "TypeScript를 사용하여 안정적이고 유지보수 가능한 코드 작성",
+                "TypeScript 기반으로 안정적인 코드 작성",
                 "React로 컴포넌트 기반 SPA 설계 및 구현",
-                "OpenWeatherMap API를 사용한 실시간 날씨 데이터 표시",
-                "Geolocation API를 활용하여 사용자의 현재 위치 기반 날씨 정보 제공"
+                "OpenWeatherMap API로 실시간 날씨 데이터 표시",
+                "Geolocation API를 통해 사용자의 현재 위치 기반 날씨 정보 제공"
             ],
             "screenshots": [
                 "/images/projects/weather/1.png",
@@ -255,18 +258,18 @@
             "category": "개인",
             "name": "짱구와 가위바위보",
             "title": "rockscissorpaper",
-            "description": "짱구 컨셉의 컴퓨터와 가위바위보 게임",
+            "description": "짱구 컨셉의 컴퓨터와 가위바위보 게임 웹사이트",
             "techStack": ["TypeScript", "React"],
-            "role": ["Frontend Developer"],
-            "duration": "",
+            "role": ["프론트엔드 개발자"],
+            "duration": "2024-04",
             "projectLinks": {
                 "deployment": "https://jiyunee-rockscissorpaper.netlify.app/",
                 "repository": ["https://github.com/kirnjiyun/RockScissorsPaper"]
             },
             "features": [
-                "TypeScript를 활용하여 안정적이고 타입 안정성을 갖춘 코드 작성",
-                "React를 사용하여 컴포넌트 기반 SPA 설계 및 구현",
-                "컴퓨터와 사용자 간의 랜덤 가위바위보 게임 로직 구현",
+                "TypeScript로 타입 안정성을 보장하는 코드 작성",
+                "React로 컴포넌트 기반 SPA 설계 및 구현",
+                "사용자와 컴퓨터 간 랜덤 가위바위보 게임 로직 구현",
                 "반응형 디자인으로 모바일 및 데스크톱 최적화"
             ],
             "screenshots": [
@@ -283,29 +286,28 @@
             "category": "개인",
             "name": "미야오 미야오",
             "title": "meowmeow",
-            "description": "귀엽고 깜찍한 컨셉의 잡화점",
+            "description": "귀엽고 깜찍한 컨셉의 잡화점 웹사이트",
             "techStack": [
                 "React",
                 "React Router",
                 "Firebase",
                 "Bootstrap",
-                "React-Bootstrap",
                 "Styled-Components",
                 "JSON Server"
             ],
-            "role": ["Frontend Developer"],
-            "duration": "",
+            "role": ["프론트엔드 개발자"],
+            "duration": "2024-04",
             "projectLinks": {
                 "deployment": "https://jiyunee-meowmeowmall.netlify.app/",
                 "repository": ["https://github.com/kirnjiyun/meowmeowmall"]
             },
             "features": [
-                "로그인 아이디 abc@naver.com, 비밀번호 123",
-                "React를 사용한 SPA 설계 및 구현",
+                "테스트 계정(abc@naver.com / 비밀번호: 123) 제공",
+                "React 기반 SPA 설계 및 구현",
                 "Firebase Authentication을 통한 사용자 인증",
-                "JSON Server를 활용한 API Mocking",
-                "Bootstrap과 React-Bootstrap을 사용한 UI 스타일링",
-                "Styled-Components로 일부 커스텀 컴포넌트 제작"
+                "JSON Server로 API Mocking",
+                "Bootstrap과 React-Bootstrap으로 UI 스타일링",
+                "Styled-Components를 사용한 커스텀 컴포넌트 제작"
             ],
             "screenshots": [
                 "/images/projects/meow/meowscreen.png",
@@ -319,15 +321,15 @@
             "category": "개인",
             "name": "득근득근 운동일기",
             "title": "workout",
-            "description": "Redux로 만든 운동일기 컨셉 웹사이트",
+            "description": "운동일기 컨셉 웹사이트",
             "techStack": ["React", "JavaScript", "Bootstrap", "Redux"],
-            "role": ["Frontend Developer"],
-            "duration": "",
+            "role": ["프론트엔드 개발자"],
+            "duration": "2024-03",
             "projectLinks": {
                 "deployment": "https://jiyunee-redux-diary.netlify.app/",
                 "repository": ["https://github.com/kirnjiyun/reduxpractice"]
             },
-            "features": ["UI 설계 및 구현", "Redux 사용"],
+            "features": ["간결한 UI 설계 및 구현", "Redux를 사용한 상태 관리"],
             "screenshots": ["/images/projects/득근득근/득근스크린샷.png"],
             "thumbnail": "/images/projects/득근득근/득근썸네일.png",
             "isMajor": false
@@ -337,32 +339,31 @@
             "category": "팀",
             "name": "Feel My Rhythm",
             "title": "feel-my-rhythm",
-            "description": "감정과 음악, 그리고 사람을 연결하는 소셜 플랫폼.",
+            "description": "감정과 음악, 그리고 사람을 연결하는 SNS 컨셉의 웹사이트",
             "techStack": [
                 "React",
                 "JavaScript",
                 "Styled-components",
                 "Recoil",
                 "React Query",
-                "Axios",
-                "React Router"
+                "Axios"
             ],
-            "role": ["Frontend Developer"],
+            "role": ["프론트엔드 개발자"],
             "duration": "2023-10 ~ 2023-11",
             "projectLinks": {
                 "deployment": "",
                 "repository": ["https://github.com/kirnjiyun/FeelMyRhythm"]
             },
             "features": [
-                "TEAM: YouTube API를 사용하여 음악 검색 및 감정 공유 기능 개발",
-                "TEAM: AI 감정 분석 기능으로 사용자 간 감정 공감 지원",
-                "TEAM: 무한 스크롤을 적용하여 사용자 경험 개선",
-                "INDIVIDUAL: 메인 페이지 UI 설계 및 구현",
-                "INDIVIDUAL: 검색 기능 개발",
-                "INDIVIDUAL: 다크 모드 토글 기능 지원",
-                "INDIVIDUAL: 카테고리 박스 설계 및 스타일링",
-                "INDIVIDUAL: 반응형 디자인으로 다양한 디바이스 지원",
-                "INDIVIDUAL: 프로젝트 이름과 컨셉 제안 및 확정"
+                "[TEAM] YouTube API를 통해 음악 검색 및 감정 공유",
+                "[TEAM] AI 감정 분석 기능으로 사용자 간 감정 공감 지원",
+                "[TEAM] 무한 스크롤 적용으로 사용자 경험 개선",
+                "[INDIVIDUAL] 메인 페이지 UI 설계 및 구현",
+                "[INDIVIDUAL] 검색 기능 개발",
+                "[INDIVIDUAL] 다크 모드 토글 기능",
+                "[INDIVIDUAL] 카테고리 박스 설계 및 스타일링",
+                "[INDIVIDUAL] 반응형 디자인으로 다양한 디바이스 지원",
+                "[INDIVIDUAL] 프로젝트 이름과 컨셉 제안 및 확정"
             ],
             "screenshots": [
                 "/images/projects/feel/무한스크롤최종.gif",

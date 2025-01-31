@@ -1,6 +1,8 @@
-// pages/projects/[projectTitle].js
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
+import Modal from "react-modal";
+import Fancy16to9Gallery from "@/components/projectsCompo/FancyImgGallery";
+Modal.setAppElement("#__next");
 import {
     PageContainer,
     BackButton,
@@ -30,8 +32,8 @@ import {
     LinksTitle,
     LinkLabel,
     LinkAnchor,
+    ScreenshotButton, // 추가
 } from "../../styles/projects/projectTitle.styles";
-import Fancy16to9Gallery from "@/components/projectsCompo/FancyImgGallery";
 
 export async function getServerSideProps({ params }) {
     const slug = params.projectTitle;
@@ -56,6 +58,21 @@ export async function getServerSideProps({ params }) {
 
 export default function ProjectDetailPage({ project }) {
     const router = useRouter();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    // 이미지 변경 함수
+    const nextImage = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === project.screenshots.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+
+    const prevImage = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === 0 ? project.screenshots.length - 1 : prevIndex - 1
+        );
+    };
 
     return (
         <PageContainer>
@@ -66,13 +83,7 @@ export default function ProjectDetailPage({ project }) {
 
                 <ProjectHeader>
                     <ProjectTitle>{project.name}</ProjectTitle>
-                    {/* 
-                    {project?.screenshots && (
-                        <Fancy16to9Gallery images={project.screenshots} />
-                    )} 
-                */}
 
-                    {/* 썸네일 이미지를 보여주는 부분 */}
                     {project.thumbnail && (
                         <ThumbnailWrapper>
                             <ThumbnailImage
@@ -105,17 +116,32 @@ export default function ProjectDetailPage({ project }) {
                         </InfoGroup>
                         {project.techStack && project.techStack.length > 0 && (
                             <InfoGroup>
-                                <InfoLabel>Tech Stack</InfoLabel>
+                                <InfoLabel>기술스택</InfoLabel>
                                 <BadgesWrapper>
                                     {project.techStack.map((stack, idx) => (
                                         <TechBadge key={idx}>{stack}</TechBadge>
                                     ))}
                                 </BadgesWrapper>
                             </InfoGroup>
-                        )}{" "}
+                        )}
                         {project.projectLinks && (
                             <LinkCard>
-                                <LinksTitle>관련 링크</LinksTitle>
+                                <LinksTitle>관련 링크</LinksTitle>{" "}
+                                {project.projectLinks.repository &&
+                                    project.projectLinks.repository.map(
+                                        (repo, idx) => (
+                                            <LinkRow key={idx}>
+                                                <LinkLabel>깃허브</LinkLabel>
+                                                <LinkAnchor
+                                                    href={repo}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                >
+                                                    {repo}
+                                                </LinkAnchor>
+                                            </LinkRow>
+                                        )
+                                    )}
                                 {project.projectLinks.deployment && (
                                     <LinkRow>
                                         <LinkLabel>배포</LinkLabel>
@@ -127,20 +153,6 @@ export default function ProjectDetailPage({ project }) {
                                             rel="noreferrer"
                                         >
                                             {project.projectLinks.deployment}
-                                        </LinkAnchor>
-                                    </LinkRow>
-                                )}
-                                {project.projectLinks.repository && (
-                                    <LinkRow>
-                                        <LinkLabel>GitHub</LinkLabel>
-                                        <LinkAnchor
-                                            href={
-                                                project.projectLinks.repository
-                                            }
-                                            target="_blank"
-                                            rel="noreferrer"
-                                        >
-                                            {project.projectLinks.repository}
                                         </LinkAnchor>
                                     </LinkRow>
                                 )}
@@ -186,7 +198,6 @@ export default function ProjectDetailPage({ project }) {
                                             </FeaturesList>
                                         </>
                                     )}
-
                                 {!project.features.team &&
                                     !project.features.individual &&
                                     project.features.length > 0 && (
@@ -200,11 +211,58 @@ export default function ProjectDetailPage({ project }) {
                                             )}
                                         </FeaturesList>
                                     )}
+
+                                {/* "스크린샷 보기" 버튼 추가 */}
+                                {project.screenshots &&
+                                    project.screenshots.length > 0 && (
+                                        <ScreenshotButton
+                                            onClick={() => setIsModalOpen(true)}
+                                        >
+                                            스크린샷 보기
+                                        </ScreenshotButton>
+                                    )}
                             </FeaturesCard>
                         )}
                     </RightColumn>
                 </InfoSection>
             </ContentWrapper>
+
+            {/* 스크린샷 모달 */}
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                contentLabel="스크린샷 갤러리"
+                style={{
+                    overlay: {
+                        backgroundColor: "rgba(0, 0, 0, 0.75)",
+                        zIndex: 1000,
+                    },
+                    content: {
+                        maxWidth: "1200px",
+                        height: "fit-content",
+                        margin: "auto",
+                        borderRadius: "12px",
+                        textAlign: "center",
+                    },
+                }}
+            >
+                <button
+                    onClick={() => setIsModalOpen(false)}
+                    style={{
+                        all: "unset",
+                        position: "absolute",
+                        top: "20px",
+                        right: "20px",
+                        color: "var(--color-dark-blue)",
+                        cursor: "pointer",
+                        fontSize: "24px",
+                        fontWeight: "bold",
+                    }}
+                >
+                    X
+                </button>
+                <Fancy16to9Gallery images={project.screenshots} />
+            </Modal>
         </PageContainer>
     );
 }

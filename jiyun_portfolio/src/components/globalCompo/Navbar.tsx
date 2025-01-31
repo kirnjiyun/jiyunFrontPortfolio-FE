@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
     const menuItems = [
         { label: "Home", path: "/" },
         { label: "Projects", path: "/projects" },
-        { label: "About", path: "/about" },
+        { label: "About Me", path: "/about" },
     ];
     const trail = useTrail(menuItems.length || 1, {
         opacity: ismenuopen ? 1 : 0,

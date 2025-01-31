@@ -8,6 +8,23 @@ export const PageContainer = styled.div`
     flex-direction: column;
     position: relative;
 `;
+export const ScreenshotButton = styled.button`
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: var(--color-dark-blue);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+    text-align: center;
+    transition: 0.3s ease;
+
+    &:hover {
+        background-color: var(--color-medium-blue);
+    }
+`;
 
 /** 모바일 느낌의 '뒤로가기' 화살표 버튼 (왼쪽 상단) */
 export const BackButton = styled.button`
@@ -145,7 +162,7 @@ export const RightColumn = styled.div`
 
 /** 프로젝트 설명 */
 export const Description = styled.p`
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--color-dark-blue);
     line-height: 1.6;
     margin: 0;
