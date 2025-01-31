@@ -37,8 +37,9 @@ import {
 
 export async function getServerSideProps({ params }) {
     const slug = params.projectTitle;
-    const baseUrl = "/api/server";
-    const res = await fetch(`${baseUrl}/projectsData`);
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
+    const res = await fetch(`${baseUrl}/api/server/projectsData`); // ✅ 절대 경로 사용
     const allProjects = await res.json();
 
     const foundProject = allProjects.find(

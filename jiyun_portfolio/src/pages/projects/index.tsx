@@ -15,19 +15,16 @@ import Image from "next/image";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 export async function getStaticProps() {
-    const baseUrl = "/api/server";
-    const res = await fetch(`${baseUrl}/projectsData`);
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-    if (!res.ok) {
-        throw new Error("Failed to fetch projectsData");
-    }
+    const [projectsRes] = await Promise.all([
+        fetch(`${baseUrl}/api/server/projectsData`),
+    ]);
 
-    const projectsData = await res.json();
+    const projectsData = await projectsRes.json();
 
     return {
-        props: {
-            projectsData,
-        },
+        props: { projectsData },
     };
 }
 
