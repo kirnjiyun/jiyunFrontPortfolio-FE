@@ -17,11 +17,12 @@ import InfiniteScrollText from "@/components/aboutCompo/InfiniteScroll";
 import TimelineComponent from "@/components/aboutCompo/TimeLineSection";
 
 export async function getStaticProps() {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const [introductionRes, educationRes, certificationRes] = await Promise.all(
         [
-            fetch("/api/server/introductionData"),
-            fetch("/api/server/educationData"),
-            fetch("/api/server/certificationData"),
+            fetch(`${baseUrl}/api/server/introductionData`),
+            fetch(`${baseUrl}/api/server/educationData`),
+            fetch(`${baseUrl}/api/server/certificationData`),
         ]
     );
 
