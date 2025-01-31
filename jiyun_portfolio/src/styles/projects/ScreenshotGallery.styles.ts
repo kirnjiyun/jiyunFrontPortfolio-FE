@@ -1,5 +1,7 @@
 import styled from "styled-components";
-
+interface ButtonProps {
+    isActive: boolean;
+}
 export const GalleryContainer = styled.div`
     display: flex;
     align-items: center;
@@ -52,7 +54,7 @@ export const Navigation = styled.div`
     }
 `;
 
-export const NavButton = styled.button`
+export const NavButton = styled.button<ButtonProps>`
     padding: 10px 15px;
     background: ${(props) =>
         props.isActive
