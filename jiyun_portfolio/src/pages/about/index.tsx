@@ -17,7 +17,8 @@ import InfiniteScrollText from "@/components/aboutCompo/InfiniteScroll";
 import TimelineComponent from "@/components/aboutCompo/TimeLineSection";
 
 export async function getStaticProps() {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"; // Vercel 배포 URL
+
     const [introductionRes, educationRes, certificationRes] = await Promise.all(
         [
             fetch(`${baseUrl}/api/server/introductionData`),
