@@ -15,7 +15,7 @@ import Image from "next/image";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 export async function getStaticProps() {
-    const baseUrl = "http://localhost:4000"; // json-server 주소
+    const baseUrl = "/api/server";
     const res = await fetch(`${baseUrl}/projectsData`);
 
     if (!res.ok) {

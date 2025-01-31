@@ -17,8 +17,7 @@ import InfiniteScrollText from "@/components/aboutCompo/InfiniteScroll";
 import TimelineComponent from "@/components/aboutCompo/TimeLineSection";
 
 export async function getStaticProps() {
-    // json-server API에서 데이터 가져오기
-    const baseUrl = "http://localhost:4000"; // json-server 주소
+    const baseUrl = "/api/server";
     const [introductionRes, educationRes, certificationRes] = await Promise.all(
         [
             fetch(`${baseUrl}/introductionData`),

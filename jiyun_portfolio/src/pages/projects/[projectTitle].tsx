@@ -37,7 +37,7 @@ import {
 
 export async function getServerSideProps({ params }) {
     const slug = params.projectTitle;
-    const baseUrl = "http://localhost:4000";
+    const baseUrl = "/api/server";
     const res = await fetch(`${baseUrl}/projectsData`);
     const allProjects = await res.json();
 
