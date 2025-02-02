@@ -40,7 +40,7 @@ import {
 export async function getServerSideProps({ params }) {
     const slug = params.projectTitle;
     const baseUrl =
-        process.env.NEXT_LOCAL_BACKEND_URL || "http://localhost:5050";
+        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5050";
 
     const res = await fetch(`${baseUrl}/api/projects`);
     const allProjects = await res.json();

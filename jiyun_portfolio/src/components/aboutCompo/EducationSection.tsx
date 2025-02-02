@@ -11,7 +11,7 @@ export default function EducationSection({ educationData }) {
             <SectionTitle>Education</SectionTitle>
             <List>
                 <ul>
-                    {educationData.map((item, index) => (
+                    {educationData?.map((item, index) => (
                         <React.Fragment key={index}>
                             {/* 학교 이름 및 위치 */}
                             {item.school && (

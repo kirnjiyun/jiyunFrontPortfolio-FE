@@ -25,32 +25,32 @@ export default function IntroductionSection({ introductionData }) {
 
                 <S.TextContainer>
                     <S.Title>Introduction</S.Title>
-                    <S.Paragraph>{introductionData.description}</S.Paragraph>
+                    <S.Paragraph>{introductionData?.description}</S.Paragraph>
 
                     <S.InfoContainer>
                         <S.InfoItem>
-                            🙋🏻‍♀️ 이름 : {introductionData.name}
+                            🙋🏻‍♀️ 이름 : {introductionData?.name}
                         </S.InfoItem>
                         <S.InfoItem>
                             📧 이메일 :{" "}
                             <S.InfoLink
-                                href={`mailto:${introductionData.email}`}
+                                href={`mailto:${introductionData?.email}`}
                             >
-                                {introductionData.email}
+                                {introductionData?.email}
                             </S.InfoLink>
                         </S.InfoItem>
                         <S.InfoItem>
                             🖥 깃허브 :{" "}
                             <S.InfoLink
-                                href={introductionData.github}
+                                href={introductionData?.github}
                                 target="_blank"
                             >
-                                {introductionData.github}
+                                {introductionData?.github}
                             </S.InfoLink>
                         </S.InfoItem>
                         <S.TechStack>
                             🛠 사용 기술:{" "}
-                            {introductionData.techStack?.join(", ")}
+                            {introductionData?.techStack?.join(", ")}
                         </S.TechStack>
                     </S.InfoContainer>
                 </S.TextContainer>

@@ -79,7 +79,6 @@ const Navbar: React.FC = () => {
                     </Link>
                 </Logo>
 
-                {/* 햄버거 버튼 */}
                 <MenuButton onClick={() => setismenuopen(!ismenuopen)}>
                     {ismenuopen ? "✕" : "☰"}
                 </MenuButton>

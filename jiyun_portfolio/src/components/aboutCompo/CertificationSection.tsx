@@ -72,7 +72,7 @@ export default function CertificationSection({ certificationData }) {
         <Section>
             <Title>Certifications &amp; etc</Title>
             <CardGrid>
-                {certificationData.map((cert, index) => {
+                {certificationData?.map((cert, index) => {
                     const isHovered = hoveredIndex === index;
                     const pos = positions[index];
 

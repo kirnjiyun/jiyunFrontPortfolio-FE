@@ -16,11 +16,27 @@ export async function getStaticProps() {
 
     const [introductionRes, educationRes, certificationRes] = await Promise.all(
         [
-            fetch(`${baseUrl}/api/introduction`),
-            fetch(`${baseUrl}/api/education`),
+            fetch(`${baseUrl}/api/introductions`),
+            fetch(`${baseUrl}/api/educations`),
             fetch(`${baseUrl}/api/certifications`),
         ]
     );
+
+    // 응답 상태 확인 및 오류 처리
+    if (!introductionRes.ok || !educationRes.ok || !certificationRes.ok) {
+        console.error("❌ API 호출 실패:", {
+            introductions: introductionRes.status,
+            educations: educationRes.status,
+            certifications: certificationRes.status,
+        });
+        return {
+            props: {
+                introductionData: null,
+                educationData: null,
+                certificationData: null,
+            },
+        };
+    }
 
     const introductionData = await introductionRes.json();
     const educationData = await educationRes.json();

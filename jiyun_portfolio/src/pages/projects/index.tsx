@@ -85,11 +85,13 @@ export default function ProjectsPage({ projectsData }) {
                     <Image
                         src="/images/down-arrow.png"
                         alt="arrow"
+                        width={100}
+                        height={100}
                         style={{
                             position: "fixed",
                             top: mousePos.y + 10,
                             left: mousePos.x + 10,
-                            width: "100px",
+
                             pointerEvents: "none",
                             transform: "translate(-50%, -50%)",
                             zIndex: 9999,
