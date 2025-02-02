@@ -10,6 +10,7 @@ import {
     PromptText,
 } from "../styles/Home.styles";
 import Image from "next/image";
+import Head from "next/head";
 
 const Home: React.FC = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -133,44 +134,75 @@ const Home: React.FC = () => {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     return (
-        <HomeWrapper style={{ backgroundColor, color }}>
-            <AnimatedBackground />
-            <AnimatedText>
-                <TypingText>{typedText}</TypingText>
-            </AnimatedText>
-            {showArrow && (
-                <ArrowIndicator style={arrowSpring}>
-                    <Image
-                        width={100}
-                        height={100}
-                        style={{
-                            position: "fixed",
-                            top: mousePos.y + 10,
-                            left: mousePos.x + 10,
-                            width: "100px",
-                            pointerEvents: "none",
-                            transform: "translate(-50%, -50%)",
-                            zIndex: 9999,
-                        }}
-                        src="/images/down-arrow.png"
-                        alt="downarrow"
-                    />
-                </ArrowIndicator>
-            )}
-            <PortfolioText style={portfolioSpring}>
-                김지윤의 포트폴리오입니다.
-            </PortfolioText>
-            <PromptText style={promptSpring}>
-                <Image
-                    src="/images/down-left-arrow.png"
-                    alt="arrow"
-                    width={50} // ✅ 숫자로 명확한 크기 설정
-                    height={50} // ✅ 숫자로 명확한 크기 설정
-                    style={{ cursor: "pointer" }}
+        <>
+            {" "}
+            <Head>
+                <title>프론트엔드 개발자 포트폴리오 - 김지윤</title>
+                <meta
+                    name="description"
+                    content="프론트엔드 개발자 김지윤의 포트폴리오 사이트입니다. React, Next.js, UI/UX 최적화 프로젝트 소개."
                 />
-                메뉴
-            </PromptText>
-        </HomeWrapper>
+                <meta
+                    name="keywords"
+                    content="프론트엔드 포트폴리오, 개발자 포트폴리오, React 포트폴리오, Next.js 개발자, 웹 개발 포트폴리오"
+                />
+                <meta
+                    property="og:title"
+                    content="프론트엔드 개발자 포트폴리오 - 김지윤"
+                />
+                <meta
+                    property="og:description"
+                    content="React와 Next.js로 구현한 김지윤의 프론트엔드 포트폴리오 사이트입니다."
+                />
+                <meta
+                    property="og:image"
+                    content="/images/portfolio-thumbnail.jpg"
+                />
+                <meta
+                    property="og:url"
+                    content="https://your-portfolio-site.com"
+                />
+                <meta name="twitter:card" content="summary_large_image" />
+            </Head>{" "}
+            <HomeWrapper style={{ backgroundColor, color }}>
+                <AnimatedBackground />
+                <AnimatedText>
+                    <TypingText>{typedText}</TypingText>
+                </AnimatedText>
+                {showArrow && (
+                    <ArrowIndicator style={arrowSpring}>
+                        <Image
+                            width={100}
+                            height={100}
+                            style={{
+                                position: "fixed",
+                                top: mousePos.y + 10,
+                                left: mousePos.x + 10,
+                                width: "100px",
+                                pointerEvents: "none",
+                                transform: "translate(-50%, -50%)",
+                                zIndex: 9999,
+                            }}
+                            src="/images/down-arrow.png"
+                            alt="downarrow"
+                        />
+                    </ArrowIndicator>
+                )}
+                <PortfolioText style={portfolioSpring}>
+                    김지윤의 포트폴리오입니다.
+                </PortfolioText>
+                <PromptText style={promptSpring}>
+                    <Image
+                        src="/images/down-left-arrow.png"
+                        alt="arrow"
+                        width={50} // ✅ 숫자로 명확한 크기 설정
+                        height={50} // ✅ 숫자로 명확한 크기 설정
+                        style={{ cursor: "pointer" }}
+                    />
+                    메뉴
+                </PromptText>
+            </HomeWrapper>
+        </>
     );
 };
 
