@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Head from "next/head";
 import { HeroSection, Title } from "@/styles/about/AboutPageStyles";
 import ProjectContainer from "@/components/projectsCompo/ProjectContainer";
 import {
@@ -72,10 +73,22 @@ export default function ProjectsPage({ projectsData }) {
 
     return (
         <>
+            <Head>
+                <title>Projects | 김지윤 포트폴리오</title>
+                <meta
+                    name="description"
+                    content="프론트엔드 개발자 김지윤의 프로젝트 모음입니다. 다양한 개인 및 팀 프로젝트를 확인하세요."
+                />
+                <meta
+                    name="keywords"
+                    content="프론트엔드 프로젝트, 팀 프로젝트, 개인 프로젝트, 포트폴리오"
+                />
+                <meta name="author" content="김지윤" />
+            </Head>
+
             <HeroSection>
                 <Title>Projects</Title>
             </HeroSection>
-
             <ScrollSection
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -100,7 +113,6 @@ export default function ProjectsPage({ projectsData }) {
                 )}
                 <ScrollTriggered />
             </ScrollSection>
-
             <FilterContainer>
                 <FilterLabel>
                     <FilterCheckbox
@@ -119,7 +131,6 @@ export default function ProjectsPage({ projectsData }) {
                     onChange={(value) => handleFilterChange("category", value)}
                 />
             </FilterContainer>
-
             <ProjectTransitionStyles>
                 <TransitionGroup component={null}>
                     {filteredProjects.map((project) => (

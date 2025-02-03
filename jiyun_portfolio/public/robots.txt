@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://kimjiyun.site
+
+# Sitemaps
+Sitemap: https://kimjiyun.site/sitemap.xml
