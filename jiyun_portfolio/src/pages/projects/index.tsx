@@ -15,11 +15,20 @@ import Image from "next/image";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 export async function getStaticProps() {
+    console.time("Total getStaticProps Time"); // 전체 시간 측정 시작
+
     const baseUrl =
         process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5050";
 
+    console.time("API Fetch Time"); // API 호출 시간 측정 시작
     const res = await fetch(`${baseUrl}/api/projects`);
+    console.timeEnd("API Fetch Time"); // API 호출 시간 측정 종료
+
+    console.time("JSON Parsing Time"); // JSON 파싱 시간 측정 시작
     const projectsData = await res.json();
+    console.timeEnd("JSON Parsing Time"); // JSON 파싱 시간 측정 종료
+
+    console.timeEnd("Total getStaticProps Time"); // 전체 시간 측정 종료
 
     return {
         props: { projectsData },

@@ -31,6 +31,7 @@ const ProjectCard = ({ project }) => {
                             : "/images/default-image.webp"
                     }
                     alt={project.name}
+                    loading="lazy"
                 />
                 <ProjectDetails>
                     <ProjectTitle>{project.name}</ProjectTitle>
