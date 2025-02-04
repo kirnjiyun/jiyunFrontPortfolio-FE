@@ -1,0 +1,42 @@
+name: Frontend CI Workflow
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: 코드 클론
+              uses: actions/checkout@v2
+
+            - name: Node.js 설치
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "16"
+
+            - name: 의존성 설치
+              run: npm install
+
+            - name: 코드 스타일 검사 (ESLint)
+              run: npm run lint
+
+            - name: 테스트 실행 (Jest)
+              run: npm run test
+
+            - name: 프로젝트 빌드 (Next.js)
+              run: npm run build
+
+            - name: 배포된 사이트 상태 확인
+              run: |
+                  response=$(curl -o /dev/null -s -w "%{http_code}" https://kimjiyun.site)
+                  if [ $response -ne 200 ]; then
+                    echo "🚨 사이트가 정상적으로 작동하지 않습니다. HTTP 상태 코드: $response"
+                    exit 1
+                  else
+                    echo "✅ 사이트가 정상적으로 작동 중입니다!"
+                  fi
