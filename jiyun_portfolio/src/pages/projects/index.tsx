@@ -14,14 +14,24 @@ import FilterSelect from "@/components/projectsCompo/FilterSelect";
 import Image from "next/image";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-export default function ProjectsPage() {
-    const [projectsData, setProjectsData] = useState([]); // 초기 데이터 빈 배열로 설정
-    const [filteredProjects, setFilteredProjects] = useState([]);
+export async function getStaticProps() {
+    const baseUrl =
+        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5050";
+
+    const res = await fetch(`${baseUrl}/api/projects`);
+    const projectsData = await res.json();
+
+    return {
+        props: { projectsData },
+    };
+}
+
+export default function ProjectsPage({ projectsData }) {
+    const [filteredProjects, setFilteredProjects] = useState(projectsData);
     const [filterOptions, setFilterOptions] = useState({
         isMajor: false,
         category: "",
     });
-    const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
     const categoryOptions = [
         { value: "", label: "전체" },
@@ -29,34 +39,6 @@ export default function ProjectsPage() {
         { value: "팀", label: "팀" },
     ];
 
-    // 클라이언트에서 데이터 가져오기
-    useEffect(() => {
-        const fetchProjects = async () => {
-            const baseUrl =
-                process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5050";
-
-            try {
-                const res = await fetch(`${baseUrl}/api/projects`);
-
-                if (!res.ok) {
-                    throw new Error(`API 호출 실패: ${res.status}`);
-                }
-
-                const data = await res.json();
-                setProjectsData(data);
-                setFilteredProjects(data); // 초기 필터링 데이터 설정
-            } catch (error) {
-                console.error("❌ API 호출 중 오류 발생:", error);
-                setProjectsData([]); // API 호출 실패 시 빈 배열 설정
-            } finally {
-                setLoading(false); // 로딩 종료
-            }
-        };
-
-        fetchProjects();
-    }, []);
-
-    // 필터링 로직
     useEffect(() => {
         let filtered = projectsData;
 
@@ -80,7 +62,6 @@ export default function ProjectsPage() {
         }));
     };
 
-    // 마우스 오버 효과
     const [isHovering, setIsHovering] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -89,11 +70,6 @@ export default function ProjectsPage() {
     const handleMouseMove = (e) => {
         setMousePos({ x: e.clientX, y: e.clientY });
     };
-
-    // 로딩 중 표시
-    if (loading) {
-        return <p>Loading projects...</p>;
-    }
 
     return (
         <>
@@ -113,7 +89,6 @@ export default function ProjectsPage() {
             <HeroSection>
                 <Title>Projects</Title>
             </HeroSection>
-
             <ScrollSection
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -129,6 +104,7 @@ export default function ProjectsPage() {
                             position: "fixed",
                             top: mousePos.y + 10,
                             left: mousePos.x + 10,
+
                             pointerEvents: "none",
                             transform: "translate(-50%, -50%)",
                             zIndex: 9999,
@@ -137,7 +113,6 @@ export default function ProjectsPage() {
                 )}
                 <ScrollTriggered />
             </ScrollSection>
-
             <FilterContainer>
                 <FilterLabel>
                     <FilterCheckbox
@@ -156,7 +131,6 @@ export default function ProjectsPage() {
                     onChange={(value) => handleFilterChange("category", value)}
                 />
             </FilterContainer>
-
             <ProjectTransitionStyles>
                 <TransitionGroup component={null}>
                     {filteredProjects.map((project) => (
