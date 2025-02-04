@@ -18,12 +18,27 @@ export async function getStaticProps() {
     const baseUrl =
         process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5050";
 
-    const res = await fetch(`${baseUrl}/api/projects`);
-    const projectsData = await res.json();
+    try {
+        const res = await fetch(`${baseUrl}/api/projects`);
 
-    return {
-        props: { projectsData },
-    };
+        // API 호출 실패 시 오류 처리
+        if (!res.ok) {
+            throw new Error(`API 호출 실패: ${res.status}`);
+        }
+
+        const projectsData = await res.json();
+
+        return {
+            props: { projectsData },
+        };
+    } catch (error) {
+        console.error("❌ API 호출 중 오류 발생:", error);
+
+        // API 호출 실패 시에도 빌드가 중단되지 않도록 빈 데이터 반환
+        return {
+            props: { projectsData: [] }, // 빈 배열로 대체
+        };
+    }
 }
 
 export default function ProjectsPage({ projectsData }) {
