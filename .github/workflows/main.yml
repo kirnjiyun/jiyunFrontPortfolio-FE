@@ -25,12 +25,15 @@ jobs:
               
             - name: 코드 스타일 검사 (ESLint)
               run: npm run lint
+              working-directory: ./jiyun_portfolio  # 경로 추가
 
             - name: 테스트 실행 (Jest)
               run: npm run test
+              working-directory: ./jiyun_portfolio  # 경로 추가
 
             - name: 프로젝트 빌드 (Next.js)
               run: npm run build
+              working-directory: ./jiyun_portfolio  # 경로 추가
 
             - name: 배포된 사이트 상태 확인
               run: |
