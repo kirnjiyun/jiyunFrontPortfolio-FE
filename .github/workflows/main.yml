@@ -21,7 +21,8 @@ jobs:
 
             - name: 의존성 설치
               run: npm install
-
+              working-directory: ./jiyun_portfolio
+              
             - name: 코드 스타일 검사 (ESLint)
               run: npm run lint
 
