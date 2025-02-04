@@ -15,6 +15,7 @@ import {
     ProjectTitle,
     ProjectSubtitle,
     ThumbnailImage,
+    SkeletonThumbnail,
     ThumbnailWrapper,
     InfoSection,
     LeftColumn,
@@ -64,7 +65,7 @@ export default function ProjectDetailPage({ project }) {
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
-
+    const [isImageLoading, setIsImageLoading] = useState(true);
     const nextImage = () => {
         setCurrentIndex((prevIndex) =>
             prevIndex === project.screenshots.length - 1 ? 0 : prevIndex + 1
@@ -89,9 +90,15 @@ export default function ProjectDetailPage({ project }) {
 
                     {project.thumbnail && (
                         <ThumbnailWrapper>
+                            {isImageLoading && <SkeletonThumbnail />}
                             <ThumbnailImage
                                 src={project.thumbnail}
                                 alt={`${project.name} thumbnail`}
+                                loading="lazy"
+                                style={{
+                                    display: isImageLoading ? "none" : "block",
+                                }}
+                                onLoad={() => setIsImageLoading(false)}
                             />
                         </ThumbnailWrapper>
                     )}

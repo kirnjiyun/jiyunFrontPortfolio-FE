@@ -307,3 +307,26 @@ export const LinkAnchor = styled.a`
         text-decoration: underline;
     }
 `;
+/** Skeleton 스타일 */
+export const SkeletonThumbnail = styled.div`
+    width: 100%;
+    max-width: 600px;
+    height: 0;
+    padding-top: 56.25%; /* 16:9 비율 유지 */
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: pulse 1.5s infinite ease-in-out;
+
+    @keyframes pulse {
+        0% {
+            background-color: #e0e0e0;
+        }
+        50% {
+            background-color: #f0f0f0;
+        }
+        100% {
+            background-color: #e0e0e0;
+        }
+    }
+`;
