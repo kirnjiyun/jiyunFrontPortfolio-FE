@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Modal from "react-modal";
 import Fancy16to9Gallery from "@/components/projectsCompo/FancyImgGallery";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProjects } from "@/lib/api";
 
 Modal.setAppElement("#__next");
 
@@ -38,34 +40,32 @@ import {
     ScreenshotButton,
 } from "../../styles/projects/projectTitle.styles";
 
-export async function getServerSideProps({ params }) {
-    const slug = params.projectTitle;
-    const baseUrl =
-        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5050";
+export default function ProjectDetailPage() {
+    const router = useRouter();
+    const { projectTitle } = router.query;
 
-    const res = await fetch(`${baseUrl}/api/projects`);
-    const allProjects = await res.json();
+    const {
+        data: allProjects,
+        isLoading,
+        error,
+    } = useQuery({
+        queryKey: ["projects"],
+        queryFn: fetchProjects,
+    });
 
-    const foundProject = allProjects.find(
-        (proj) => proj.title.toLowerCase().replace(/\s+/g, "-") === slug
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+
+    const project = allProjects.find(
+        (proj) => proj.title.toLowerCase().replace(/\s+/g, "-") === projectTitle
     );
 
-    if (!foundProject) {
-        return { notFound: true };
-    }
+    if (!project) return <p>Project not found</p>;
 
-    return {
-        props: {
-            project: foundProject,
-        },
-    };
-}
-
-export default function ProjectDetailPage({ project }) {
-    const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isImageLoading, setIsImageLoading] = useState(true);
+
     const nextImage = () => {
         setCurrentIndex((prevIndex) =>
             prevIndex === project.screenshots.length - 1 ? 0 : prevIndex + 1
@@ -117,7 +117,7 @@ export default function ProjectDetailPage({ project }) {
                             <InfoValue>{project.duration}</InfoValue>
                         </InfoGroup>
                         <InfoGroup>
-                            <InfoLabel>역할</InfoLabel>
+                            <InfoLabel>여러가지 역할</InfoLabel>
                             <div>
                                 {project.role.map((r, idx) => (
                                     <InfoValue key={idx}>{r}</InfoValue>
@@ -136,12 +136,12 @@ export default function ProjectDetailPage({ project }) {
                         )}
                         {project.projectLinks && (
                             <LinkCard>
-                                <LinksTitle>관련 링크</LinksTitle>{" "}
+                                <LinksTitle>관련 링크</LinksTitle>
                                 {project.projectLinks.repository &&
                                     project.projectLinks.repository.map(
                                         (repo, idx) => (
                                             <LinkRow key={idx}>
-                                                <LinkLabel>깃허브</LinkLabel>
+                                                <LinkLabel>기테너</LinkLabel>
                                                 <LinkAnchor
                                                     href={repo}
                                                     target="_blank"
