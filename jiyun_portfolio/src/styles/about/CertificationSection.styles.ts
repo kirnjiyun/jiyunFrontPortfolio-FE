@@ -1,17 +1,26 @@
 import styled from "styled-components";
+import { animated } from "react-spring";
 
+const colors = {
+    darkBlue: "var(--color-dark-blue)",
+    mediumBlue: "var(--color-medium-blue)",
+    lightestBlue: "var(--color-lightest-blue)",
+    brightestBlue: "var(--color-brightest-blue)",
+};
+
+// 전체 섹션 컨테이너
 export const Section = styled.section`
     display: flex;
-    flex-direction: column; /* 위아래로 정렬 */
-    align-items: center; /* Title을 가운데 정렬 */
-    gap: 1rem; /* Title과 카드 사이 간격 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 24px;
+    margin: 16px 0;
     border-radius: 12px;
-    background: var(--color-lightest-blue);
-
+    background: ${colors.lightestBlue};
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
-    min-height: 240px;
+    min-height: 300px;
     width: 100%;
 
     &:hover {
@@ -19,78 +28,142 @@ export const Section = styled.section`
     }
 `;
 
-export const Title = styled.h2`
+// 섹션 제목
+export const SectionTitle = styled.h2`
     font-size: 2rem;
     font-weight: bold;
-    color: var(--color-dark-blue);
+    color: ${colors.darkBlue};
+    margin-bottom: 20px;
     text-align: center;
-    margin-bottom: 1rem;
     font-family: "SBAggroB";
 `;
 
+// 카드가 여러 개 있을 경우 그리드 배치
 export const CardGrid = styled.div`
-    display: grid; /* 카드들을 그리드 레이아웃으로 */
-    gap: 0.5rem; /* 카드 간 간격 */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
     width: 100%;
-    grid-template-columns: repeat(2, 1fr);
-
-    @media (min-width: 768px) {
-        grid-template-columns: repeat(4, 1fr); /* 태블릿 이상에서는 네 개 */
-    }
+    max-width: 1080px;
+    margin: 0 auto;
 `;
 
-export const Card = styled.div`
-    width: 200px;
-    height: 200px;
-    perspective: 1000px;
-    cursor: pointer;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative; /* 안내 문구 배치를 위해 필요 */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/*
+  ─────────────────────────────────────
+  뒤집힘 효과 관련 styled-components
+  ─────────────────────────────────────
+*/
+
+// 카드 최외곽 컨테이너(3D 공간 마련)
+export const FlipContainer = styled.div`
+    perspective: 1000px; // 3D 효과를 위해 필수
+    width: 100%;
+    height: 250px; // 카드 높이 (필요에 따라 조정)
+    position: relative;
+`;
+
+// 실제로 회전하는 부분(react-spring의 animated.div 사용)
+export const FlipInner = styled(animated.div)`
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d; // 자식들이 3D로 뒤집히도록
+    position: relative;
+`;
+
+// 앞면 스타일
+export const CardFront = styled.div`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; // 뒤집혔을 때 숨김
+    background-color: #ffffff;
+    border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
+    // 내부 레이아웃
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 1.2rem;
+    color: ${colors.darkBlue};
 
-    &:hover .hover-text {
-        opacity: 1;
-        visibility: visible;
+    // 제목, 설명 등
+    h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+    p {
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
     }
 `;
 
-export const ImageContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-    border-radius: 8px;
-`;
-
-export const Front = styled.div`
+// 뒷면 스타일
+export const CardBack = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden;
-    border-radius: 8px;
+    backface-visibility: hidden; // 뒤집혔을 때 숨김
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    // 뒷면은 180도 돌아가 있어야 함
+    transform: rotateY(180deg);
+
+    // 내부 레이아웃
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 1.2rem;
+    color: ${colors.darkBlue};
+
+    // 예: 제목, 설명
+    h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    // description은 dangerouslySetInnerHTML로 렌더링할 것이므로 p 대신 div 사용 가능
+    .description {
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+    }
 `;
 
-export const HoverText = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(221, 230, 237, 1);
-    color: var(--color-dark-blue);
-    padding: 8px;
+// "자세히 보기" 등 버튼
+export const DetailButton = styled.button`
+    align-self: flex-end;
+    padding: 0.4rem 0.8rem;
+    border: none;
     border-radius: 4px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-    opacity: 0; /* 기본 상태에서는 보이지 않음 */
-    visibility: hidden;
-    transition: opacity 0.3s ease;
+    background-color: ${colors.mediumBlue};
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+
+    &:hover {
+        background-color: ${colors.darkBlue};
+    }
+`;
+
+// 닫기 버튼 (뒷면에서)
+export const CloseButton = styled.button`
+    align-self: flex-end;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    background-color: ${colors.darkBlue};
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+
+    &:hover {
+        background-color: #333;
+    }
 `;

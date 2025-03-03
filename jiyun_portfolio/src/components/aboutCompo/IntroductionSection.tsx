@@ -16,17 +16,15 @@ export default function IntroductionSection({ introductionData }) {
     return (
         <S.MainSection ref={ref}>
             <S.Section>
-                <S.ImageContainer>
+                {/* <S.ImageContainer>
                     <S.ProfileImage
                         src="/images/작은 이미지 작게.jpeg"
                         alt="Profile"
                     />
-                </S.ImageContainer>
+                </S.ImageContainer> */}
 
                 <S.TextContainer>
                     <S.Title>Introduction</S.Title>
-                    <S.Paragraph>{introductionData?.description}</S.Paragraph>
-
                     <S.InfoContainer>
                         <S.InfoItem>
                             🙋🏻‍♀️ 이름 : {introductionData?.name}
@@ -53,6 +51,7 @@ export default function IntroductionSection({ introductionData }) {
                             {introductionData?.techStack?.join(", ")}
                         </S.TechStack>
                     </S.InfoContainer>
+                    <S.Paragraph>{introductionData?.description}</S.Paragraph>
                 </S.TextContainer>
             </S.Section>
         </S.MainSection>

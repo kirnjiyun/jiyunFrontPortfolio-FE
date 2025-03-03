@@ -77,7 +77,7 @@ export default function AboutPage({
             <InfiniteScrollText />
             <Section>
                 <IntroductionSection introductionData={introductionData} />
-                <TimelineComponent />
+                {/* <TimelineComponent /> */}
                 <EducationSection educationData={educationData} />
                 <CertificationSection certificationData={certificationData} />
             </Section>

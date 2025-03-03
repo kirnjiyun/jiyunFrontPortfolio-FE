@@ -105,10 +105,12 @@ export const Title = styled.h2`
     margin-bottom: 1rem;
     color: ${colors.darkBlue};
     font-family: "SBAggroB";
+    text-align: center;
 `;
 
 // 본문 텍스트 스타일
 export const Paragraph = styled.p`
+    margin-top: 24px;
     font-size: 18px;
     line-height: 1.8;
     margin-bottom: 24px;

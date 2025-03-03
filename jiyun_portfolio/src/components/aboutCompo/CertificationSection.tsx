@@ -1,210 +1,95 @@
-import Image from "next/image";
-import { useState } from "react";
-import Modal from "react-modal";
+import React, { useState } from "react";
+import { useSpring } from "react-spring"; // 회전 애니메이션용
 import {
     Section,
-    Title,
+    SectionTitle,
     CardGrid,
-    Card,
-    ImageContainer,
-    Front,
-    // HoverText, // 이제 커스텀 커서로 대체하므로 주석 처리
-} from "@/styles/about/CertificationSection.styles";
+    FlipContainer,
+    FlipInner,
+    CardFront,
+    CardBack,
+    DetailButton,
+    CloseButton,
+} from "../../styles/about/CertificationSection.styles";
 
-Modal.setAppElement("#__next");
+function parseDescription(description) {
+    if (!description) return "";
 
-export default function CertificationSection({ certificationData }) {
-    // 모달용 상태
-    const [modalData, setModalData] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    // 어떤 카드(index)가 hover 되었는지
-    const [hoveredIndex, setHoveredIndex] = useState(null);
-
-    // 각 카드별 마우스 좌표 { [index]: { x, y } }
-    const [positions, setPositions] = useState({});
-
-    // 모달 열기/닫기
-    const handleOpenModal = (cert) => {
-        setModalData(cert);
-        setIsModalOpen(true);
-    };
-    const handleCloseModal = () => {
-        setModalData(null);
-        setIsModalOpen(false);
-    };
-
-    // 모달에 표시할 description 속 링크 치환
-    function formatDescription(description) {
-        return description
+    return (
+        description
+            // "GitHub 링크: URL" 치환
             .replace(
-                /GitHub 링크: (https?:\/\/[^\s,]+)/,
-                '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: var(--color-lightest-blue); text-decoration: underline;">GitHub 링크</a>'
+                /GitHub 링크:\s*(https?:\/\/[^\s,]+)/g,
+                '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">GitHub 링크</a>'
             )
+            // "E-book 링크: URL" 치환
             .replace(
-                /E-book 링크: (https?:\/\/[^\s,]+)/,
-                '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: var(--color-lightest-blue); text-decoration: underline;">E-book 링크</a>'
-            );
-    }
+                /E-book 링크:\s*(https?:\/\/[^\s,]+)/g,
+                '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">E-book 링크</a>'
+            )
+            // 줄바꿈을 <br>로 변환
+            .replace(/\n/g, "<br/>")
+    );
+}
 
-    // 마우스가 카드 위에 들어오면
-    const handleMouseEnter = (index) => {
-        setHoveredIndex(index);
-    };
+// 개별 플립 카드 컴포넌트
+function FlipCard({ cert }) {
+    const [flipped, setFlipped] = useState(false);
 
-    // 카드 밖으로 나가면
-    const handleMouseLeave = () => {
-        setHoveredIndex(null);
-    };
+    // rotation 값을 react-spring으로 관리
+    const { rotation } = useSpring({
+        rotation: flipped ? 180 : 0,
+        config: { tension: 200, friction: 20 },
+    });
 
-    // 카드 위에서 마우스가 움직일 때 좌표 업데이트
-    const handleMouseMove = (e, index) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        setPositions((prev) => ({
-            ...prev,
-            [index]: { x, y },
-        }));
+    // 카드 뒤집기 토글 함수
+    const toggleFlip = () => {
+        setFlipped((prev) => !prev);
     };
 
     return (
-        <Section>
-            <Title>Certifications &amp; etc</Title>
-            <CardGrid>
-                {certificationData?.map((cert, index) => {
-                    const isHovered = hoveredIndex === index;
-                    const pos = positions[index];
+        <FlipContainer>
+            <FlipInner
+                style={{
+                    // rotation값에 따라 Y축 회전
+                    transform: rotation.to((r) => `rotateY(${r}deg)`),
+                }}
+            >
+                {/* 앞면 */}
+                <CardFront>
+                    <h3>{cert.title}</h3>
+                    <p>{cert.shortDescription}</p>
+                    <DetailButton onClick={toggleFlip}>
+                        자세히 보기
+                    </DetailButton>
+                </CardFront>
 
-                    return (
-                        <Card
-                            key={index}
-                            onClick={() => handleOpenModal(cert)}
-                            onMouseEnter={() => handleMouseEnter(index)}
-                            onMouseLeave={handleMouseLeave}
-                            onMouseMove={(e) => handleMouseMove(e, index)}
-                            style={{
-                                position: "relative",
-                                cursor: isHovered ? "none" : "pointer",
-                                // isHovered일 때만 기본 커서 숨김, 아니면 일반 포인터
-                            }}
-                        >
-                            <ImageContainer>
-                                <Front
-                                    style={{
-                                        transition: "filter 0.3s ease",
-                                        // hover된 카드면 어둡게 + 블러 처리
-                                        filter: isHovered
-                                            ? "brightness(0.7) blur(2px)"
-                                            : "none",
-                                    }}
-                                >
-                                    <Image
-                                        src={cert.imageSrc}
-                                        alt={cert.alt}
-                                        fill
-                                        style={{
-                                            objectFit: "cover",
-                                            filter: "grayscale(100%) contrast(100%)",
-                                        }}
-                                    />
-                                </Front>
-
-                                {isHovered && pos && (
-                                    <div
-                                        style={{
-                                            position: "absolute",
-                                            left: pos.x,
-                                            top: pos.y,
-                                            transform: "translate(-50%, -50%)",
-                                            pointerEvents: "none",
-                                            backgroundColor:
-                                                "var(--color-dark-blue)",
-                                            color: "var(--color-brightest-blue)",
-                                            padding: "1rem",
-                                            borderRadius: "8px",
-                                            fontWeight: "bolder",
-                                            zIndex: 9999,
-                                        }}
-                                    >
-                                        눌러보세요
-                                    </div>
-                                )}
-                            </ImageContainer>
-                        </Card>
-                    );
-                })}
-            </CardGrid>
-
-            {/* 모달 부분 */}
-            {modalData && (
-                <Modal
-                    isOpen={isModalOpen}
-                    onRequestClose={handleCloseModal}
-                    style={{
-                        content: {
-                            top: "50%",
-                            left: "50%",
-                            right: "auto",
-                            bottom: "auto",
-                            marginRight: "-50%",
-                            transform: "translate(-50%, -50%)",
-                            width: "500px",
-                            padding: "30px",
-                            borderRadius: "8px",
-                            height: "auto",
-                            overflow: "visible",
-                            scrollY: "auto",
-                            backgroundColor: "var(--color-dark-blue)",
-                            border: "none",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            overflowY: "auto",
-                            overflowX: "hidden",
-                        },
-                        overlay: {
-                            backgroundColor: "rgba(0, 0, 0, 0.5)",
-                            backdropFilter: "blur(8px)",
-                        },
-                    }}
-                >
-                    <button
-                        onClick={handleCloseModal}
-                        style={{
-                            all: "unset",
-                            position: "absolute",
-                            top: "20px",
-                            right: "20px",
-                            color: "var(--color-lightest-blue)",
-                            cursor: "pointer",
-                            fontSize: "24px",
-                            fontWeight: "bold",
-                        }}
-                    >
-                        X
-                    </button>
-                    <h2
-                        style={{
-                            color: "var(--color-brightest-blue)",
-                            textAlign: "center",
-                            margin: "20px",
-                        }}
-                    >
-                        {modalData.title}
-                    </h2>
-                    <p
-                        style={{
-                            color: "var(--color-lightest-blue)",
-                            textAlign: "center",
-                            margin: "20px 10px",
-                        }}
+                {/* 뒷면 */}
+                <CardBack>
+                    {/* description을 HTML로 치환하여 렌더 */}
+                    <div
+                        className="description"
                         dangerouslySetInnerHTML={{
-                            __html: formatDescription(modalData.description),
+                            __html: parseDescription(cert.description),
                         }}
                     />
-                </Modal>
-            )}
+                    <CloseButton onClick={toggleFlip}>닫기</CloseButton>
+                </CardBack>
+            </FlipInner>
+        </FlipContainer>
+    );
+}
+
+export default function CertificationSection({ certificationData = [] }) {
+    return (
+        <Section>
+            <SectionTitle>Certifications &amp; etc</SectionTitle>
+
+            <CardGrid>
+                {certificationData.map((cert, idx) => (
+                    <FlipCard key={idx} cert={cert} />
+                ))}
+            </CardGrid>
         </Section>
     );
 }

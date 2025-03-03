@@ -31,7 +31,7 @@ export const SectionTitle = styled.h2`
     font-size: 2rem;
     font-weight: bold;
     color: ${colors.darkBlue};
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
     text-align: center;
     font-family: "SBAggroB";
 `;
