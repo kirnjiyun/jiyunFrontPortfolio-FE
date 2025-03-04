@@ -44,6 +44,11 @@ export default function ProjectDetailPage() {
     const router = useRouter();
     const { projectTitle } = router.query;
 
+    // 모든 useState 호출을 컴포넌트 최상위 레벨로 이동
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isImageLoading, setIsImageLoading] = useState(true);
+
     const {
         data: allProjects,
         isLoading,
@@ -53,6 +58,7 @@ export default function ProjectDetailPage() {
         queryFn: fetchProjects,
     });
 
+    // 조기 반환 전에 모든 useState 호출이 완료됨
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
@@ -61,10 +67,6 @@ export default function ProjectDetailPage() {
     );
 
     if (!project) return <p>Project not found</p>;
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isImageLoading, setIsImageLoading] = useState(true);
 
     const nextImage = () => {
         setCurrentIndex((prevIndex) =>
