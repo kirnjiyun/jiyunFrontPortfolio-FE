@@ -40,9 +40,6 @@ const Home: React.FC = () => {
         };
     }, [fullText]);
 
-    // ----------------------
-    // 2. 스크롤 이벤트 처리 (버벅임 개선)
-    // ----------------------
     useEffect(() => {
         let ticking = false;
 
@@ -72,10 +69,6 @@ const Home: React.FC = () => {
         };
     }, []);
 
-    // --------------------------
-    // 3. React Spring 애니메이션
-    // --------------------------
-    // (1) 배경색 전환
     const { backgroundColor, color } = useSpring({
         backgroundColor:
             scrollProgress > 0.4
@@ -88,14 +81,12 @@ const Home: React.FC = () => {
         config: { tension: 200, friction: 20 },
     });
 
-    // (2) “김지윤의 포트폴리오입니다.” 텍스트 페이드 인
     const portfolioSpring = useSpring({
         opacity: scrollProgress > 0.95 ? 1 : 0,
         transform: scrollProgress > 0.95 ? "translateY(0)" : "translateY(20px)",
         config: { tension: 100, friction: 20 },
     });
 
-    // (3) 매 아래 도달 시 “메뉴” 안내
     const promptSpring = useSpring({
         opacity: isAtBottom ? 1 : 0,
         transform: isAtBottom ? "translateY(0)" : "translateY(20px)",
@@ -126,10 +117,7 @@ const Home: React.FC = () => {
                     property="og:image"
                     content="/images/portfolio-thumbnail.jpg"
                 />
-                <meta
-                    property="og:url"
-                    content="https://your-portfolio-site.com"
-                />
+                <meta property="og:url" content="https://kimjiyun.site" />
                 <meta name="twitter:card" content="summary_large_image" />
             </Head>
             <HomeWrapper style={{ backgroundColor, color }}>

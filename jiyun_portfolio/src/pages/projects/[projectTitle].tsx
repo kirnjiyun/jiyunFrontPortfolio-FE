@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Modal from "react-modal";
-import Fancy16to9Gallery from "@/components/projectsCompo/FancyImgGallery";
+import MultiCarouselGallery from "@/components/projectsCompo/MultiCarouselGallery";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProjects } from "@/lib/api";
 
@@ -117,7 +117,7 @@ export default function ProjectDetailPage() {
                             <InfoValue>{project.duration}</InfoValue>
                         </InfoGroup>
                         <InfoGroup>
-                            <InfoLabel>여러가지 역할</InfoLabel>
+                            <InfoLabel>역할</InfoLabel>
                             <div>
                                 {project.role.map((r, idx) => (
                                     <InfoValue key={idx}>{r}</InfoValue>
@@ -141,7 +141,7 @@ export default function ProjectDetailPage() {
                                     project.projectLinks.repository.map(
                                         (repo, idx) => (
                                             <LinkRow key={idx}>
-                                                <LinkLabel>기테너</LinkLabel>
+                                                <LinkLabel>깃허브</LinkLabel>
                                                 <LinkAnchor
                                                     href={repo}
                                                     target="_blank"
@@ -254,22 +254,7 @@ export default function ProjectDetailPage() {
                     },
                 }}
             >
-                <button
-                    onClick={() => setIsModalOpen(false)}
-                    style={{
-                        all: "unset",
-                        position: "absolute",
-                        top: "20px",
-                        right: "20px",
-                        color: "var(--color-dark-blue)",
-                        cursor: "pointer",
-                        fontSize: "24px",
-                        fontWeight: "bold",
-                    }}
-                >
-                    X
-                </button>
-                <Fancy16to9Gallery images={project.screenshots} />
+                <MultiCarouselGallery images={project.screenshots} />
             </Modal>
         </PageContainer>
     );

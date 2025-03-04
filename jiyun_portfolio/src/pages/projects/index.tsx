@@ -16,6 +16,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProjects } from "@/lib/api";
 import styled from "styled-components";
+import ProjectCarousel from "@/components/projectsCompo/ProjectCarousel";
 
 // Skeleton UI 스타일 컴포넌트
 const SkeletonCard = styled.div`
