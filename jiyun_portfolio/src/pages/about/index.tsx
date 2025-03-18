@@ -9,7 +9,7 @@ import {
     Section,
 } from "../../styles/about/AboutPageStyles";
 import InfiniteScrollText from "@/components/aboutCompo/InfiniteScroll";
-import TimelineComponent from "@/components/aboutCompo/TimeLineSection";
+// import TimelineComponent from "@/components/aboutCompo/TimeLineSection";
 export async function getStaticProps() {
     const baseUrl =
         process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5050";

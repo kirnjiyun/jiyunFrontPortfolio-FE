@@ -144,3 +144,8 @@ export const TechStack = styled.p`
     color: ${colors.mediumBlue};
     margin-top: 8px;
 `;
+export const ContentContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
