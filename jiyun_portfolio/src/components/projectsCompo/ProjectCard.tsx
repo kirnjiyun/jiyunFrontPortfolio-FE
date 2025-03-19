@@ -7,27 +7,18 @@ import {
     ProjectDetails,
     ProjectTitle,
     ProjectDescription,
+    TechStackContainer,
+    TechStackTag,
 } from "../../styles/projects/ProjectCard.styles";
 
 const ProjectCard = ({ project }) => {
-    const handleClick = (e) => {
-        e.preventDefault();
-        alert("준비중입니다.");
-    };
-
     return (
         <ProjectCardContainer>
             <Link
                 href={`/projects/${project.title
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`}
-                onClick={handleClick}
             >
-                <div className="mac-window-bar">
-                    <div className="dot red" />
-                    <div className="dot yellow" />
-                    <div className="dot green" />
-                </div>
                 <ProjectImage
                     src={
                         project.thumbnail
@@ -43,6 +34,11 @@ const ProjectCard = ({ project }) => {
                         {project.description}
                     </ProjectDescription>
                 </ProjectDetails>
+                <TechStackContainer>
+                    {project.techStack?.map((tech, index) => (
+                        <TechStackTag key={index}>{tech}</TechStackTag>
+                    ))}
+                </TechStackContainer>
             </Link>
         </ProjectCardContainer>
     );

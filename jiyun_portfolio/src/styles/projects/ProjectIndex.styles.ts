@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 export const FilterContainer = styled.div`
     display: flex;
     align-items: center;
@@ -9,6 +10,12 @@ export const FilterContainer = styled.div`
     border-radius: 8px;
     margin: 1.5rem 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 576px) {
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1rem;
+    }
 `;
 
 export const FilterLabel = styled.label`
@@ -17,7 +24,6 @@ export const FilterLabel = styled.label`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-
     color: var(--color-dark-blue);
 `;
 
@@ -46,24 +52,35 @@ export const FilterCheckbox = styled.input`
     height: 18px;
     cursor: pointer;
 `;
+
 export const ProjectTransitionStyles = styled.div`
     display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(400px, 1fr)
+    ); /* 카드 가로 크기에 맞게 조정 */
+    gap: 16px;
     margin: 0 100px;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 16px;
+    padding: 1rem;
+    justify-items: center;
 
+    /* 화면 너비 1220px 이하 → 2열 */
     @media (max-width: 1220px) {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        margin: 0 50px;
     }
 
-    /* 화면 너비 900px 이하 → 2열 */
+    /* 화면 너비 900px 이하 → 1열 */
     @media (max-width: 900px) {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        margin: 0 30px;
     }
 
     /* 화면 너비 576px 이하 → 1열 */
     @media (max-width: 576px) {
         grid-template-columns: 1fr;
+        margin: 0 15px;
+        gap: 12px;
     }
 
     .project-enter {

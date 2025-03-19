@@ -16,15 +16,16 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProjects } from "@/lib/api";
 import styled from "styled-components";
-import ProjectCarousel from "@/components/projectsCompo/ProjectCarousel";
 
 // Skeleton UI 스타일 컴포넌트
 const SkeletonCard = styled.div`
     width: 100%;
-    height: 300px; // ProjectContainer의 예상 높이에 맞게 조정
+    max-width: 400px; /* 카드 가로 크기에 맞게 조정 */
+    height: 350px;
     background: #e0e0e0;
-    border-radius: 8px;
+    border-radius: 12px;
     animation: pulse 1.5s infinite ease-in-out;
+    margin: 0 auto;
 
     @keyframes pulse {
         0% {
@@ -37,15 +38,36 @@ const SkeletonCard = styled.div`
             background-color: #e0e0e0;
         }
     }
+
+    @media (max-width: 576px) {
+        max-width: 300px;
+        height: 300px;
+    }
 `;
 
 const SkeletonWrapper = styled.div`
     display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(
-        auto-fill,
-        minmax(300px, 1fr)
-    ); // ProjectContainer 레이아웃에 맞게
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 16px;
+    margin: 0 100px;
+    padding: 1rem;
+    justify-items: center;
+
+    @media (max-width: 1220px) {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        margin: 0 50px;
+    }
+
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        margin: 0 30px;
+    }
+
+    @media (max-width: 576px) {
+        grid-template-columns: 1fr;
+        margin: 0 15px;
+        gap: 12px;
+    }
 `;
 
 export default function ProjectsPage({ initialProjects }) {
@@ -56,9 +78,12 @@ export default function ProjectsPage({ initialProjects }) {
     } = useQuery({
         queryKey: ["projects"],
         queryFn: fetchProjects,
-        initialData: initialProjects, // getStaticProps에서 받은 초기 데이터
+        initialData: initialProjects,
     });
-    const [filteredProjects, setFilteredProjects] = useState([]);
+
+    const [filteredProjects, setFilteredProjects] = useState(
+        projectsData || []
+    );
     const [filterOptions, setFilterOptions] = useState({
         isMajor: false,
         category: "",
@@ -73,18 +98,25 @@ export default function ProjectsPage({ initialProjects }) {
     useEffect(() => {
         if (!projectsData) return;
 
+        console.log("projectsData:", projectsData);
+        console.log("filterOptions:", filterOptions);
+
         let filtered = projectsData;
 
         if (filterOptions.isMajor) {
-            filtered = filtered.filter((project) => project.isMajor);
+            filtered = filtered.filter((project) => project.isMajor === true);
         }
 
         if (filterOptions.category) {
             filtered = filtered.filter(
-                (project) => project.category === filterOptions.category
+                (project) =>
+                    project.category &&
+                    project.category.trim().toLowerCase() ===
+                        filterOptions.category.trim().toLowerCase()
             );
         }
 
+        console.log("filteredProjects:", filtered);
         setFilteredProjects(filtered);
     }, [filterOptions, projectsData]);
 
@@ -175,32 +207,29 @@ export default function ProjectsPage({ initialProjects }) {
             </FilterContainer>
             <ProjectTransitionStyles>
                 {isLoading ? (
-                    renderSkeleton() // 로딩 중일 때 Skeleton UI
+                    renderSkeleton()
                 ) : error ? (
                     <p>Error loading projects: {error.message}</p>
-                ) : (
+                ) : filteredProjects.length > 0 ? (
                     <TransitionGroup component={null}>
-                        {filteredProjects && filteredProjects.length > 0 ? (
-                            filteredProjects.map((project) => (
-                                <CSSTransition
-                                    key={project.id}
-                                    classNames="project"
-                                    timeout={200}
-                                >
-                                    <ProjectContainer
-                                        projectsData={[project]}
-                                    />
-                                </CSSTransition>
-                            ))
-                        ) : (
-                            <p></p>
-                        )}
+                        {filteredProjects.map((project) => (
+                            <CSSTransition
+                                key={project.id}
+                                classNames="project"
+                                timeout={200}
+                            >
+                                <ProjectContainer projectsData={[project]} />
+                            </CSSTransition>
+                        ))}
                     </TransitionGroup>
+                ) : (
+                    <p>필터링된 프로젝트가 없습니다.</p>
                 )}
             </ProjectTransitionStyles>
         </>
     );
 }
+
 export async function getStaticProps() {
     const projectsData = await fetchProjects();
     return {
