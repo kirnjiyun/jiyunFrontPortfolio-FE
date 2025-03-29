@@ -2,13 +2,8 @@ import styled from "styled-components";
 
 export const ProjectCardContainer = styled.div`
     position: relative;
-    width: 100%;
-    max-width: 400px; /* 가로 크기 증가 */
-    height: 350px; /* 세로 크기 약간 줄임 */
-    @media (max-width: 576px) {
-        max-width: 300px; /* 모바일에서는 조금 작게 */
-        height: 300px;
-    }
+    width: 400px;
+    height: 350px;
     margin: 0 auto;
     border-radius: 12px;
     background-color: #fff;
@@ -21,8 +16,13 @@ export const ProjectCardContainer = styled.div`
     &:hover {
         transform: translateY(-8px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        background-color: rgba(0, 0, 0, 0.8); /* 투명도 0.8로 설정 */
+        background-color: rgba(0, 0, 0, 0.8);
         border: 2px solid #fff;
+    }
+
+    @media (max-width: 576px) {
+        width: 300px;
+        height: 300px;
     }
 `;
 
@@ -93,14 +93,13 @@ export const TechStackContainer = styled.div`
         transform: scale(1);
     }
 `;
-
 export const TechStackTag = styled.span`
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: #fff;
-    background-color: rgba(255, 255, 255, 0.2); /* 뱃지 배경 색상 */
-    padding: 0.4rem 0.8rem;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.5); /* 뱃지 테두리 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 0.3rem 0.7rem;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
 `;
