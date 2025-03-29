@@ -1,232 +1,279 @@
-import React, { useState, useEffect } from "react";
-import Head from "next/head";
-import { HeroSection, Title } from "@/styles/about/AboutPageStyles";
-import ProjectContainer from "@/components/projectsCompo/ProjectContainer";
-import {
-    ScrollSection,
-    FilterContainer,
-    FilterLabel,
-    FilterCheckbox,
-    ProjectTransitionStyles,
-} from "@/styles/projects/ProjectIndex.styles";
-import ScrollTriggered from "@/components/projectsCompo/ScrollTrigger";
-import FilterSelect from "@/components/projectsCompo/FilterSelect";
-import Image from "next/image";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import Modal from "react-modal";
+import MultiCarouselGallery from "@/components/projectsCompo/MultiCarouselGallery";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProjects } from "@/lib/api";
-import styled from "styled-components";
+import {
+    PageContainer,
+    BackButton,
+    ArrowSymbol,
+    ContentWrapper,
+    ProjectHeader,
+    ProjectTitle,
+    ProjectSubtitle,
+    ThumbnailImage,
+    ThumbnailWrapper,
+    InfoSection,
+    LeftColumn,
+    RightColumn,
+    Description,
+    InfoGroup,
+    InfoLabel,
+    InfoValue,
+    BadgesWrapper,
+    TechBadge,
+    FeaturesCard,
+    FeaturesTitle,
+    FeaturesList,
+    FeatureItem,
+    LinkCard,
+    LinkRow,
+    LinksTitle,
+    LinkLabel,
+    LinkAnchor,
+    ScreenshotButton,
+    // Skeleton 컴포넌트들 (named export)
+    SkeletonTitle,
+    SkeletonText,
+    SkeletonButton,
+} from "../../styles/projects/projectTitle.styles";
 
-// Skeleton UI 스타일 컴포넌트
-const SkeletonCard = styled.div`
-    width: 100%;
-    max-width: 300px;
-    height: 400px;
-    background: #e0e0e0;
-    border-radius: 12px;
-    animation: pulse 1.5s infinite ease-in-out;
-    margin: 0 auto;
+Modal.setAppElement("#__next");
 
-    @keyframes pulse {
-        0% {
-            background-color: #e0e0e0;
-        }
-        50% {
-            background-color: #f0f0f0;
-        }
-        100% {
-            background-color: #e0e0e0;
-        }
-    }
+// 로딩 중에 보여줄 스켈레톤 컴포넌트
+function ProjectDetailSkeleton() {
+    return (
+        <PageContainer>
+            <ContentWrapper>
+                <BackButton disabled>
+                    <ArrowSymbol>←</ArrowSymbol>
+                </BackButton>
+                <ProjectHeader>
+                    <SkeletonTitle />
+                    <ThumbnailWrapper></ThumbnailWrapper>
+                </ProjectHeader>
+                <InfoSection>
+                    <LeftColumn>
+                        <SkeletonText style={{ marginBottom: "1rem" }} />
+                        <SkeletonText />
+                        <SkeletonText style={{ width: "50%" }} />
+                    </LeftColumn>
+                    <RightColumn>
+                        <FeaturesTitle>주요 기능</FeaturesTitle>
+                        <SkeletonText />
+                        <SkeletonText />
+                        <SkeletonButton style={{ marginTop: "1rem" }} />
+                    </RightColumn>
+                </InfoSection>
+            </ContentWrapper>
+        </PageContainer>
+    );
+}
 
-    @media (max-width: 576px) {
-        max-width: 250px;
-        height: 350px;
-    }
-`;
+export default function ProjectDetailPage() {
+    const router = useRouter();
+    const { projectTitle } = router.query;
 
-const SkeletonWrapper = styled.div`
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin: 0 100px;
-    padding: 1rem;
-    justify-items: center;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isImageLoading, setIsImageLoading] = useState(true);
 
-    @media (max-width: 1220px) {
-        grid-template-columns: repeat(3, 1fr);
-        margin: 0 50px;
-    }
-
-    @media (max-width: 900px) {
-        grid-template-columns: repeat(2, 1fr);
-        margin: 0 30px;
-    }
-
-    @media (max-width: 576px) {
-        grid-template-columns: 1fr;
-        margin: 0 15px;
-        gap: 12px;
-    }
-`;
-
-export default function ProjectsPage({ initialProjects }) {
+    // suspense 옵션 없이 데이터를 가져옴
     const {
-        data: projectsData,
+        data: allProjects,
         isLoading,
         error,
     } = useQuery({
         queryKey: ["projects"],
         queryFn: fetchProjects,
-        initialData: initialProjects,
-    });
-    const [filteredProjects, setFilteredProjects] = useState([]);
-    const [filterOptions, setFilterOptions] = useState({
-        isMajor: false,
-        category: "",
     });
 
-    const categoryOptions = [
-        { value: "", label: "전체" },
-        { value: "개인", label: "개인" },
-        { value: "팀", label: "팀" },
-    ];
+    if (error) return <p>Error: {error.message}</p>;
 
-    useEffect(() => {
-        if (!projectsData) return;
+    // 데이터가 로딩 중이면 스켈레톤 UI를 보여줌
+    if (isLoading) return <ProjectDetailSkeleton />;
 
-        let filtered = projectsData;
-
-        if (filterOptions.isMajor) {
-            filtered = filtered.filter((project) => project.isMajor);
-        }
-
-        if (filterOptions.category) {
-            filtered = filtered.filter(
-                (project) => project.category === filterOptions.category
-            );
-        }
-
-        setFilteredProjects(filtered);
-    }, [filterOptions, projectsData]);
-
-    const handleFilterChange = (key, value) => {
-        setFilterOptions((prev) => ({
-            ...prev,
-            [key]: value,
-        }));
-    };
-
-    const [isHovering, setIsHovering] = useState(false);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
-    const handleMouseMove = (e) => {
-        setMousePos({ x: e.clientX, y: e.clientY });
-    };
-
-    const renderSkeleton = () => (
-        <SkeletonWrapper>
-            {Array(6)
-                .fill(3)
-                .map((_, idx) => (
-                    <SkeletonCard key={idx} />
-                ))}
-        </SkeletonWrapper>
+    const project = allProjects.find(
+        (proj) => proj.title.toLowerCase().replace(/\s+/g, "-") === projectTitle
     );
+
+    if (!project) return <p>Project not found</p>;
 
     return (
-        <>
-            <Head>
-                <title>Projects | 김지윤 포트폴리오</title>
-                <meta
-                    name="description"
-                    content="프론트엔드 개발자 김지윤의 프로젝트 모음입니다. 다양한 개인 및 팀 프로젝트를 확인하세요."
-                />
-                <meta
-                    name="keywords"
-                    content="프론트엔드 프로젝트, 팀 프로젝트, 개인 프로젝트, 포트폴리오"
-                />
-                <meta name="author" content="김지윤" />
-            </Head>
+        <PageContainer>
+            <ContentWrapper>
+                <BackButton onClick={() => router.back()}>
+                    <ArrowSymbol>←</ArrowSymbol>
+                </BackButton>
 
-            <HeroSection>
-                <Title>Projects</Title>
-            </HeroSection>
-            <ScrollSection
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                onMouseMove={handleMouseMove}
-            >
-                {isHovering && (
-                    <Image
-                        src="/images/down-arrow.png"
-                        alt="arrow"
-                        width={100}
-                        height={100}
-                        style={{
-                            position: "fixed",
-                            top: mousePos.y + 10,
-                            left: mousePos.x + 10,
-                            pointerEvents: "none",
-                            transform: "translate(-50%, -50%)",
-                            zIndex: 9999,
-                        }}
-                    />
-                )}
-                <ScrollTriggered />
-            </ScrollSection>
-            <FilterContainer>
-                <FilterLabel>
-                    <FilterCheckbox
-                        type="checkbox"
-                        checked={filterOptions.isMajor}
-                        onChange={(e) =>
-                            handleFilterChange("isMajor", e.target.checked)
-                        }
-                    />
-                    중요한 프로젝트만
-                </FilterLabel>
+                <ProjectHeader>
+                    <ProjectTitle>{project.name}</ProjectTitle>
+                    {project.thumbnail && (
+                        <ThumbnailWrapper>
+                            <ThumbnailImage
+                                src={project.thumbnail}
+                                alt={`${project.name} thumbnail`}
+                                loading="lazy"
+                                style={{
+                                    display: isImageLoading ? "none" : "block",
+                                }}
+                                onLoad={() => setIsImageLoading(false)}
+                            />
+                        </ThumbnailWrapper>
+                    )}
+                </ProjectHeader>
 
-                <FilterSelect
-                    value={filterOptions.category}
-                    options={categoryOptions}
-                    onChange={(value) => handleFilterChange("category", value)}
-                />
-            </FilterContainer>
-            <ProjectTransitionStyles>
-                {isLoading ? (
-                    renderSkeleton()
-                ) : error ? (
-                    <p>Error loading projects: {error.message}</p>
-                ) : (
-                    <TransitionGroup component={null}>
-                        {filteredProjects && filteredProjects.length > 0 ? (
-                            filteredProjects.map((project) => (
-                                <CSSTransition
-                                    key={project.id}
-                                    classNames="project"
-                                    timeout={200}
-                                >
-                                    <ProjectContainer
-                                        projectsData={[project]}
-                                    />
-                                </CSSTransition>
-                            ))
-                        ) : (
-                            <p>프로젝트가 없습니다.</p>
+                <InfoSection>
+                    <LeftColumn>
+                        <Description>{project.description}</Description>
+                        <InfoGroup>
+                            <ProjectSubtitle>
+                                {project.category} 프로젝트
+                            </ProjectSubtitle>
+                        </InfoGroup>
+                        <InfoGroup>
+                            <InfoLabel>기간</InfoLabel>
+                            <InfoValue>{project.duration}</InfoValue>
+                        </InfoGroup>
+                        <InfoGroup>
+                            <InfoLabel>역할</InfoLabel>
+                            <div>
+                                {project.role.map((r, idx) => (
+                                    <InfoValue key={idx}>{r}</InfoValue>
+                                ))}
+                            </div>
+                        </InfoGroup>
+                        {project.techStack && project.techStack.length > 0 && (
+                            <InfoGroup>
+                                <InfoLabel>기술스택</InfoLabel>
+                                <BadgesWrapper>
+                                    {project.techStack.map((stack, idx) => (
+                                        <TechBadge key={idx}>{stack}</TechBadge>
+                                    ))}
+                                </BadgesWrapper>
+                            </InfoGroup>
                         )}
-                    </TransitionGroup>
-                )}
-            </ProjectTransitionStyles>
-        </>
-    );
-}
+                        {project.projectLinks && (
+                            <LinkCard>
+                                <LinksTitle>관련 링크</LinksTitle>
+                                {project.projectLinks.repository &&
+                                    project.projectLinks.repository.map(
+                                        (repo, idx) => (
+                                            <LinkRow key={idx}>
+                                                <LinkLabel>깃허브</LinkLabel>
+                                                <LinkAnchor
+                                                    href={repo}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                >
+                                                    {repo}
+                                                </LinkAnchor>
+                                            </LinkRow>
+                                        )
+                                    )}
+                                {project.projectLinks.deployment && (
+                                    <LinkRow>
+                                        <LinkLabel>배포</LinkLabel>
+                                        <LinkAnchor
+                                            href={
+                                                project.projectLinks.deployment
+                                            }
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            {project.projectLinks.deployment}
+                                        </LinkAnchor>
+                                    </LinkRow>
+                                )}
+                            </LinkCard>
+                        )}
+                    </LeftColumn>
 
-export async function getStaticProps() {
-    const projectsData = await fetchProjects();
-    return {
-        props: { initialProjects: projectsData },
-    };
+                    <RightColumn>
+                        {project.features && (
+                            <FeaturesCard>
+                                <FeaturesTitle>주요 기능</FeaturesTitle>
+                                {project.features.team &&
+                                    project.features.team.length > 0 && (
+                                        <>
+                                            <FeaturesSubtitle>
+                                                Team Features
+                                            </FeaturesSubtitle>
+                                            <FeaturesList>
+                                                {project.features.team.map(
+                                                    (feature, idx) => (
+                                                        <FeatureItem key={idx}>
+                                                            • {feature}
+                                                        </FeatureItem>
+                                                    )
+                                                )}
+                                            </FeaturesList>
+                                        </>
+                                    )}
+                                {project.features.individual &&
+                                    project.features.individual.length > 0 && (
+                                        <>
+                                            <FeaturesSubtitle>
+                                                Individual Features
+                                            </FeaturesSubtitle>
+                                            <FeaturesList>
+                                                {project.features.individual.map(
+                                                    (feature, idx) => (
+                                                        <FeatureItem key={idx}>
+                                                            • {feature}
+                                                        </FeatureItem>
+                                                    )
+                                                )}
+                                            </FeaturesList>
+                                        </>
+                                    )}
+                                {!project.features.team &&
+                                    !project.features.individual &&
+                                    project.features.length > 0 && (
+                                        <FeaturesList>
+                                            {project.features.map(
+                                                (feature, idx) => (
+                                                    <FeatureItem key={idx}>
+                                                        • {feature}
+                                                    </FeatureItem>
+                                                )
+                                            )}
+                                        </FeaturesList>
+                                    )}
+                                {project.screenshots &&
+                                    project.screenshots.length > 0 && (
+                                        <ScreenshotButton
+                                            onClick={() => setIsModalOpen(true)}
+                                        >
+                                            스크린샷 보기
+                                        </ScreenshotButton>
+                                    )}
+                            </FeaturesCard>
+                        )}
+                    </RightColumn>
+                </InfoSection>
+            </ContentWrapper>
+
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                contentLabel="스크린샷 갤러리"
+                style={{
+                    overlay: {
+                        backgroundColor: "rgba(0, 0, 0, 0.75)",
+                        zIndex: 1000,
+                    },
+                    content: {
+                        maxWidth: "1200px",
+                        height: "fit-content",
+                        margin: "auto",
+                        borderRadius: "12px",
+                        textAlign: "center",
+                    },
+                }}
+            >
+                <MultiCarouselGallery images={project.screenshots} />
+            </Modal>
+        </PageContainer>
+    );
 }

@@ -307,26 +307,59 @@ export const LinkAnchor = styled.a`
         text-decoration: underline;
     }
 `;
-/** Skeleton 스타일 */
-export const SkeletonThumbnail = styled.div`
-    width: 100%;
-    max-width: 600px;
-    height: 0;
-    padding-top: 56.25%; /* 16:9 비율 유지 */
-    background-color: #e0e0e0;
+export const SkeletonTitle = styled.div`
+    width: 60%;
+    height: 32px;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #e0e0e0;
+    animation: pulse 1.5s infinite ease-in-out;
+`;
+
+export const SkeletonText = styled.div`
+    width: 100%;
+    height: 16px;
+    border-radius: 4px;
+    background-color: #e0e0e0;
     animation: pulse 1.5s infinite ease-in-out;
 
-    @keyframes pulse {
-        0% {
-            background-color: #e0e0e0;
-        }
-        50% {
-            background-color: #f0f0f0;
-        }
-        100% {
-            background-color: #e0e0e0;
-        }
+    & + & {
+        margin-top: 0.5rem;
     }
 `;
+
+export const SkeletonButton = styled.div`
+    width: 120px;
+    height: 32px;
+    border-radius: 6px;
+    background-color: #d6d6d6;
+    animation: pulse 1.5s infinite ease-in-out;
+`;
+
+export const SkeletonBox = styled.div`
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    animation: pulse 1.5s infinite ease-in-out;
+`;
+
+// 재사용 가능한 pulse 애니메이션
+const pulseKeyframes = `
+  @keyframes pulse {
+    0% {
+      background-color: #e0e0e0;
+    }
+    50% {
+      background-color: #f0f0f0;
+    }
+    100% {
+      background-color: #e0e0e0;
+    }
+  }
+`;
+
+const GlobalStyles = styled.div`
+    ${pulseKeyframes}
+`;
+
+export default GlobalStyles;

@@ -7,8 +7,6 @@ import {
     ProjectDetails,
     ProjectTitle,
     ProjectDescription,
-    TechStackContainer,
-    TechStackTag,
 } from "../../styles/projects/ProjectCard.styles";
 
 const ProjectCard = ({ project }) => {
@@ -34,11 +32,6 @@ const ProjectCard = ({ project }) => {
                         {project.description}
                     </ProjectDescription>
                 </ProjectDetails>
-                <TechStackContainer>
-                    {project.techStack?.map((tech, index) => (
-                        <TechStackTag key={index}>{tech}</TechStackTag>
-                    ))}
-                </TechStackContainer>
             </Link>
         </ProjectCardContainer>
     );
