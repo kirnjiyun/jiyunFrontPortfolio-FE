@@ -3,48 +3,51 @@ import styled from "styled-components";
 export const PageContainer = styled.div`
     width: 100%;
     min-height: 100vh;
-    background-color: var(--color-lightest-blue);
+    background-color: #ffffff; /* 흰색 유지 */
     display: flex;
     flex-direction: column;
     position: relative;
 `;
+
 export const ScreenshotButton = styled.button`
     width: 100%;
-    padding: 10px 15px;
+    padding: 12px 20px; /* 패딩 증가로 버튼 크기 키움 */
     font-size: 1rem;
-    color: #fff;
-    background-color: var(--color-dark-blue);
-    border: none;
-    border-radius: 8px;
+    font-weight: 600; /* 텍스트 굵게 */
+    color: var(--color-dark-blue); /* #0e0e0e */
+    background-color: var(--color-lightest-blue); /* #eaeaea */
+    border: 1px solid var(--color-medium-blue); /* #333333 테두리 추가 */
+    border-radius: 0; /* 직선 디자인 유지 */
     cursor: pointer;
     margin-top: 1rem;
     text-align: center;
-    transition: 0.3s ease;
+    transition: all 0.3s ease; /* opacity뿐만 아니라 전체 속성에 부드러운 전환 적용 */
 
     &:hover {
-        background-color: var(--color-medium-blue);
+        background-color: var(
+            --color-light-blue
+        ); /* #888888으로 약간 어두워짐 */
+        color: white;
+        opacity: 1; /* 투명도 변화 대신 색상으로 강조 */
     }
 `;
-
-/** 모바일 느낌의 '뒤로가기' 화살표 버튼 (왼쪽 상단) */
 export const BackButton = styled.button`
     position: absolute;
     top: 1.5rem;
     left: 1.5rem;
     width: 40px;
     height: 40px;
-    background-color: var(--color-dark-blue);
+    background-color: var(--color-medium-blue); /* #333333 */
     border: none;
-    border-radius: 12px;
+    border-radius: 0;
     cursor: pointer;
-    z-index: 10; /* 위에 표시 */
-
+    z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
 
     &:hover {
-        background-color: #1c2f45; /* 조금 더 진하게 */
+        background-color: var(--color-light-blue); /* #888888 */
     }
 
     @media (max-width: 600px) {
@@ -55,9 +58,8 @@ export const BackButton = styled.button`
     }
 `;
 
-/** 화살표 기호 */
 export const ArrowSymbol = styled.span`
-    color: #fff;
+    color: #ffffff;
     font-size: 1.2rem;
     line-height: 1;
     @media (max-width: 600px) {
@@ -68,11 +70,9 @@ export const ArrowSymbol = styled.span`
 export const ContentWrapper = styled.div`
     width: 100%;
     max-width: 1000px;
-    margin: 4rem auto 2rem;
-    background-color: var(--color-lightest-blue);
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
+    margin: 6rem auto 2rem;
+    background-color: #ffffff;
+    padding: 3rem;
     position: relative;
 
     @media (max-width: 600px) {
@@ -81,19 +81,18 @@ export const ContentWrapper = styled.div`
     }
 `;
 
-/** 프로젝트 헤더 (타이틀, 서브타이틀) */
 export const ProjectHeader = styled.div`
-    text-align: center;
-    margin-bottom: 2rem;
+    text-align: center; /* 가운데 정렬 */
+    margin-bottom: 3rem;
 `;
 
-/** 더 크고 세련된 타이틀 */
 export const ProjectTitle = styled.h1`
-    font-size: 3rem;
-    font-weight: bolder;
-    letter-spacing: 1px;
-    color: var(--color-dark-blue);
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: var(--color-dark-blue); /* #0e0e0e */
     margin-bottom: 0.5rem;
+    text-align: center; /* 가운데 정렬 */
 
     @media (max-width: 600px) {
         font-size: 1.8rem;
@@ -101,18 +100,15 @@ export const ProjectTitle = styled.h1`
 `;
 
 export const ProjectSubtitle = styled.div`
-    min-width: 60px;
-
-    color: var(--color-dark-blue);
-    margin-right: 1rem;
+    color: var(--color-light-blue); /* #888888 */
     margin-bottom: 0.5rem;
+    font-size: 1rem;
 
     @media (max-width: 500px) {
         margin-bottom: 0;
     }
 `;
 
-/** 이미지(썸네일) 섹션 */
 export const ThumbnailWrapper = styled.div`
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -124,66 +120,54 @@ export const ThumbnailWrapper = styled.div`
 export const ThumbnailImage = styled.img`
     width: 100%;
     max-width: 600px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: opacity 0.3s ease;
     cursor: pointer;
 
     &:hover {
-        transform: scale(1.02);
+        opacity: 0.95;
     }
 `;
 
-/** 2컬럼 레이아웃 */
 export const InfoSection = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 3rem;
 
     @media (max-width: 768px) {
         grid-template-columns: 1fr;
     }
 `;
 
-/** 왼쪽 컬럼 */
 export const LeftColumn = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
 `;
 
-/** 오른쪽 컬럼 */
 export const RightColumn = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
 `;
 
-/** 프로젝트 설명 */
 export const Description = styled.p`
     font-size: 1.1rem;
-    color: var(--color-dark-blue);
+    color: var(--color-medium-blue); /* #333333 */
     line-height: 1.6;
     margin: 0;
 `;
 
-/** 인포(기간, 역할, TechStack 등) */
 export const InfoGroup = styled.div`
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    align-items: start;
-    justify-content: center;
+    align-items: flex-start;
 `;
 
-/** Label / Value 짝 (예: '기간: 2023-01 ~ 2023-03') */
 export const InfoLabel = styled.div`
-    min-width: 60px;
-
-    color: var(--color-dark-blue);
-    margin-right: 1rem;
+    color: var(--color-light-blue); /* #888888 */
     margin-bottom: 0.5rem;
+    font-weight: 600;
 
     @media (max-width: 500px) {
         margin-bottom: 0;
@@ -192,15 +176,14 @@ export const InfoLabel = styled.div`
 
 export const InfoValue = styled.div`
     font-size: 0.95rem;
-    margin-bottom: 0.3rem; /* 추가: 역할들이 붙지 않도록 간격 조정 */
+    margin-bottom: 0.3rem;
+    color: var(--color-medium-blue); /* #333333 */
 
     &:last-child {
-        margin-bottom: 0; /* 마지막 요소는 여백 제거 */
+        margin-bottom: 0;
     }
-    color: var(--color-dark-blue);
 `;
 
-/** Tech Stack Badges */
 export const BadgesWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -208,43 +191,28 @@ export const BadgesWrapper = styled.div`
 `;
 
 export const TechBadge = styled.span`
-    background-color: var(--color-dark-blue);
-    color: #fff;
+    background-color: var(--color-lightest-blue); /* #eaeaea */
+    color: var(--color-medium-blue); /* #333333 */
     font-size: 0.85rem;
-    border-radius: 4px;
     padding: 0.4rem 0.6rem;
     display: inline-block;
     white-space: nowrap;
 `;
 
-/** 주요 기능 카드 */
 export const FeaturesCard = styled.div`
-    background-color: #ffffff;
+    background-color: var(--color-lightest-blue); /* #eaeaea */
     padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e6ecf1;
     display: flex;
     flex-direction: column;
-    gap: 2rem; /* Larger gap for clear separation */
+    gap: 2rem;
 `;
 
 export const FeaturesTitle = styled.h3`
     font-size: 1.5rem;
-    color: var(--color-dark-blue);
+    color: var(--color-dark-blue); /* #0e0e0e */
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     margin-bottom: 1rem;
-`;
-
-export const FeaturesSubtitle = styled.h4`
-    font-size: 1.2rem;
-    color: var(--color-medium-blue);
-    font-weight: bold;
-    margin-bottom: 1rem;
-    text-transform: uppercase; /* All caps for emphasis */
-    letter-spacing: 0.05em;
-    text-align: left; /* Left-aligned for cleaner layout */
 `;
 
 export const FeaturesList = styled.ul`
@@ -253,37 +221,23 @@ export const FeaturesList = styled.ul`
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* Larger spacing for clean look */
+    gap: 1rem;
 `;
 
 export const FeatureItem = styled.li`
     font-size: 1rem;
-    color: #4a4a4a;
-    padding: 0.8rem 1rem;
-    border-radius: 10px;
-    background-color: #f9fbfc; /* Subtle background */
-    transition: all 0.3s ease;
-
-    &:hover {
-        background-color: var(--color-light-blue); /* Highlight hover */
-        color: #ffffff;
-        transform: translateY(-4px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Hover shadow */
-    }
+    color: var(--color-medium-blue); /* #333333 */
+    padding: 0.8rem 0;
 `;
 
-/** 링크 섹션 */
 export const LinkCard = styled.div`
-    background-color: #ffffff;
+    background-color: var(--color-lightest-blue); /* #eaeaea */
     padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e6ecf1;
 `;
 
 export const LinksTitle = styled.h3`
     font-size: 1.1rem;
-    color: var(--color-medium-blue);
+    color: var(--color-dark-blue); /* #0e0e0e */
     margin-bottom: 0.75rem;
 `;
 
@@ -294,32 +248,31 @@ export const LinkRow = styled.div`
 export const LinkLabel = styled.span`
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--color-dark-blue);
+    color: var(--color-light-blue); /* #888888 */
     margin-right: 0.5rem;
 `;
 
 export const LinkAnchor = styled.a`
     font-size: 0.95rem;
-    color: var(--color-light-blue);
+    color: var(--color-darkest-blue); /* #39ff14 */
     text-decoration: none;
 
     &:hover {
         text-decoration: underline;
     }
 `;
+
 export const SkeletonTitle = styled.div`
     width: 60%;
     height: 32px;
-    border-radius: 8px;
-    background-color: #e0e0e0;
+    background-color: var(--color-lightest-blue); /* #eaeaea */
     animation: pulse 1.5s infinite ease-in-out;
 `;
 
 export const SkeletonText = styled.div`
     width: 100%;
     height: 16px;
-    border-radius: 4px;
-    background-color: #e0e0e0;
+    background-color: var(--color-lightest-blue); /* #eaeaea */
     animation: pulse 1.5s infinite ease-in-out;
 
     & + & {
@@ -330,31 +283,15 @@ export const SkeletonText = styled.div`
 export const SkeletonButton = styled.div`
     width: 120px;
     height: 32px;
-    border-radius: 6px;
-    background-color: #d6d6d6;
+    background-color: var(--color-light-blue); /* #888888 */
     animation: pulse 1.5s infinite ease-in-out;
 `;
 
-export const SkeletonBox = styled.div`
-    width: 100%;
-    height: 200px;
-    border-radius: 10px;
-    background-color: #e0e0e0;
-    animation: pulse 1.5s infinite ease-in-out;
-`;
-
-// 재사용 가능한 pulse 애니메이션
 const pulseKeyframes = `
   @keyframes pulse {
-    0% {
-      background-color: #e0e0e0;
-    }
-    50% {
-      background-color: #f0f0f0;
-    }
-    100% {
-      background-color: #e0e0e0;
-    }
+    0% { background-color: var(--color-lightest-blue); }
+    50% { background-color: #f0f0f0; }
+    100% { background-color: var(--color-lightest-blue); }
   }
 `;
 

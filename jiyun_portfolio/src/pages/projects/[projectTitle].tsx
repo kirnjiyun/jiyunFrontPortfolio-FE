@@ -39,7 +39,6 @@ import {
 
 Modal.setAppElement("#__next");
 
-// 로딩 중에 보여줄 스켈레톤 컴포넌트 (필요 시 유지 가능, 여기서는 제거 가능성도 고려)
 function ProjectDetailSkeleton() {
     return (
         <PageContainer>
@@ -74,7 +73,6 @@ export default function ProjectDetailPage({ project }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isImageLoading, setIsImageLoading] = useState(true);
 
-    // project가 getStaticProps를 통해 전달되므로 useQuery 및 로딩/에러 상태 제거
     if (!project) return <p>Project not found</p>;
 
     return (
@@ -256,7 +254,6 @@ export default function ProjectDetailPage({ project }) {
     );
 }
 
-// 모든 프로젝트 페이지의 경로를 생성
 export async function getStaticPaths() {
     const projects = await fetchProjects();
     const paths = projects.map((project) => ({
@@ -266,11 +263,10 @@ export async function getStaticPaths() {
     }));
     return {
         paths,
-        fallback: false, // 존재하지 않는 경로는 404로 처리
+        fallback: false,
     };
 }
 
-// 각 프로젝트 데이터를 빌드 시 가져옴
 export async function getStaticProps({ params }) {
     const projects = await fetchProjects();
     const project = projects.find(
@@ -279,9 +275,9 @@ export async function getStaticProps({ params }) {
             params.projectTitle
     );
     if (!project) {
-        return { notFound: true }; // 프로젝트가 없으면 404 페이지 표시
+        return { notFound: true };
     }
     return {
-        props: { project }, // 프로젝트 데이터를 페이지에 전달
+        props: { project },
     };
 }
