@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css"; // 꼭 import해줘야 스타일이 적용됩니다.
+import "react-multi-carousel/lib/styles.css";
 
 const MultiCarouselGallery = ({ images }) => {
-    // 반응형 설정
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -23,6 +22,18 @@ const MultiCarouselGallery = ({ images }) => {
         },
     };
 
+    const [loadedImages, setLoadedImages] = useState(
+        Array(images?.length || 0).fill(false)
+    );
+
+    const handleImageLoad = (index) => {
+        setLoadedImages((prev) => {
+            const newLoaded = [...prev];
+            newLoaded[index] = true;
+            return newLoaded;
+        });
+    };
+
     if (!images || images.length === 0) return null;
 
     return (
@@ -34,18 +45,42 @@ const MultiCarouselGallery = ({ images }) => {
             keyBoardControl={true}
             swipeable={true}
             draggable={true}
-            // 필요 시 더 많은 옵션 추가 가능
-            // arrows={true}
-            // removeArrowOnDeviceType={["tablet", "mobile"]}
-            // customTransition="transform 300ms ease-in-out"
-            // etc...
         >
             {images.map((src, index) => (
-                <div key={index}>
+                <div
+                    key={index}
+                    style={{
+                        position: "relative",
+                        display: "flex", // Flexbox로 중앙 정렬
+                        justifyContent: "center", // 수평 중앙
+                        alignItems: "center", // 수직 중앙
+                        height: "100%", // 캐러셀 높이 전체 사용
+                    }}
+                >
+                    {!loadedImages[index] && (
+                        <img
+                            src="/images/loading/loading.svg"
+                            alt="Loading"
+                            style={{
+                                maxWidth: "100%",
+                                height: "auto",
+                                position: "absolute",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                            }}
+                        />
+                    )}
+
                     <img
                         src={src}
                         alt={`Screenshot-${index}`}
-                        style={{ maxWidth: "100%", height: "auto" }}
+                        style={{
+                            maxWidth: "100%",
+                            height: "auto",
+                            display: loadedImages[index] ? "block" : "none",
+                        }}
+                        onLoad={() => handleImageLoad(index)}
                     />
                 </div>
             ))}
