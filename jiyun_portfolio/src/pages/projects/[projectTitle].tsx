@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Modal from "react-modal";
 import MultiCarouselGallery from "@/components/projectsCompo/MultiCarouselGallery";
-import { useQuery } from "@tanstack/react-query";
 import { fetchProjects } from "@/lib/api";
 import {
     PageContainer,
@@ -33,7 +32,6 @@ import {
     LinkLabel,
     LinkAnchor,
     ScreenshotButton,
-    // Skeleton 컴포넌트들 (named export)
     SkeletonTitle,
     SkeletonText,
     SkeletonButton,
@@ -41,7 +39,7 @@ import {
 
 Modal.setAppElement("#__next");
 
-// 로딩 중에 보여줄 스켈레톤 컴포넌트
+// 로딩 중에 보여줄 스켈레톤 컴포넌트 (필요 시 유지 가능, 여기서는 제거 가능성도 고려)
 function ProjectDetailSkeleton() {
     return (
         <PageContainer>
@@ -71,32 +69,12 @@ function ProjectDetailSkeleton() {
     );
 }
 
-export default function ProjectDetailPage() {
+export default function ProjectDetailPage({ project }) {
     const router = useRouter();
-    const { projectTitle } = router.query;
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isImageLoading, setIsImageLoading] = useState(true);
 
-    // suspense 옵션 없이 데이터를 가져옴
-    const {
-        data: allProjects,
-        isLoading,
-        error,
-    } = useQuery({
-        queryKey: ["projects"],
-        queryFn: fetchProjects,
-    });
-
-    if (error) return <p>Error: {error.message}</p>;
-
-    // 데이터가 로딩 중이면 스켈레톤 UI를 보여줌
-    if (isLoading) return <ProjectDetailSkeleton />;
-
-    const project = allProjects.find(
-        (proj) => proj.title.toLowerCase().replace(/\s+/g, "-") === projectTitle
-    );
-
+    // project가 getStaticProps를 통해 전달되므로 useQuery 및 로딩/에러 상태 제거
     if (!project) return <p>Project not found</p>;
 
     return (
@@ -196,9 +174,9 @@ export default function ProjectDetailPage() {
                                 {project.features.team &&
                                     project.features.team.length > 0 && (
                                         <>
-                                            <FeaturesSubtitle>
+                                            <FeaturesTitle>
                                                 Team Features
-                                            </FeaturesSubtitle>
+                                            </FeaturesTitle>
                                             <FeaturesList>
                                                 {project.features.team.map(
                                                     (feature, idx) => (
@@ -213,9 +191,9 @@ export default function ProjectDetailPage() {
                                 {project.features.individual &&
                                     project.features.individual.length > 0 && (
                                         <>
-                                            <FeaturesSubtitle>
+                                            <FeaturesTitle>
                                                 Individual Features
-                                            </FeaturesSubtitle>
+                                            </FeaturesTitle>
                                             <FeaturesList>
                                                 {project.features.individual.map(
                                                     (feature, idx) => (
@@ -276,4 +254,34 @@ export default function ProjectDetailPage() {
             </Modal>
         </PageContainer>
     );
+}
+
+// 모든 프로젝트 페이지의 경로를 생성
+export async function getStaticPaths() {
+    const projects = await fetchProjects();
+    const paths = projects.map((project) => ({
+        params: {
+            projectTitle: project.title.toLowerCase().replace(/\s+/g, "-"),
+        },
+    }));
+    return {
+        paths,
+        fallback: false, // 존재하지 않는 경로는 404로 처리
+    };
+}
+
+// 각 프로젝트 데이터를 빌드 시 가져옴
+export async function getStaticProps({ params }) {
+    const projects = await fetchProjects();
+    const project = projects.find(
+        (proj) =>
+            proj.title.toLowerCase().replace(/\s+/g, "-") ===
+            params.projectTitle
+    );
+    if (!project) {
+        return { notFound: true }; // 프로젝트가 없으면 404 페이지 표시
+    }
+    return {
+        props: { project }, // 프로젝트 데이터를 페이지에 전달
+    };
 }

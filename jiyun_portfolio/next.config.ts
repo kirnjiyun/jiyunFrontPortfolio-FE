@@ -1,42 +1,27 @@
-import {withSentryConfig} from "@sentry/nextjs";
-import type { NextConfig } from "next";
+const { withSentryConfig } = require("@sentry/nextjs");
 
-const nextConfig: NextConfig = {
-    /* config options here */
-    reactStrictMode: false,
+const nextConfig = {
+    // Next.js 설정
+    reactStrictMode: true,
+    // Sentry 설정에서 예제 페이지 비활성화
+    sentry: {
+        disableServerWebpackPlugin: false,
+        disableClientWebpackPlugin: false,
+        hideSourceMaps: false, // 소스 맵 숨기기 여부 (필요 시 true로 변경)
+    },
+    // Sentry 예제 페이지를 빌드에서 제외
+    async rewrites() {
+        return [];
+    },
+    // 페이지 자동 생성 비활성화 (필요 시 추가)
+    pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
 };
 
-export default withSentryConfig(nextConfig, {
-// For all available options, see:
-// https://github.com/getsentry/sentry-webpack-plugin#options
-
-org: "jiyun",
-project: "javascript-nextjs",
-
-// Only print logs for uploading source maps in CI
-silent: !process.env.CI,
-
-// For all available options, see:
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-// Upload a larger set of source maps for prettier stack traces (increases build time)
-widenClientFileUpload: true,
-
-// Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-// This can increase your server load as well as your hosting bill.
-// Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-// side errors will fail.
-// tunnelRoute: "/monitoring",
-
-// Hides source maps from generated client bundles
-hideSourceMaps: true,
-
-// Automatically tree-shake Sentry logger statements to reduce bundle size
-disableLogger: true,
-
-// Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
-// See the following for more information:
-// https://docs.sentry.io/product/crons/
-// https://vercel.com/docs/cron-jobs
-automaticVercelMonitors: true,
+module.exports = withSentryConfig(nextConfig, {
+    // Sentry 추가 옵션
+    silent: true, // 로그 억제
+    // 소스 맵 생성 후 삭제 설정 (빌드 경고 해결)
+    sourcemaps: {
+        deleteSourcemapsAfterUpload: true, // 소스 맵 업로드 후 삭제
+    },
 });
