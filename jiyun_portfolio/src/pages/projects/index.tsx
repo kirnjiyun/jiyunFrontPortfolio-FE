@@ -185,11 +185,7 @@ export default function ProjectsPage({ initialProjects }) {
             >
                 {isHovering && (
                     <Image
-                        src={
-                            scrollDir === "down"
-                                ? "/images/down-arrow.png"
-                                : "/images/up-arrow.png"
-                        }
+                        src="/images/down-arrow.png"
                         alt="arrow"
                         width={100}
                         height={100}
@@ -198,11 +194,15 @@ export default function ProjectsPage({ initialProjects }) {
                             top: mousePos.y + 10,
                             left: mousePos.x + 10,
                             pointerEvents: "none",
-                            transform: "translate(-50%, -50%)",
+                            transform: `translate(-50%, -50%) rotate(${
+                                scrollDir === "down" ? 0 : 180
+                            }deg)`,
+                            transition: "transform 0.3s ease",
                             zIndex: 9999,
                         }}
                     />
                 )}
+
                 <ScrollTriggered />
             </ScrollSection>
             <FilterContainer>
