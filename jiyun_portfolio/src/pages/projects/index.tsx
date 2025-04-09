@@ -20,7 +20,7 @@ import styled from "styled-components";
 // Skeleton UI 스타일 컴포넌트
 const SkeletonCard = styled.div`
     width: 100%;
-    max-width: 400px; /* 카드 가로 크기에 맞게 조정 */
+    max-width: 400px;
     height: 350px;
     background: #e0e0e0;
     border-radius: 12px;
@@ -97,10 +97,6 @@ export default function ProjectsPage({ initialProjects }) {
 
     useEffect(() => {
         if (!projectsData) return;
-
-        console.log("projectsData:", projectsData);
-        console.log("filterOptions:", filterOptions);
-
         let filtered = projectsData;
 
         if (filterOptions.isMajor) {
@@ -116,7 +112,6 @@ export default function ProjectsPage({ initialProjects }) {
             );
         }
 
-        console.log("filteredProjects:", filtered);
         setFilteredProjects(filtered);
     }, [filterOptions, projectsData]);
 
@@ -127,14 +122,33 @@ export default function ProjectsPage({ initialProjects }) {
         }));
     };
 
+    // 마우스 커서 위치 관련 상태 및 핸들러
     const [isHovering, setIsHovering] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
     const handleMouseEnter = () => setIsHovering(true);
     const handleMouseLeave = () => setIsHovering(false);
     const handleMouseMove = (e) => {
         setMousePos({ x: e.clientX, y: e.clientY });
     };
+
+    // 스크롤 방향 감지 관련 상태 및 로직
+    const [scrollDir, setScrollDir] = useState("down");
+    const [prevScrollY, setPrevScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > prevScrollY) {
+                setScrollDir("down");
+            } else if (currentScrollY < prevScrollY) {
+                setScrollDir("up");
+            }
+            setPrevScrollY(currentScrollY);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [prevScrollY]);
 
     const renderSkeleton = () => (
         <SkeletonWrapper>
@@ -171,7 +185,11 @@ export default function ProjectsPage({ initialProjects }) {
             >
                 {isHovering && (
                     <Image
-                        src="/images/down-arrow.png"
+                        src={
+                            scrollDir === "down"
+                                ? "/images/down-arrow.png"
+                                : "/images/up-arrow.png"
+                        }
                         alt="arrow"
                         width={100}
                         height={100}
