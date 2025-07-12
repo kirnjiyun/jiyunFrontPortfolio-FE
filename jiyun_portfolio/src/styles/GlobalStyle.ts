@@ -47,6 +47,37 @@ const GlobalStyle = createGlobalStyle`
     font-family: inherit;
     cursor: pointer;
   }
+
+  img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    html {
+      font-size: 14px;
+    }
+    body {
+      font-size: 1rem;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    h3 {
+      font-size: 1.2rem;
+    }
+    p, a, li, button {
+      font-size: 1rem;
+    }
+    section, main, header, footer {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
 `;
 
 export default GlobalStyle;

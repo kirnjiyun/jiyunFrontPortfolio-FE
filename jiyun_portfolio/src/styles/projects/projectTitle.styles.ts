@@ -133,6 +133,7 @@ export const InfoSection = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
+    align-items: start;
 
     @media (max-width: 768px) {
         grid-template-columns: 1fr;
@@ -143,12 +144,16 @@ export const LeftColumn = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    width: 100%;
+    min-width: 0;
 `;
 
 export const RightColumn = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    width: 100%;
+    min-width: 0;
 `;
 
 export const Description = styled.p`
@@ -205,6 +210,7 @@ export const FeaturesCard = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    width: 100%;
 `;
 
 export const FeaturesTitle = styled.h3`
@@ -233,6 +239,7 @@ export const FeatureItem = styled.li`
 export const LinkCard = styled.div`
     background-color: var(--color-lightest-blue); /* #eaeaea */
     padding: 2rem;
+    width: 100%;
 `;
 
 export const LinksTitle = styled.h3`

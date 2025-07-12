@@ -64,6 +64,9 @@ export const Info = styled.p`
         color: var(--color-medium-blue);
         font-size: 1.2rem;
     }
+    @media (max-width: 768px) {
+        text-align: center;
+    }
 `;
 
 export const StyledLink = styled.a`
@@ -72,6 +75,11 @@ export const StyledLink = styled.a`
     &:hover {
         text-decoration: underline;
     }
+    @media (max-width: 768px) {
+        display: inline-block;
+        text-align: center;
+        margin: 0 auto;
+    }
 `;
 
 export const Features = styled.div`
@@ -79,6 +87,14 @@ export const Features = styled.div`
     ul {
         margin-top: 10px;
         padding-left: 20px;
+        @media (max-width: 768px) {
+            padding-left: 0;
+            text-align: center;
+            list-style-position: inside;
+        }
+    }
+    @media (max-width: 768px) {
+        text-align: center;
     }
 `;
 
@@ -91,6 +107,10 @@ export const FeatureItem = styled.li`
         color: var(--color-medium-blue);
         transform: scale(1.02);
         transition: all 0.3s ease-in-out;
+    }
+    @media (max-width: 768px) {
+        text-align: center;
+        margin-left: 0;
     }
 `;
 

@@ -19,6 +19,13 @@ export const MainSection = styled.div`
     background: ${colors.lightestBlue};
     position: relative;
     overflow: hidden;
+    @media (max-width: 768px) {
+        height: auto;
+        padding: 1.5rem 0.5rem;
+    }
+    @media (max-width: 480px) {
+        padding: 1rem 0.2rem;
+    }
 `;
 
 // 스크롤 텍스트 컨테이너
@@ -37,6 +44,12 @@ export const ScrollText = styled(animated.div)`
     font-weight: bold;
     color: ${colors.darkBlue};
     white-space: nowrap;
+    @media (max-width: 768px) {
+        font-size: 2.2rem;
+    }
+    @media (max-width: 480px) {
+        font-size: 1.2rem;
+    }
 `;
 
 // 밝은 텍스트 스타일
@@ -45,6 +58,12 @@ export const ScrollTextLight = styled(animated.div)`
     font-weight: bold;
     color: ${colors.brightestBlue};
     white-space: nowrap;
+    @media (max-width: 768px) {
+        font-size: 2.2rem;
+    }
+    @media (max-width: 480px) {
+        font-size: 1.2rem;
+    }
 `;
 
 // 아래 일반 섹션
@@ -66,28 +85,13 @@ export const Section = styled.section`
     &:hover {
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
-`;
-
-// 이미지 컨테이너 스타일
-export const ImageContainer = styled.div`
-    margin-bottom: 24px;
-
-    @media (min-width: 769px) {
-        flex: 0 0 200px;
-        margin-right: 32px;
-        margin-bottom: 0;
+    @media (max-width: 768px) {
+        padding: 16px 4px;
+        margin: 8px 0;
     }
-`;
-
-// 프로필 이미지 스타일
-export const ProfileImage = styled.img`
-    width: 180px;
-    height: 240px;
-    border-radius: 12px;
-    object-fit: cover;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 4px solid ${colors.mediumBlue};
-    transition: all 0.3s ease;
+    @media (max-width: 480px) {
+        padding: 8px 2px;
+    }
 `;
 
 // 텍스트 컨테이너
@@ -110,11 +114,19 @@ export const Title = styled.h2`
 
 // 본문 텍스트 스타일
 export const Paragraph = styled.p`
-    margin-top: 24px;
+    margin: 24px 12px;
     font-size: 18px;
     line-height: 1.8;
-    margin-bottom: 24px;
+
     color: ${colors.mediumBlue};
+    @media (max-width: 768px) {
+        font-size: 1rem;
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
+    @media (max-width: 480px) {
+        font-size: 0.9rem;
+    }
 `;
 // 추가된 스타일 (기본 스타일 파일 하단에 추가)
 export const InfoContainer = styled.div`
@@ -148,4 +160,11 @@ export const ContentContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 12px;
+        padding: 16px;
+    }
 `;

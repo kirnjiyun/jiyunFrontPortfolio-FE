@@ -26,6 +26,10 @@ export const NavbarWrapper = styled(animated.nav)`
         padding: 0 1rem;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     }
+    @media (max-width: 480px) {
+        height: 48px;
+        padding: 0 0.5rem;
+    }
 `;
 
 // 로고
@@ -33,6 +37,14 @@ export const Logo = styled.div`
     width: 40px;
     height: 40px;
     cursor: pointer;
+    @media (max-width: 768px) {
+        width: 32px;
+        height: 32px;
+    }
+    @media (max-width: 480px) {
+        width: 24px;
+        height: 24px;
+    }
 `;
 
 // 햄버거 버튼
@@ -46,6 +58,16 @@ export const MenuButton = styled.div`
     color: var(--color-lightest-blue);
     font-size: 2rem;
     background: none;
+    @media (max-width: 768px) {
+        width: 32px;
+        height: 32px;
+        font-size: 1.5rem;
+    }
+    @media (max-width: 480px) {
+        width: 24px;
+        height: 24px;
+        font-size: 1.2rem;
+    }
 `;
 export const ModalCircle = styled(animated.div).attrs(
     (props: { ismenuopen?: boolean }) => ({
@@ -100,6 +122,13 @@ export const MenuItem = styled(animated.div)`
         &:hover {
             font-size: 1.5rem;
             text-shadow: 0 0 5px var(--color-brightest-blue);
+        }
+    }
+    @media (max-width: 480px) {
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+        &:hover {
+            font-size: 1.1rem;
         }
     }
 `;

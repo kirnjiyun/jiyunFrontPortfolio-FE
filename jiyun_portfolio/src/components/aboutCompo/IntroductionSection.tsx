@@ -19,13 +19,7 @@ export default function IntroductionSection({ introductionData }) {
                 <S.TextContainer>
                     <S.Title>Introduction</S.Title>
                     <S.ContentContainer>
-                        {" "}
-                        <S.ImageContainer>
-                            <S.ProfileImage
-                                src="/images/작은 이미지 작게.jpeg"
-                                alt="Profile"
-                            />
-                        </S.ImageContainer>
+                        {/* 이미지 제거됨 */}
                         <S.InfoContainer>
                             <S.InfoItem>
                                 🙋🏻‍♀️ 이름 : {introductionData?.name}

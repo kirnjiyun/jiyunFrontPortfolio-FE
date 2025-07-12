@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { animated } from "react-spring";
 
 // 전체 래퍼
@@ -8,6 +8,14 @@ export const HomeWrapper = styled(animated.div)`
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
+    @media (max-width: 768px) {
+        height: auto;
+        min-height: 100vh;
+        padding-bottom: 2rem;
+    }
+    @media (max-width: 480px) {
+        padding-bottom: 1rem;
+    }
 `;
 
 // 배경
@@ -36,6 +44,10 @@ export const AnimatedText = styled.div`
     @media (max-width: 768px) {
         font-size: 4rem;
         margin-top: 20vh;
+    }
+    @media (max-width: 480px) {
+        font-size: 2.2rem;
+        margin-top: 12vh;
     }
 `;
 
@@ -92,9 +104,18 @@ export const PortfolioText = styled(animated.div)`
     text-align: center;
     font-size: 5rem;
     font-weight: bold;
-
+    color: white;
     @media (max-width: 768px) {
         font-size: 2rem;
+    }
+    @media (max-width: 480px) {
+        position: absolute;
+        top: unset;
+        bottom: 60px;
+        left: 0;
+        right: 0;
+        font-size: 2rem;
+        padding: 0 8px;
     }
 `;
 
@@ -120,5 +141,33 @@ export const PromptText = styled(animated.div)`
 
     @media (max-width: 768px) {
         display: none;
+    }
+`;
+
+const bounce = keyframes`
+  0%, 100% { transform: translateY(0);}
+  50% { transform: translateY(15px);}
+`;
+
+export const ArrowImage = styled.img`
+    animation: ${bounce} 1.2s infinite;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+`;
+
+export const ScrollGuideText = styled.div`
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    font-size: 1rem;
+    color: black;
+    opacity: 0.7;
+    z-index: 10;
+    letter-spacing: 0.05em;
+    @media (max-width: 600px) {
+        top: 16px;
+        left: 16px;
+        font-size: 0.9rem;
     }
 `;

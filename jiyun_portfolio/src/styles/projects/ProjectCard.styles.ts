@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const ProjectCardContainer = styled.div`
     position: relative;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     height: 350px;
     margin: 0 auto;
     border-radius: 12px;
@@ -17,9 +18,17 @@ export const ProjectCardContainer = styled.div`
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
+    @media (max-width: 768px) {
+        width: 100%;
+        max-width: 340px;
+        height: 260px;
+        margin: 0 auto 1.5rem auto;
+    }
     @media (max-width: 576px) {
-        width: 300px;
-        height: 300px;
+        width: 100%;
+        max-width: 98vw;
+        height: 220px;
+        margin: 0 auto 1rem auto;
     }
 `;
 
@@ -40,6 +49,14 @@ export const ProjectDetails = styled.div`
     justify-content: center;
     gap: 0.5rem;
     position: relative;
+    @media (max-width: 768px) {
+        padding: 0.5rem;
+        height: calc(100% - 140px);
+    }
+    @media (max-width: 576px) {
+        padding: 0.3rem;
+        height: calc(100% - 100px);
+    }
 `;
 
 export const ProjectTitle = styled.h2`
@@ -47,6 +64,12 @@ export const ProjectTitle = styled.h2`
     font-weight: 700;
     color: var(--color-dark-blue);
     margin: 0;
+    @media (max-width: 768px) {
+        font-size: 1rem;
+    }
+    @media (max-width: 576px) {
+        font-size: 0.95rem;
+    }
 `;
 
 export const ProjectDescription = styled.p`
@@ -61,5 +84,17 @@ export const ProjectDescription = styled.p`
     ${ProjectCardContainer}:hover & {
         opacity: 1;
         max-height: 100px; /* 적당한 높이 */
+    }
+    @media (max-width: 768px) {
+        font-size: 0.85rem;
+        ${ProjectCardContainer}:hover & {
+            max-height: 60px;
+        }
+    }
+    @media (max-width: 576px) {
+        font-size: 0.8rem;
+        ${ProjectCardContainer}:hover & {
+            max-height: 40px;
+        }
     }
 `;
