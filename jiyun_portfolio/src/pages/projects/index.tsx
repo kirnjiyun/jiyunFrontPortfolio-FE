@@ -12,7 +12,11 @@ import {
 import ScrollTriggered from "@/components/projectsCompo/ScrollTrigger";
 import FilterSelect from "@/components/projectsCompo/FilterSelect";
 import { useQuery } from "@tanstack/react-query";
-import { fetchProjects } from "@/lib/api";
+import {
+    fetchProjects,
+    fetchProjectsForSSG,
+    SSG_REVALIDATE_SECONDS,
+} from "@/lib/api";
 import styled from "styled-components";
 import { animated, useTransition } from "react-spring";
 
@@ -199,8 +203,9 @@ export default function ProjectsPage({ initialProjects }) {
 }
 
 export async function getStaticProps() {
-    const projectsData = await fetchProjects();
+    const projectsData = await fetchProjectsForSSG();
     return {
         props: { initialProjects: projectsData },
+        revalidate: SSG_REVALIDATE_SECONDS,
     };
 }

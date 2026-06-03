@@ -9,38 +9,14 @@ import {
     Section,
 } from "../../styles/about/AboutPageStyles";
 import InfiniteScrollText from "@/components/aboutCompo/InfiniteScroll";
+import {
+    fetchAboutDataForSSG,
+    SSG_REVALIDATE_SECONDS,
+} from "@/lib/api";
 // import TimelineComponent from "@/components/aboutCompo/TimeLineSection";
 export async function getStaticProps() {
-    const baseUrl =
-        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5050";
-
-    const [introductionRes, educationRes, certificationRes] = await Promise.all(
-        [
-            fetch(`${baseUrl}/api/introductions`),
-            fetch(`${baseUrl}/api/educations`),
-            fetch(`${baseUrl}/api/certifications`),
-        ]
-    );
-
-    // 응답 상태 확인 및 오류 처리
-    if (!introductionRes.ok || !educationRes.ok || !certificationRes.ok) {
-        console.error("❌ API 호출 실패:", {
-            introductions: introductionRes.status,
-            educations: educationRes.status,
-            certifications: certificationRes.status,
-        });
-        return {
-            props: {
-                introductionData: null,
-                educationData: null,
-                certificationData: null,
-            },
-        };
-    }
-
-    const introductionData = await introductionRes.json();
-    const educationData = await educationRes.json();
-    const certificationData = await certificationRes.json();
+    const { introductionData, educationData, certificationData } =
+        await fetchAboutDataForSSG();
 
     return {
         props: {
@@ -48,6 +24,7 @@ export async function getStaticProps() {
             educationData,
             certificationData,
         },
+        revalidate: SSG_REVALIDATE_SECONDS,
     };
 }
 

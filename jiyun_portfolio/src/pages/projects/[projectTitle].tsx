@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Modal from "react-modal";
 import { animated, useSpring, useTrail } from "react-spring";
 import MultiCarouselGallery from "@/components/projectsCompo/MultiCarouselGallery";
-import { fetchProjects } from "@/lib/api";
+import { fetchProjectsForSSG, SSG_REVALIDATE_SECONDS } from "@/lib/api";
 import {
     PageContainer,
     BackButton,
@@ -253,7 +253,7 @@ export default function ProjectDetailPage({ project }) {
 }
 
 export async function getStaticPaths() {
-    const projects = await fetchProjects();
+    const projects = await fetchProjectsForSSG();
     const paths = projects.map((project) => ({
         params: {
             projectTitle: project.title.toLowerCase().replace(/\s+/g, "-"),
@@ -261,21 +261,22 @@ export async function getStaticPaths() {
     }));
     return {
         paths,
-        fallback: false,
+        fallback: "blocking",
     };
 }
 
 export async function getStaticProps({ params }) {
-    const projects = await fetchProjects();
+    const projects = await fetchProjectsForSSG();
     const project = projects.find(
         (proj) =>
             proj.title.toLowerCase().replace(/\s+/g, "-") ===
             params.projectTitle
     );
     if (!project) {
-        return { notFound: true };
+        return { notFound: true, revalidate: SSG_REVALIDATE_SECONDS };
     }
     return {
         props: { project },
+        revalidate: SSG_REVALIDATE_SECONDS,
     };
 }
