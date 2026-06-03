@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const PageContainer = styled.div`
     width: 100%;
     min-height: 100vh;
-    background-color: #ffffff; /* 흰색 유지 */
+    background: transparent;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -14,10 +14,10 @@ export const ScreenshotButton = styled.button`
     padding: 12px 20px; /* 패딩 증가로 버튼 크기 키움 */
     font-size: 1rem;
     font-weight: 600; /* 텍스트 굵게 */
-    color: var(--color-dark-blue); /* #0e0e0e */
-    background-color: var(--color-lightest-blue); /* #eaeaea */
-    border: 1px solid var(--color-medium-blue); /* #333333 테두리 추가 */
-    border-radius: 0; /* 직선 디자인 유지 */
+    color: var(--color-dark-blue);
+    background-color: var(--color-lightest-blue);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
     cursor: pointer;
     margin-top: 1rem;
     text-align: center;
@@ -37,9 +37,9 @@ export const BackButton = styled.button`
     left: 1.5rem;
     width: 40px;
     height: 40px;
-    background-color: var(--color-medium-blue); /* #333333 */
-    border: none;
-    border-radius: 0;
+    background-color: var(--color-medium-blue);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
     cursor: pointer;
     z-index: 10;
     display: flex;
@@ -71,13 +71,16 @@ export const ContentWrapper = styled.div`
     width: 100%;
     max-width: 1000px;
     margin: 6rem auto 2rem;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
     padding: 3rem;
     position: relative;
 
     @media (max-width: 600px) {
         margin: 5rem auto 1.5rem;
-        padding: 1.5rem;
+        padding: 1.25rem;
     }
 `;
 
@@ -123,6 +126,8 @@ export const ThumbnailImage = styled.img`
     object-fit: cover;
     transition: opacity 0.3s ease;
     cursor: pointer;
+    border-radius: 14px;
+    border: 1px solid var(--color-border);
 
     &:hover {
         opacity: 0.95;
@@ -137,6 +142,7 @@ export const InfoSection = styled.div`
 
     @media (max-width: 768px) {
         grid-template-columns: 1fr;
+        gap: 1.4rem;
     }
 `;
 
@@ -157,7 +163,7 @@ export const RightColumn = styled.div`
 `;
 
 export const Description = styled.p`
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--color-medium-blue); /* #333333 */
     line-height: 1.6;
     margin: 0;
@@ -205,12 +211,17 @@ export const TechBadge = styled.span`
 `;
 
 export const FeaturesCard = styled.div`
-    background-color: var(--color-lightest-blue); /* #eaeaea */
+    background-color: var(--color-lightest-blue);
     padding: 2rem;
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
     gap: 2rem;
     width: 100%;
+    @media (max-width: 768px) {
+        padding: 1.1rem;
+        gap: 1rem;
+    }
 `;
 
 export const FeaturesTitle = styled.h3`
@@ -237,9 +248,13 @@ export const FeatureItem = styled.li`
 `;
 
 export const LinkCard = styled.div`
-    background-color: var(--color-lightest-blue); /* #eaeaea */
+    background-color: var(--color-lightest-blue);
     padding: 2rem;
+    border-radius: 16px;
     width: 100%;
+    @media (max-width: 768px) {
+        padding: 1.1rem;
+    }
 `;
 
 export const LinksTitle = styled.h3`
@@ -261,7 +276,7 @@ export const LinkLabel = styled.span`
 
 export const LinkAnchor = styled.a`
     font-size: 0.95rem;
-    color: var(--color-darkest-blue); /* #39ff14 */
+    color: var(--color-medium-blue);
     text-decoration: none;
 
     &:hover {

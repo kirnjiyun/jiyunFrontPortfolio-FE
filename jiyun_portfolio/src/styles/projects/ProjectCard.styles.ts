@@ -6,29 +6,32 @@ export const ProjectCardContainer = styled.div`
     max-width: 400px;
     height: 350px;
     margin: 0 auto;
-    border-radius: 12px;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
     cursor: pointer;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.32s ease, box-shadow 0.32s ease,
+        border-color 0.32s ease;
 
     &:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-8px) scale(1.01);
+        box-shadow: var(--shadow-md);
+        border-color: #bfd0e8;
     }
 
     @media (max-width: 768px) {
         width: 100%;
-        max-width: 340px;
-        height: 260px;
-        margin: 0 auto 1.5rem auto;
+        max-width: 360px;
+        height: 280px;
+        margin: 0 auto 1rem auto;
     }
     @media (max-width: 576px) {
         width: 100%;
-        max-width: 98vw;
-        height: 220px;
-        margin: 0 auto 1rem auto;
+        max-width: min(94vw, 360px);
+        height: 248px;
+        margin: 0 auto 0.8rem auto;
     }
 `;
 
@@ -37,12 +40,25 @@ export const ProjectImage = styled.img`
     width: 100%;
     height: 220px;
     object-fit: cover;
-    border-radius: 12px 12px 0 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    transition: transform 0.4s ease;
+
+    ${ProjectCardContainer}:hover & {
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+        height: 190px;
+    }
+
+    @media (max-width: 576px) {
+        height: 170px;
+    }
 `;
 
 export const ProjectDetails = styled.div`
-    padding: 1rem;
-    text-align: center;
+    padding: 1.1rem 1rem;
+    text-align: left;
     height: calc(100% - 220px);
     display: flex;
     flex-direction: column;
@@ -51,18 +67,18 @@ export const ProjectDetails = styled.div`
     position: relative;
     @media (max-width: 768px) {
         padding: 0.5rem;
-        height: calc(100% - 140px);
+        height: calc(100% - 190px);
     }
     @media (max-width: 576px) {
-        padding: 0.3rem;
-        height: calc(100% - 100px);
+        padding: 0.5rem;
+        height: calc(100% - 170px);
     }
 `;
 
 export const ProjectTitle = styled.h2`
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    color: var(--color-dark-blue);
+    color: var(--color-text-primary);
     margin: 0;
     @media (max-width: 768px) {
         font-size: 1rem;
@@ -73,28 +89,36 @@ export const ProjectTitle = styled.h2`
 `;
 
 export const ProjectDescription = styled.p`
-    font-size: 0.9rem;
-    color: #444;
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
     margin: 0;
-    opacity: 0;
-    max-height: 0;
+    opacity: 0.82;
+    max-height: 3.2em;
     overflow: hidden;
-    transition: opacity 0.3s ease, max-height 0.3s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    transition: opacity 0.3s ease;
 
     ${ProjectCardContainer}:hover & {
         opacity: 1;
-        max-height: 100px; /* 적당한 높이 */
     }
     @media (max-width: 768px) {
         font-size: 0.85rem;
-        ${ProjectCardContainer}:hover & {
-            max-height: 60px;
-        }
     }
     @media (max-width: 576px) {
         font-size: 0.8rem;
-        ${ProjectCardContainer}:hover & {
-            max-height: 40px;
-        }
     }
+`;
+
+export const ProjectMeta = styled.span`
+    display: inline-flex;
+    margin-bottom: 0.45rem;
+    padding: 0.24rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--color-medium-blue);
+    background-color: var(--color-surface-soft);
 `;

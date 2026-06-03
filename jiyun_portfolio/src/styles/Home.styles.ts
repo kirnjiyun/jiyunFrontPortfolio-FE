@@ -4,14 +4,15 @@ import { animated } from "react-spring";
 // 전체 래퍼
 export const HomeWrapper = styled(animated.div)`
     width: 100vw;
-    height: 200vh;
+    min-height: 200vh;
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
+    padding-left: 84px;
     @media (max-width: 768px) {
         height: auto;
         min-height: 100vh;
-        padding-bottom: 2rem;
+        padding: 64px 0 2rem;
     }
     @media (max-width: 480px) {
         padding-bottom: 1rem;
@@ -25,11 +26,7 @@ export const AnimatedBackground = styled(animated.div)`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        135deg,
-        var(--color-lightest-blue) 50%,
-        var(--color-dark-blue) 50%
-    );
+    background: linear-gradient(160deg, #f8fbff 0%, #e7eef9 35%, #1d2d44 100%);
     z-index: -1;
 `;
 
@@ -37,9 +34,10 @@ export const AnimatedBackground = styled(animated.div)`
 export const AnimatedText = styled.div`
     display: flex;
     justify-content: center;
-    margin-top: 30vh;
+    margin-top: 24vh;
     font-weight: normal;
-    font-size: 10rem;
+    font-size: clamp(3rem, 10vw, 8rem);
+    letter-spacing: 0.08em;
 
     @media (max-width: 768px) {
         font-size: 4rem;
@@ -59,7 +57,7 @@ export const TypingText = styled.div`
     &::after {
         content: "|";
         position: absolute;
-        right: -40px;
+        right: -24px;
         animation: blink 1s steps(2, start) infinite;
         color: currentColor;
     }
@@ -99,12 +97,13 @@ export const ArrowIndicator = styled(animated.div)`
 // 포트폴리오 텍스트
 export const PortfolioText = styled(animated.div)`
     position: absolute;
-    top: 150vh;
+    top: 145vh;
     width: 100%;
     text-align: center;
-    font-size: 5rem;
-    font-weight: bold;
-    color: white;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--color-lightest-blue);
+    text-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
     @media (max-width: 768px) {
         font-size: 2rem;
     }
@@ -121,12 +120,18 @@ export const PortfolioText = styled(animated.div)`
 
 export const PromptText = styled(animated.div)`
     position: absolute;
-    bottom: 1vh;
-    left: 80px;
-    width: 200px;
+    bottom: 2rem;
+    left: calc(84px + 2rem);
+    width: auto;
     text-align: center;
-    font-size: 1.2rem;
-    font-weight: lighter;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.65rem 1rem;
+    border-radius: 999px;
+    color: var(--color-lightest-blue);
+    background: rgba(13, 19, 33, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.24);
 
     @keyframes blinkText {
         0%,
@@ -140,7 +145,8 @@ export const PromptText = styled(animated.div)`
     animation: blinkText 1.2s infinite;
 
     @media (max-width: 768px) {
-        display: none;
+        left: 1rem;
+        bottom: 1rem;
     }
 `;
 
@@ -158,16 +164,25 @@ export const ArrowImage = styled.img`
 
 export const ScrollGuideText = styled.div`
     position: absolute;
-    top: 40px;
-    left: 40px;
-    font-size: 1rem;
-    color: black;
-    opacity: 0.7;
+    top: 42px;
+    left: calc(84px + 2rem);
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    opacity: 0.85;
     z-index: 10;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     @media (max-width: 600px) {
-        top: 16px;
+        top: 84px;
         left: 16px;
-        font-size: 0.9rem;
+        font-size: 0.78rem;
     }
+`;
+
+export const HeroSubText = styled.p`
+    margin-top: 1.4rem;
+    text-align: center;
+    color: rgba(13, 19, 33, 0.72);
+    font-size: clamp(1rem, 2.2vw, 1.35rem);
+    letter-spacing: 0.04em;
 `;

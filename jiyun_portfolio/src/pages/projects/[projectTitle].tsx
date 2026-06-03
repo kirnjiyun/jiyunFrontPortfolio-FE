@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Modal from "react-modal";
+import { animated, useSpring, useTrail } from "react-spring";
 import MultiCarouselGallery from "@/components/projectsCompo/MultiCarouselGallery";
 import { fetchProjects } from "@/lib/api";
 import {
@@ -72,12 +73,43 @@ export default function ProjectDetailPage({ project }) {
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isImageLoading, setIsImageLoading] = useState(true);
+    const contentSpring = useSpring({
+        from: { opacity: 0, transform: "translateY(20px)" },
+        to: { opacity: 1, transform: "translateY(0px)" },
+        config: { tension: 220, friction: 22 },
+    });
 
-    if (!project) return <p>Project not found</p>;
+    const normalizedFeatures = Array.isArray(project?.features)
+        ? project.features
+        : [
+              ...(project?.features?.team || []).map(
+                  (feature) => `[Team] ${feature}`
+              ),
+              ...(project?.features?.individual || []).map(
+                  (feature) => `[Individual] ${feature}`
+              ),
+          ];
+
+    const featureTrail = useTrail(normalizedFeatures.length, {
+        from: { opacity: 0, transform: "translateY(8px)" },
+        to: { opacity: 1, transform: "translateY(0px)" },
+        config: { tension: 240, friction: 20 },
+    });
+
+    if (!project) {
+        return (
+            <PageContainer>
+                <ContentWrapper>
+                    <p>Project not found</p>
+                </ContentWrapper>
+            </PageContainer>
+        );
+    }
 
     return (
         <PageContainer>
-            <ContentWrapper>
+            <animated.div style={contentSpring}>
+                <ContentWrapper>
                 <BackButton onClick={() => router.back()}>
                     <ArrowSymbol>←</ArrowSymbol>
                 </BackButton>
@@ -166,56 +198,21 @@ export default function ProjectDetailPage({ project }) {
                     </LeftColumn>
 
                     <RightColumn>
-                        {project.features && (
+                        {normalizedFeatures.length > 0 && (
                             <FeaturesCard>
                                 <FeaturesTitle>주요 기능</FeaturesTitle>
-                                {project.features.team &&
-                                    project.features.team.length > 0 && (
-                                        <>
-                                            <FeaturesTitle>
-                                                Team Features
-                                            </FeaturesTitle>
-                                            <FeaturesList>
-                                                {project.features.team.map(
-                                                    (feature, idx) => (
-                                                        <FeatureItem key={idx}>
-                                                            • {feature}
-                                                        </FeatureItem>
-                                                    )
-                                                )}
-                                            </FeaturesList>
-                                        </>
-                                    )}
-                                {project.features.individual &&
-                                    project.features.individual.length > 0 && (
-                                        <>
-                                            <FeaturesTitle>
-                                                Individual Features
-                                            </FeaturesTitle>
-                                            <FeaturesList>
-                                                {project.features.individual.map(
-                                                    (feature, idx) => (
-                                                        <FeatureItem key={idx}>
-                                                            • {feature}
-                                                        </FeatureItem>
-                                                    )
-                                                )}
-                                            </FeaturesList>
-                                        </>
-                                    )}
-                                {!project.features.team &&
-                                    !project.features.individual &&
-                                    project.features.length > 0 && (
-                                        <FeaturesList>
-                                            {project.features.map(
-                                                (feature, idx) => (
-                                                    <FeatureItem key={idx}>
-                                                        • {feature}
-                                                    </FeatureItem>
-                                                )
-                                            )}
-                                        </FeaturesList>
-                                    )}
+                                <FeaturesList>
+                                    {featureTrail.map((trailStyle, idx) => (
+                                        <animated.div
+                                            key={`${normalizedFeatures[idx]}-${idx}`}
+                                            style={trailStyle}
+                                        >
+                                            <FeatureItem>
+                                                • {normalizedFeatures[idx]}
+                                            </FeatureItem>
+                                        </animated.div>
+                                    ))}
+                                </FeaturesList>
                                 {project.screenshots &&
                                     project.screenshots.length > 0 && (
                                         <ScreenshotButton
@@ -228,7 +225,8 @@ export default function ProjectDetailPage({ project }) {
                         )}
                     </RightColumn>
                 </InfoSection>
-            </ContentWrapper>
+                </ContentWrapper>
+            </animated.div>
 
             <Modal
                 isOpen={isModalOpen}

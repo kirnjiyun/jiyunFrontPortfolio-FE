@@ -7,7 +7,7 @@ export const Title = styled.h1`
     margin: 0;
     white-space: nowrap;
     text-align: center;
-    animation: zoomIn 1.5s ease-out forwards; /* forwards로 애니메이션 마지막 상태 유지 */
+    animation: zoomIn 1.5s ease-out forwards;
 
     @keyframes zoomIn {
         0% {
@@ -56,11 +56,8 @@ export const HeroSection = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-dark-blue);
+    background: linear-gradient(140deg, #0d1321 0%, #1d2d44 100%);
     height: 100vh;
-
-    /* 모바일 최적화: 세로 높이 확보가 어려울 경우, 
-     min-height 지정 정도로만 조절하는 것도 방법입니다 */
 `;
 
 export const IconContainer = styled.div`
@@ -75,14 +72,15 @@ export const StyledImage = styled(Image)`
 export const Section = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 20px 40px;
+    padding: 26px 40px;
     gap: 2rem;
-    background-color: var(--color-lightest-blue);
+    background-color: rgba(255, 255, 255, 0.92);
     color: var(--color-dark-blue);
-    border-radius: 12px;
-    margin: 1rem auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    margin: 1.5rem auto 2.5rem;
     max-width: 1000px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
 `;
 
 export const SectionTitle = styled.h2`

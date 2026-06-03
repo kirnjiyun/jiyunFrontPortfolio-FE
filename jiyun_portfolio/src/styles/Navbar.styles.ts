@@ -4,31 +4,39 @@ import { animated } from "react-spring";
 // Navbar 전체 래퍼
 export const NavbarWrapper = styled(animated.nav)`
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 80px;
-    height: 100vh;
-    background-color: var(--color-dark-blue);
+    top: 1.25rem;
+    left: 1.25rem;
+    width: 84px;
+    height: calc(100vh - 2.5rem);
+    background: rgba(13, 19, 33, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(14px);
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 10rem 1rem;
-    z-index: 100;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    padding: 2rem 1rem;
+    z-index: 200;
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
 
     @media (max-width: 768px) {
+        top: 0;
+        left: 0;
         width: 100%;
-        height: 60px;
+        height: 64px;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         padding: 0 1rem;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
     }
     @media (max-width: 480px) {
-        height: 48px;
-        padding: 0 0.5rem;
+        height: 56px;
+        padding: 0 0.8rem;
     }
 `;
 
@@ -79,10 +87,12 @@ export const ModalCircle = styled(animated.div).attrs(
     left: 50%;
     width: 0px;
     height: 0px;
-    background-color: var(--color-lightest-blue);
-    border-radius: 50%;
+    background: rgba(247, 249, 252, 0.95);
+    border: 1px solid var(--color-border);
+    border-radius: 28px;
+    box-shadow: 0 26px 60px rgba(13, 19, 33, 0.3);
     transform: translate(-50%, -50%);
-    z-index: 100;
+    z-index: 300;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -95,7 +105,7 @@ export const ModalCircle = styled(animated.div).attrs(
 `;
 export const MenuItem = styled(animated.div)`
     margin: 1rem 0;
-    font-size: 3rem;
+    font-size: clamp(1.8rem, 4vw, 3rem);
     font-weight: bold;
     color: var(--color-dark-blue);
     opacity: 0;
@@ -104,13 +114,12 @@ export const MenuItem = styled(animated.div)`
         text-shadow 0.3s ease-in-out;
 
     &:hover {
-        font-size: 3.5rem;
-        text-shadow: 0 0 10px var(--color-brightest-blue);
+        text-shadow: 0 0 12px rgba(111, 255, 233, 0.65);
     }
 
     @media (max-width: 768px) {
-        margin: 1rem 0;
-        font-size: 1rem;
+        margin: 0.8rem 0;
+        font-size: 1.2rem;
         font-weight: bold;
         color: var(--color-dark-blue);
         opacity: 0;
@@ -120,16 +129,12 @@ export const MenuItem = styled(animated.div)`
             text-shadow 0.3s ease-in-out;
 
         &:hover {
-            font-size: 1.5rem;
             text-shadow: 0 0 5px var(--color-brightest-blue);
         }
     }
     @media (max-width: 480px) {
-        font-size: 0.9rem;
+        font-size: 1rem;
         margin: 0.5rem 0;
-        &:hover {
-            font-size: 1.1rem;
-        }
     }
 `;
 
@@ -142,6 +147,6 @@ export const Backdrop = styled(animated.div)`
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(10px);
-    z-index: 99;
+    z-index: 250;
     pointer-events: none;
 `;

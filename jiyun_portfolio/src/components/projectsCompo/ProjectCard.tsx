@@ -7,6 +7,7 @@ import {
     ProjectDetails,
     ProjectTitle,
     ProjectDescription,
+    ProjectMeta,
 } from "../../styles/projects/ProjectCard.styles";
 
 const ProjectCard = ({ project }) => {
@@ -27,6 +28,7 @@ const ProjectCard = ({ project }) => {
                     loading="lazy"
                 />
                 <ProjectDetails>
+                    <ProjectMeta>{project.category || "PROJECT"}</ProjectMeta>
                     <ProjectTitle>{project.name}</ProjectTitle>
                     <ProjectDescription>
                         {project.description}

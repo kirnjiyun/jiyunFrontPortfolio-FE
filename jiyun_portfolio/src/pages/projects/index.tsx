@@ -11,11 +11,10 @@ import {
 } from "@/styles/projects/ProjectIndex.styles";
 import ScrollTriggered from "@/components/projectsCompo/ScrollTrigger";
 import FilterSelect from "@/components/projectsCompo/FilterSelect";
-import Image from "next/image";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProjects } from "@/lib/api";
 import styled from "styled-components";
+import { animated, useTransition } from "react-spring";
 
 // Skeleton UI 스타일 컴포넌트
 const SkeletonCard = styled.div`
@@ -122,34 +121,6 @@ export default function ProjectsPage({ initialProjects }) {
         }));
     };
 
-    // 마우스 커서 위치 관련 상태 및 핸들러
-    const [isHovering, setIsHovering] = useState(false);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
-    const handleMouseMove = (e) => {
-        setMousePos({ x: e.clientX, y: e.clientY });
-    };
-
-    // 스크롤 방향 감지 관련 상태 및 로직
-    const [scrollDir, setScrollDir] = useState("down");
-    const [prevScrollY, setPrevScrollY] = useState(0);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            if (currentScrollY > prevScrollY) {
-                setScrollDir("down");
-            } else if (currentScrollY < prevScrollY) {
-                setScrollDir("up");
-            }
-            setPrevScrollY(currentScrollY);
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [prevScrollY]);
-
     const renderSkeleton = () => (
         <SkeletonWrapper>
             {Array(6)
@@ -159,6 +130,15 @@ export default function ProjectsPage({ initialProjects }) {
                 ))}
         </SkeletonWrapper>
     );
+
+    const transitions = useTransition(filteredProjects, {
+        keys: (item: any) => item.id || item.title || item.name,
+        from: { opacity: 0, transform: "translateY(18px) scale(0.98)" },
+        enter: { opacity: 1, transform: "translateY(0px) scale(1)" },
+        leave: { opacity: 0, transform: "translateY(10px) scale(0.98)" },
+        config: { tension: 230, friction: 23 },
+        trail: 45,
+    });
 
     return (
         <>
@@ -178,31 +158,7 @@ export default function ProjectsPage({ initialProjects }) {
             <HeroSection>
                 <Title>Projects</Title>
             </HeroSection>
-            <ScrollSection
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                onMouseMove={handleMouseMove}
-            >
-                {isHovering && (
-                    <Image
-                        src="/images/down-arrow.png"
-                        alt="arrow"
-                        width={100}
-                        height={100}
-                        style={{
-                            position: "fixed",
-                            top: mousePos.y + 10,
-                            left: mousePos.x + 10,
-                            pointerEvents: "none",
-                            transform: `translate(-50%, -50%) rotate(${
-                                scrollDir === "down" ? 0 : 180
-                            }deg)`,
-                            transition: "transform 0.3s ease",
-                            zIndex: 9999,
-                        }}
-                    />
-                )}
-
+            <ScrollSection>
                 <ScrollTriggered />
             </ScrollSection>
             <FilterContainer>
@@ -229,17 +185,11 @@ export default function ProjectsPage({ initialProjects }) {
                 ) : error ? (
                     <p>Error loading projects: {error.message}</p>
                 ) : filteredProjects.length > 0 ? (
-                    <TransitionGroup component={null}>
-                        {filteredProjects.map((project) => (
-                            <CSSTransition
-                                key={project.id}
-                                classNames="project"
-                                timeout={200}
-                            >
-                                <ProjectContainer projectsData={[project]} />
-                            </CSSTransition>
-                        ))}
-                    </TransitionGroup>
+                    transitions((style, project) => (
+                        <animated.div style={style}>
+                            <ProjectContainer projectsData={[project]} />
+                        </animated.div>
+                    ))
                 ) : (
                     <p>필터링된 프로젝트가 없습니다.</p>
                 )}

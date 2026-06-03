@@ -14,11 +14,19 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
 }
 :root {
-  --color-dark-blue: #0e0e0e;       /* 완전 검정에 가까운 어두운 톤 */
-  --color-medium-blue: #333333;     /* 중간 톤 회색 */
-  --color-light-blue: #888888;      /* 좀 더 진한 느낌의 밝은 회색 */
-  --color-lightest-blue: #eaeaea;   /* #f5f5f5보다 조금 진함 */
-  --color-brightest-blue: #39ff14;  /* 기존과 동일한 형광 연두 */
+  --color-dark-blue: #0d1321;
+  --color-medium-blue: #1d2d44;
+  --color-light-blue: #748cab;
+  --color-lightest-blue: #f7f9fc;
+  --color-brightest-blue: #6fffe9;
+  --color-surface: #ffffff;
+  --color-surface-soft: #edf2fb;
+  --color-border: #d8e1ec;
+  --color-text-primary: #0d1321;
+  --color-text-secondary: #3e5c76;
+  --shadow-sm: 0 8px 20px rgba(13, 19, 33, 0.06);
+  --shadow-md: 0 14px 34px rgba(13, 19, 33, 0.1);
+  --radius-lg: 18px;
 }
 
 
@@ -29,13 +37,21 @@ const GlobalStyle = createGlobalStyle`
   }
   
   html, body {
-    overflow-x: hidden; /* 좌우 스크롤 제거 */
+    overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 
   body {
     font-family: 'S-CoreDream-3Light', 'SBAggroB','Pretendard', sans-serif;
-    background-color: var(--color-lightest-blue); 
-    color: var(--color-dark-blue); 
+    background: radial-gradient(circle at 0% 0%, #ffffff 0%, #edf2fb 45%, #d9e4f5 100%);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: rgba(111, 255, 233, 0.28);
+    color: var(--color-dark-blue);
   }
 
   a {
@@ -54,9 +70,24 @@ const GlobalStyle = createGlobalStyle`
     display: block;
   }
 
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #748cab, #3e5c76);
+    border-radius: 10px;
+    border: 2px solid #edf2fb;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #edf2fb;
+  }
+
   @media (max-width: 768px) {
     html {
-      font-size: 14px;
+      font-size: 15px;
     }
     body {
       font-size: 1rem;
@@ -74,8 +105,8 @@ const GlobalStyle = createGlobalStyle`
       font-size: 1rem;
     }
     section, main, header, footer {
-      padding-left: 8px;
-      padding-right: 8px;
+      padding-left: 12px;
+      padding-right: 12px;
     }
   }
 `;

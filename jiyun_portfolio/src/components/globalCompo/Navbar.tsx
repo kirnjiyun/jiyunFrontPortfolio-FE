@@ -12,12 +12,11 @@ import Link from "next/link";
 import Image from "next/image";
 const Navbar: React.FC = () => {
     const [ismenuopen, setismenuopen] = useState(false);
-    const [isNavbarVisible, setIsNavbarVisible] = useState(false);
 
     // Modal Circle 애니메이션
     const modalCircleSpring = useSpring({
-        width: ismenuopen ? "50vw" : "0px",
-        height: ismenuopen ? "50vw" : "0px",
+        width: ismenuopen ? "min(92vw, 680px)" : "0px",
+        height: ismenuopen ? "min(92vw, 680px)" : "0px",
         config: { duration: 300 },
     });
     const backdropSpring: any = useSpring({
@@ -27,7 +26,8 @@ const Navbar: React.FC = () => {
 
     // Navbar 애니메이션 (스크롤 시 나타남)
     const navbarSpring = useSpring({
-        transform: isNavbarVisible ? "translateX(0)" : "translateX(-100%)",
+        opacity: 1,
+        transform: "translate3d(0,0,0)",
         config: { tension: 200, friction: 20 },
     });
 
@@ -46,21 +46,14 @@ const Navbar: React.FC = () => {
     });
 
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollTop = window.scrollY;
-            const scrollHeight = document.documentElement.scrollHeight;
-            const clientHeight = document.documentElement.clientHeight;
-
-            // 스크롤이 끝까지 내려갔을 때 Navbar 표시
-            if (scrollTop + clientHeight >= scrollHeight - 20) {
-                setIsNavbarVisible(true);
-            } else {
-                setIsNavbarVisible(false);
+        const closeOnEsc = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setismenuopen(false);
             }
         };
 
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+        window.addEventListener("keydown", closeOnEsc);
+        return () => window.removeEventListener("keydown", closeOnEsc);
     }, []);
 
     return (
