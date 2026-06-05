@@ -6,6 +6,8 @@ import { HydrationBoundary } from "@tanstack/react-query";
 import GlobalStyle from "../styles/GlobalStyle";
 import Footer from "../components/globalCompo/Footer";
 import Navbar from "../components/globalCompo/Navbar";
+import MaintenancePage from "../components/MaintenancePage";
+import { MAINTENANCE_MODE } from "../lib/maintenance";
 
 export default function App({ Component, pageProps }: AppProps) {
     const [queryClient] = useState(() => new QueryClient());
@@ -14,9 +16,15 @@ export default function App({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
             <HydrationBoundary state={pageProps.dehydratedState}>
                 <GlobalStyle />
-                <Navbar />
-                <Component {...pageProps} />
-                <Footer />
+                {MAINTENANCE_MODE ? (
+                    <MaintenancePage />
+                ) : (
+                    <>
+                        <Navbar />
+                        <Component {...pageProps} />
+                        <Footer />
+                    </>
+                )}
             </HydrationBoundary>
         </QueryClientProvider>
     );
