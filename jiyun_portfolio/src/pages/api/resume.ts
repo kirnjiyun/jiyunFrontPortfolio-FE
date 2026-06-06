@@ -1,8 +1,10 @@
 import { readFile } from "fs/promises";
 import path from "path";
+import { PDFDocument } from "pdf-lib";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const RESUME_FILENAME = "김지윤_이력서.pdf";
+const PAGE_COUNT = 2;
 
 export default async function handler(
     req: NextApiRequest,
@@ -17,12 +19,23 @@ export default async function handler(
         const filePath = path.join(process.cwd(), "public", "resume.pdf");
         const file = await readFile(filePath);
 
+        const sourceDoc = await PDFDocument.load(file);
+        const trimmedDoc = await PDFDocument.create();
+        const pageCount = Math.min(PAGE_COUNT, sourceDoc.getPageCount());
+        const pages = await trimmedDoc.copyPages(
+            sourceDoc,
+            Array.from({ length: pageCount }, (_, i) => i)
+        );
+        pages.forEach((page) => trimmedDoc.addPage(page));
+
+        const trimmedPdf = await trimmedDoc.save();
+
         res.setHeader("Content-Type", "application/pdf");
         res.setHeader(
             "Content-Disposition",
             `attachment; filename="resume.pdf"; filename*=UTF-8''${encodeURIComponent(RESUME_FILENAME)}`
         );
-        res.send(file);
+        res.send(Buffer.from(trimmedPdf));
     } catch {
         res.status(404).json({ message: "이력서 파일을 찾을 수 없습니다." });
     }
