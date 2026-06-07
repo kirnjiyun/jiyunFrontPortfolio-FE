@@ -7,6 +7,7 @@ import {
     MaintenanceDescription,
     DownloadButton,
 } from "../styles/Maintenance.styles";
+import IntroButton from "./aboutCompo/gamification/IntroButton";
 
 const RESUME_DOWNLOAD_URL = "/api/resume";
 
@@ -32,6 +33,7 @@ export default function MaintenancePage() {
                     <DownloadButton href={RESUME_DOWNLOAD_URL} download>
                         이력서 다운로드
                     </DownloadButton>
+                    <IntroButton />
                 </MaintenanceHeader>
             </MaintenanceWrapper>
         </>

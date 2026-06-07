@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import IntroductionSection from "../../components/aboutCompo/IntroductionSection";
 import CertificationSection from "../../components/aboutCompo/CertificationSection";
 import EducationSection from "../../components/aboutCompo/EducationSection";
+import IntroButton from "../../components/aboutCompo/gamification/IntroButton";
 import Head from "next/head";
 import {
     HeroSection,
@@ -13,7 +14,7 @@ import {
     fetchAboutDataForSSG,
     SSG_REVALIDATE_SECONDS,
 } from "@/lib/api";
-// import TimelineComponent from "@/components/aboutCompo/TimeLineSection";
+
 export async function getStaticProps() {
     const { introductionData, educationData, certificationData } =
         await fetchAboutDataForSSG();
@@ -53,8 +54,8 @@ export default function AboutPage({
             </HeroSection>
             <InfiniteScrollText />
             <Section>
+                <IntroButton />
                 <IntroductionSection introductionData={introductionData} />
-                {/* <TimelineComponent /> */}
                 <EducationSection educationData={educationData} />
                 <CertificationSection certificationData={certificationData} />
             </Section>

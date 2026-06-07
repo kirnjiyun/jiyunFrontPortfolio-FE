@@ -48,17 +48,32 @@ export const DownloadButton = styled.a`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.85rem 1.75rem;
-    border-radius: 12px;
-    background: var(--color-dark-blue);
-    color: var(--color-brightest-blue);
-    font-size: 1rem;
-    font-weight: 600;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    box-shadow: var(--shadow-md);
+    padding: 0.65rem 1.5rem;
+    font-family: 'SBAggroB', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    color: var(--color-dark-blue);
+    background: var(--color-brightest-blue);
+    border: 2px solid var(--color-dark-blue);
+    border-radius: 4px;
+    box-shadow: 3px 3px 0 var(--color-dark-blue);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
 
     &:hover {
-        opacity: 0.9;
-        transform: translateY(-1px);
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0 var(--color-dark-blue);
+        background: #3de8d0;
+    }
+    &:active {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 var(--color-dark-blue);
+    }
+    &:focus-visible {
+        outline: 3px solid var(--color-dark-blue);
+        outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
     }
 `;
