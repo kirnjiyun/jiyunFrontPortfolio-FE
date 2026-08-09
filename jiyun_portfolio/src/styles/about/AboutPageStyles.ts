@@ -2,53 +2,34 @@ import styled from "styled-components";
 import Image from "next/image";
 
 export const Title = styled.h1`
-    font-size: clamp(2rem, 8vw, 6rem);
-    color: var(--color-lightest-blue);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    color: var(--color-fg);
     margin: 0;
     white-space: nowrap;
     text-align: center;
-    animation: zoomIn 1.5s ease-out forwards;
-
-    @keyframes zoomIn {
-        0% {
-            transform: scale(0.5); /* 시작 크기 */
-            opacity: 0; /* 시작 상태: 투명 */
-        }
-        70% {
-            transform: scale(1.5); /* 최대 확대 */
-            opacity: 1; /* 완전히 나타남 */
-        }
-        100% {
-            transform: scale(1.2); /* 살짝 줄어든 상태로 멈춤 */
-            opacity: 1;
-        }
-    }
+    letter-spacing: -0.03em;
 `;
 
 export const TypingText = styled.div`
     display: inline-block;
     position: relative;
     line-height: 1.2;
-    white-space: nowrap; /* 줄바꿈 없이 가로로만 */
+    white-space: nowrap;
 
     &::after {
         content: "|";
         position: absolute;
         left: 100%;
-        margin-left: 0.2em; /* 텍스트와 커서 사이 간격 */
-        color: currentColor;
+        margin-left: 0.2em;
+        color: var(--color-muted-fg);
         font-size: inherit;
         animation: blink 0.8s steps(2, start) infinite;
     }
 
     @keyframes blink {
-        0%,
-        100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0;
-        }
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
     }
 `;
 
@@ -56,44 +37,51 @@ export const HeroSection = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(140deg, #0d1321 0%, #1d2d44 100%);
-    height: 100vh;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    min-height: 40vh;
+    padding-top: 64px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 `;
 
 export const IconContainer = styled.div`
     margin-right: 20px;
 `;
 
-export const StyledImage = styled(Image)`
-    /* 필요한 추가 스타일 */
-`;
+export const StyledImage = styled(Image)``;
 
-// 콘텐츠 영역
 export const Section = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 26px 40px;
+    padding: 2rem 2.5rem;
     gap: 2rem;
-    background-color: rgba(255, 255, 255, 0.92);
-    color: var(--color-dark-blue);
+    background-color: var(--color-card);
+    color: var(--color-fg);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    margin: 1.5rem auto 2.5rem;
+    border-radius: var(--radius);
+    margin: 2rem auto;
     max-width: 1000px;
-    box-shadow: var(--shadow-md);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
+    @media (max-width: 768px) {
+        padding: 1.5rem 1rem;
+        margin: 1rem;
+    }
 `;
 
 export const SectionTitle = styled.h2`
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 16px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
     text-align: center;
-    color: var(--color-medium-blue);
+    color: var(--color-fg);
+    letter-spacing: -0.02em;
 `;
 
 export const List = styled.ul`
     list-style: none;
     padding: 0;
     line-height: 1.8;
-    font-size: 16px;
+    font-size: 0.95rem;
+    color: var(--color-muted-fg);
 `;

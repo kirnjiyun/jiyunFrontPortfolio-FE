@@ -90,11 +90,14 @@ export default function ScrollMoveText() {
 // 스타일 정의
 const ScrollContainer = styled.div`
     width: 100%;
-    background-color: var(--color-brightest-blue, #dff0ff);
+    background-color: var(--color-muted);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
     justify-content: center;
     overflow: hidden;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 `;
 
 const ScrollRow = styled.div`
@@ -107,12 +110,13 @@ const ScrollRow = styled.div`
 
 const ScrollText = styled(animated.div)`
     display: inline-block;
-    font-size: 4rem;
-    font-weight: 300;
-    font-family: "SBAggroB";
-    color: var(--color-dark-blue, #003366);
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--color-fg);
     white-space: nowrap;
     margin-right: 3rem;
+    opacity: 0.06;
+    letter-spacing: -0.02em;
     @media (max-width: 768px) {
         font-size: 2rem;
     }
@@ -120,13 +124,14 @@ const ScrollText = styled(animated.div)`
 
 const ScrollTextLight = styled(animated.div)`
     display: inline-block;
-    font-size: 4rem;
-    color: var(--color-light-blue, #88cfff);
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--color-muted-fg);
     white-space: nowrap;
     margin-right: 3rem;
+    opacity: 0.12;
+    letter-spacing: -0.02em;
     @media (max-width: 768px) {
         font-size: 2rem;
     }
-    font-family: "SBAggroB";
-    font-weight: 400;
 `;

@@ -3,80 +3,75 @@ import styled from "styled-components";
 export const PageContainer = styled.div`
     width: 100%;
     min-height: 100vh;
-    background: transparent;
+    background: var(--color-bg);
     display: flex;
     flex-direction: column;
     position: relative;
+    transition: background-color 0.3s ease;
 `;
 
 export const ScreenshotButton = styled.button`
     width: 100%;
-    padding: 12px 20px; /* 패딩 증가로 버튼 크기 키움 */
-    font-size: 1rem;
-    font-weight: 600; /* 텍스트 굵게 */
-    color: var(--color-dark-blue);
-    background-color: var(--color-lightest-blue);
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-fg);
+    background-color: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: 12px;
+    border-radius: var(--radius);
     cursor: pointer;
     margin-top: 1rem;
     text-align: center;
-    transition: all 0.3s ease; /* opacity뿐만 아니라 전체 속성에 부드러운 전환 적용 */
+    transition: background-color 0.15s ease, border-color 0.15s ease;
 
     &:hover {
-        background-color: var(
-            --color-light-blue
-        ); /* #888888으로 약간 어두워짐 */
-        color: white;
-        opacity: 1; /* 투명도 변화 대신 색상으로 강조 */
+        background-color: var(--color-accent);
     }
 `;
+
 export const BackButton = styled.button`
     position: absolute;
     top: 1.5rem;
     left: 1.5rem;
-    width: 40px;
-    height: 40px;
-    background-color: var(--color-medium-blue);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) - 2px);
     cursor: pointer;
     z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--color-muted-fg);
+    transition: background-color 0.15s ease, color 0.15s ease;
 
     &:hover {
-        background-color: var(--color-light-blue); /* #888888 */
+        background-color: var(--color-accent);
+        color: var(--color-fg);
     }
 
     @media (max-width: 600px) {
         top: 1rem;
         left: 1rem;
-        width: 36px;
-        height: 36px;
     }
 `;
 
 export const ArrowSymbol = styled.span`
-    color: #ffffff;
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1;
-    @media (max-width: 600px) {
-        font-size: 1rem;
-    }
 `;
 
 export const ContentWrapper = styled.div`
     width: 100%;
     max-width: 1000px;
     margin: 6rem auto 2rem;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
+    background-color: var(--color-card);
+    border-radius: var(--radius);
     border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-md);
     padding: 3rem;
     position: relative;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 
     @media (max-width: 600px) {
         margin: 5rem auto 1.5rem;
@@ -85,49 +80,44 @@ export const ContentWrapper = styled.div`
 `;
 
 export const ProjectHeader = styled.div`
-    text-align: center; /* 가운데 정렬 */
-    margin-bottom: 3rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
 `;
 
 export const ProjectTitle = styled.h1`
-    font-size: 2.5rem;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    color: var(--color-dark-blue); /* #0e0e0e */
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-fg);
     margin-bottom: 0.5rem;
-    text-align: center; /* 가운데 정렬 */
 
     @media (max-width: 600px) {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
 `;
 
 export const ProjectSubtitle = styled.div`
-    color: var(--color-light-blue); /* #888888 */
+    color: var(--color-muted-fg);
     margin-bottom: 0.5rem;
-    font-size: 1rem;
-
-    @media (max-width: 500px) {
-        margin-bottom: 0;
-    }
+    font-size: 0.875rem;
+    font-weight: 500;
 `;
 
 export const ThumbnailWrapper = styled.div`
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
     display: flex;
     justify-content: center;
-    align-items: center;
 `;
 
 export const ThumbnailImage = styled.img`
     width: 100%;
     max-width: 600px;
     object-fit: cover;
-    transition: opacity 0.3s ease;
     cursor: pointer;
-    border-radius: 14px;
+    border-radius: var(--radius);
     border: 1px solid var(--color-border);
+    transition: opacity 0.15s ease;
 
     &:hover {
         opacity: 0.95;
@@ -137,19 +127,19 @@ export const ThumbnailImage = styled.img`
 export const InfoSection = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    gap: 2.5rem;
     align-items: start;
 
     @media (max-width: 768px) {
         grid-template-columns: 1fr;
-        gap: 1.4rem;
+        gap: 1.5rem;
     }
 `;
 
 export const LeftColumn = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
     width: 100%;
     min-width: 0;
 `;
@@ -157,15 +147,15 @@ export const LeftColumn = styled.div`
 export const RightColumn = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
     width: 100%;
     min-width: 0;
 `;
 
 export const Description = styled.p`
-    font-size: 1rem;
-    color: var(--color-medium-blue); /* #333333 */
-    line-height: 1.6;
+    font-size: 0.95rem;
+    color: var(--color-muted-fg);
+    line-height: 1.7;
     margin: 0;
 `;
 
@@ -176,19 +166,18 @@ export const InfoGroup = styled.div`
 `;
 
 export const InfoLabel = styled.div`
-    color: var(--color-light-blue); /* #888888 */
-    margin-bottom: 0.5rem;
+    color: var(--color-muted-fg);
+    margin-bottom: 0.375rem;
     font-weight: 600;
-
-    @media (max-width: 500px) {
-        margin-bottom: 0;
-    }
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 `;
 
 export const InfoValue = styled.div`
-    font-size: 0.95rem;
-    margin-bottom: 0.3rem;
-    color: var(--color-medium-blue); /* #333333 */
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    color: var(--color-fg);
 
     &:last-child {
         margin-bottom: 0;
@@ -198,38 +187,43 @@ export const InfoValue = styled.div`
 export const BadgesWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.375rem;
 `;
 
 export const TechBadge = styled.span`
-    background-color: var(--color-lightest-blue); /* #eaeaea */
-    color: var(--color-medium-blue); /* #333333 */
-    font-size: 0.85rem;
-    padding: 0.4rem 0.6rem;
+    background-color: var(--color-muted);
+    color: var(--color-muted-fg);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: calc(var(--radius) - 2px);
+    border: 1px solid var(--color-border);
     display: inline-block;
     white-space: nowrap;
 `;
 
 export const FeaturesCard = styled.div`
-    background-color: var(--color-lightest-blue);
-    padding: 2rem;
-    border-radius: 16px;
+    background-color: var(--color-muted);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     width: 100%;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
     @media (max-width: 768px) {
-        padding: 1.1rem;
-        gap: 1rem;
+        padding: 1rem;
     }
 `;
 
 export const FeaturesTitle = styled.h3`
-    font-size: 1.5rem;
-    color: var(--color-dark-blue); /* #0e0e0e */
-    font-weight: bold;
-    text-align: left;
-    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--color-fg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
 `;
 
 export const FeaturesList = styled.ul`
@@ -238,28 +232,38 @@ export const FeaturesList = styled.ul`
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.25rem;
 `;
 
 export const FeatureItem = styled.li`
-    font-size: 1rem;
-    color: var(--color-medium-blue); /* #333333 */
-    padding: 0.8rem 0;
+    font-size: 0.875rem;
+    color: var(--color-muted-fg);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+    transition: border-color 0.3s ease;
+
+    &:last-child {
+        border-bottom: none;
+    }
 `;
 
 export const LinkCard = styled.div`
-    background-color: var(--color-lightest-blue);
-    padding: 2rem;
-    border-radius: 16px;
+    background-color: var(--color-muted);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
     width: 100%;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
     @media (max-width: 768px) {
-        padding: 1.1rem;
+        padding: 1rem;
     }
 `;
 
 export const LinksTitle = styled.h3`
-    font-size: 1.1rem;
-    color: var(--color-dark-blue); /* #0e0e0e */
+    font-size: 1rem;
+    color: var(--color-fg);
+    font-weight: 600;
     margin-bottom: 0.75rem;
 `;
 
@@ -268,33 +272,45 @@ export const LinkRow = styled.div`
 `;
 
 export const LinkLabel = styled.span`
-    font-size: 0.95rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    color: var(--color-light-blue); /* #888888 */
+    color: var(--color-muted-fg);
     margin-right: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
 `;
 
 export const LinkAnchor = styled.a`
-    font-size: 0.95rem;
-    color: var(--color-medium-blue);
+    font-size: 0.875rem;
+    color: var(--color-fg);
     text-decoration: none;
+    transition: opacity 0.15s ease;
 
     &:hover {
         text-decoration: underline;
+        opacity: 0.8;
     }
 `;
 
 export const SkeletonTitle = styled.div`
     width: 60%;
     height: 32px;
-    background-color: var(--color-lightest-blue); /* #eaeaea */
+    background-color: var(--color-muted);
+    border-radius: var(--radius);
     animation: pulse 1.5s infinite ease-in-out;
+
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
 `;
 
 export const SkeletonText = styled.div`
     width: 100%;
     height: 16px;
-    background-color: var(--color-lightest-blue); /* #eaeaea */
+    background-color: var(--color-muted);
+    border-radius: calc(var(--radius) - 2px);
     animation: pulse 1.5s infinite ease-in-out;
 
     & + & {
@@ -305,20 +321,7 @@ export const SkeletonText = styled.div`
 export const SkeletonButton = styled.div`
     width: 120px;
     height: 32px;
-    background-color: var(--color-light-blue); /* #888888 */
+    background-color: var(--color-muted);
+    border-radius: var(--radius);
     animation: pulse 1.5s infinite ease-in-out;
 `;
-
-const pulseKeyframes = `
-  @keyframes pulse {
-    0% { background-color: var(--color-lightest-blue); }
-    50% { background-color: #f0f0f0; }
-    100% { background-color: var(--color-lightest-blue); }
-  }
-`;
-
-const GlobalStyles = styled.div`
-    ${pulseKeyframes}
-`;
-
-export default GlobalStyles;

@@ -70,7 +70,9 @@ function Card({
     );
 }
 
-const hsl = (h: number) => `hsl(${h}, 100%, 50%)`; // HSL로 색상 설정
+// 채도를 낮춘 톤. Splash 자체에도 낮은 opacity 가 걸려 있어
+// 기술스택별 색상은 유지하면서 전체 팔레트와 부딪히지 않게 합니다.
+const hsl = (h: number) => `hsl(${h}, 40%, 55%)`;
 
 const techStacks: { src: string; hue: number; name: string }[] = [
     { src: "/images/techstack/html.png", hue: 0, name: "HTML" },

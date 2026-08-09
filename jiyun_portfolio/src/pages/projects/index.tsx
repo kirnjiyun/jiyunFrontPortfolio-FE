@@ -25,21 +25,16 @@ const SkeletonCard = styled.div`
     width: 100%;
     max-width: 400px;
     height: 350px;
-    background: #e0e0e0;
-    border-radius: 12px;
+    background: var(--color-muted);
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
     animation: pulse 1.5s infinite ease-in-out;
     margin: 0 auto;
 
     @keyframes pulse {
-        0% {
-            background-color: #e0e0e0;
-        }
-        50% {
-            background-color: #f0f0f0;
-        }
-        100% {
-            background-color: #e0e0e0;
-        }
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
     }
 
     @media (max-width: 576px) {
@@ -50,26 +45,17 @@ const SkeletonCard = styled.div`
 
 const SkeletonWrapper = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 16px;
-    margin: 0 100px;
-    padding: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    max-width: 1200px;
     justify-items: center;
-
-    @media (max-width: 1220px) {
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        margin: 0 50px;
-    }
-
-    @media (max-width: 900px) {
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        margin: 0 30px;
-    }
 
     @media (max-width: 576px) {
         grid-template-columns: 1fr;
-        margin: 0 15px;
-        gap: 12px;
+        padding: 1rem;
+        gap: 1rem;
     }
 `;
 

@@ -1,152 +1,160 @@
 import styled from "styled-components";
 import { animated } from "react-spring";
+import Link from "next/link";
 
-// Navbar 전체 래퍼
 export const NavbarWrapper = styled(animated.nav)`
-    position: fixed;
-    top: 1.25rem;
-    left: 1.25rem;
-    width: 84px;
-    height: calc(100vh - 2.5rem);
-    background: rgba(13, 19, 33, 0.86);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    backdrop-filter: blur(14px);
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 2rem 1rem;
-    z-index: 200;
-    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
-
-    @media (max-width: 768px) {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 64px;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 1rem;
-        border-radius: 0;
-        border-left: 0;
-        border-right: 0;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-    }
-    @media (max-width: 480px) {
-        height: 56px;
-        padding: 0 0.8rem;
-    }
-`;
-
-// 로고
-export const Logo = styled.div`
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    @media (max-width: 768px) {
-        width: 32px;
-        height: 32px;
-    }
-    @media (max-width: 480px) {
-        width: 24px;
-        height: 24px;
-    }
-`;
-
-// 햄버거 버튼
-export const MenuButton = styled.div`
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--color-lightest-blue);
-    font-size: 2rem;
-    background: none;
-    @media (max-width: 768px) {
-        width: 32px;
-        height: 32px;
-        font-size: 1.5rem;
-    }
-    @media (max-width: 480px) {
-        width: 24px;
-        height: 24px;
-        font-size: 1.2rem;
-    }
-`;
-export const ModalCircle = styled(animated.div).attrs(
-    (props: { ismenuopen?: boolean }) => ({
-        ismenuopen: undefined,
-    })
-)`
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 0px;
-    height: 0px;
-    background: rgba(247, 249, 252, 0.95);
-    border: 1px solid var(--color-border);
-    border-radius: 28px;
-    box-shadow: 0 26px 60px rgba(13, 19, 33, 0.3);
-    transform: translate(-50%, -50%);
-    z-index: 300;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    /* box-shadow: ${(props) =>
-        props.ismenuopen
-            ? "0 0 20px 30px rgba(221, 230, 237, 1), 0 0 80px 40px rgba(221, 230, 237, 0.3)"
-            : "none"}; */
-`;
-export const MenuItem = styled(animated.div)`
-    margin: 1rem 0;
-    font-size: clamp(1.8rem, 4vw, 3rem);
-    font-weight: bold;
-    color: var(--color-dark-blue);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: font-size 0.3s ease-in-out, color 0.3s ease-in-out,
-        text-shadow 0.3s ease-in-out;
-
-    &:hover {
-        text-shadow: 0 0 12px rgba(111, 255, 233, 0.65);
-    }
-
-    @media (max-width: 768px) {
-        margin: 0.8rem 0;
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: var(--color-dark-blue);
-        opacity: 0;
-        transform: translateY(20px);
-        /* 모바일에서도 동일하게 트랜지션 적용 */
-        transition: font-size 0.3s ease-in-out, color 0.3s ease-in-out,
-            text-shadow 0.3s ease-in-out;
-
-        &:hover {
-            text-shadow: 0 0 5px var(--color-brightest-blue);
-        }
-    }
-    @media (max-width: 480px) {
-        font-size: 1rem;
-        margin: 0.5rem 0;
-    }
-`;
-
-// Backdrop
-export const Backdrop = styled(animated.div)`
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
-    z-index: 250;
-    pointer-events: none;
+    right: 0;
+    height: 64px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 200;
+    backdrop-filter: blur(12px);
+    background: hsl(var(--background) / 0.8);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
+    @media (max-width: 768px) {
+        padding: 0 1rem;
+        height: 56px;
+    }
 `;
+
+export const Logo = styled.div`
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-fg);
+    letter-spacing: -0.02em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+`;
+
+export const NavLinks = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+`;
+
+export const NavLink = styled(Link)`
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-muted-fg);
+    border-radius: calc(var(--radius) - 2px);
+    transition: color 0.15s ease, background-color 0.15s ease;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--color-fg);
+        background-color: var(--color-accent);
+    }
+
+    &.active {
+        color: var(--color-fg);
+        background-color: var(--color-accent);
+    }
+`;
+
+export const NavActions = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+`;
+
+export const ThemeToggle = styled.button`
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) - 2px);
+    color: var(--color-muted-fg);
+    cursor: pointer;
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    font-size: 1rem;
+    line-height: 1;
+
+    &:hover {
+        color: var(--color-fg);
+        background-color: var(--color-accent);
+        border-color: var(--color-border);
+    }
+`;
+
+export const MobileMenuButton = styled.button`
+    display: none;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) - 2px);
+    color: var(--color-muted-fg);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color 0.15s ease, background-color 0.15s ease;
+
+    &:hover {
+        color: var(--color-fg);
+        background-color: var(--color-accent);
+    }
+
+    @media (max-width: 768px) {
+        display: flex;
+    }
+`;
+
+export const MobileMenu = styled.div<{ $open: boolean }>`
+    display: none;
+
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 56px;
+        left: 0;
+        right: 0;
+        background: var(--color-bg);
+        border-bottom: 1px solid var(--color-border);
+        padding: ${({ $open }) => ($open ? "0.5rem" : "0")};
+        max-height: ${({ $open }) => ($open ? "300px" : "0")};
+        overflow: hidden;
+        transition: max-height 0.25s ease, padding 0.25s ease;
+        z-index: 199;
+    }
+`;
+
+export const MobileNavLink = styled(Link)`
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-muted-fg);
+    border-radius: calc(var(--radius) - 2px);
+    transition: color 0.15s ease, background-color 0.15s ease;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--color-fg);
+        background-color: var(--color-accent);
+    }
+`;
+
+/* Legacy exports for compatibility — no longer used */
+export const MenuButton = styled.div``;
+export const ModalCircle = styled(animated.div)``;
+export const MenuItem = styled(animated.div)``;
+export const Backdrop = styled(animated.div)``;

@@ -6,37 +6,37 @@ export const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--color-dark-blue);
+    background-color: var(--color-bg);
     text-align: center;
     padding: 2rem;
+    transition: background-color 0.3s ease;
 `;
 
 export const Title = styled.h1`
-    font-size: 4rem;
-    margin-bottom: 1.5rem;
-    color: var(--color-brightest-blue);
-    text-shadow: 2px 2px var(--color-light-blue);
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--color-fg);
+    letter-spacing: -0.03em;
 `;
 
 export const Description = styled.p`
-    font-size: 1.75rem;
-    margin-bottom: 2.5rem;
-    color: var(--color-brightest-blue);
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    color: var(--color-muted-fg);
 `;
 
 export const HomeButton = styled.button`
-    padding: 1rem 2rem;
-    font-size: 1.25rem;
-    background-color: white;
-    color: var(--color-dark-blue);
-    border: 2px solid var(--color-dark-blue);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background-color: var(--color-primary);
+    color: var(--color-primary-fg);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    transition: opacity 0.15s ease;
 
     &:hover {
-        background-color: var(--color-brightest-blue);
-        color: var(--color-dark-blue);
-        transform: translateY(-3px);
+        opacity: 0.9;
     }
 `;

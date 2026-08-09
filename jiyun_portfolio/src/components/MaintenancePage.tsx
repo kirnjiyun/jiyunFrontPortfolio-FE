@@ -6,10 +6,13 @@ import {
     MaintenanceTitle,
     MaintenanceDescription,
     DownloadButton,
+    PreviewButton,
+    ButtonGroup,
 } from "../styles/Maintenance.styles";
 import IntroButton from "./aboutCompo/gamification/IntroButton";
 
 const RESUME_DOWNLOAD_URL = "/api/resume";
+const PROJECT_PREVIEW_URL = "https://www.dailyq.me";
 
 export default function MaintenancePage() {
     return (
@@ -30,10 +33,19 @@ export default function MaintenancePage() {
                         <br />
                         그동안 이력서를 다운로드해 주세요.
                     </MaintenanceDescription>
-                    <DownloadButton href={RESUME_DOWNLOAD_URL} download>
-                        이력서 다운로드
-                    </DownloadButton>
-                    <IntroButton />
+                    <ButtonGroup>
+                        <PreviewButton
+                            href={PROJECT_PREVIEW_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            준비중인 프로젝트 미리보기
+                        </PreviewButton>
+                        <DownloadButton href={RESUME_DOWNLOAD_URL} download>
+                            이력서 다운로드
+                        </DownloadButton>
+                        <IntroButton />
+                    </ButtonGroup>
                 </MaintenanceHeader>
             </MaintenanceWrapper>
         </>

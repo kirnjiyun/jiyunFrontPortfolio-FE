@@ -1,98 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { useSpring } from "react-spring";
 import {
     HomeWrapper,
-    AnimatedBackground,
     AnimatedText,
     TypingText,
-    PortfolioText,
-    PromptText,
     HeroSubText,
+    HeroActions,
+    HeroPrimaryButton,
+    HeroSecondaryButton,
 } from "../styles/Home.styles";
 import Head from "next/head";
-import { ScrollGuideText } from "../styles/Home.styles";
 
 const Home: React.FC = () => {
-    const [scrollProgress, setScrollProgress] = useState(0);
     const [typedText, setTypedText] = useState("");
-    const [isAtBottom, setIsAtBottom] = useState(false);
+    const fullText = "WELCOME";
+    const typingSpeed = 100;
 
-    const fullText = "  WELCOME";
-    const typingSpeed = 120;
-
-    // ----------------------
-    // 1. 텍스트 타이핑 효과
-    // ----------------------
     useEffect(() => {
         let index = 0;
-        setTypedText(""); // 초기화
+        setTypedText("");
 
         const typingInterval = setInterval(() => {
-            if (index < fullText.length) {
-                setTypedText((prev) => prev + fullText.charAt(index));
-                index++;
-            } else {
+            index += 1;
+            // slice로 매번 전체 문자열을 계산해 StrictMode 이중 호출에도 안전하게 처리
+            setTypedText(fullText.slice(0, index));
+            if (index >= fullText.length) {
                 clearInterval(typingInterval);
             }
         }, typingSpeed);
 
-        return () => {
-            clearInterval(typingInterval);
-        };
-    }, [fullText]);
-
-    useEffect(() => {
-        let ticking = false;
-
-        function onScroll() {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const scrollTop = window.scrollY;
-                    const scrollHeight = document.documentElement.scrollHeight;
-                    const clientHeight = document.documentElement.clientHeight;
-
-                    const progress = scrollTop / (scrollHeight - clientHeight);
-                    setScrollProgress(progress);
-
-                    const scrolledToBottom =
-                        scrollTop + clientHeight >= scrollHeight - 1;
-                    setIsAtBottom(scrolledToBottom);
-
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }
-
-        window.addEventListener("scroll", onScroll);
-        return () => {
-            window.removeEventListener("scroll", onScroll);
-        };
+        return () => clearInterval(typingInterval);
     }, []);
-
-    const { backgroundColor, color } = useSpring({
-        backgroundColor:
-            scrollProgress > 0.4
-                ? "var(--color-dark-blue)"
-                : "var(--color-lightest-blue)",
-        color:
-            scrollProgress > 0.4
-                ? "var(--color-lightest-blue)"
-                : "var(--color-dark-blue)",
-        config: { tension: 200, friction: 20 },
-    });
-
-    const portfolioSpring = useSpring({
-        opacity: scrollProgress > 0.9 ? 1 : 0,
-        transform: scrollProgress > 0.9 ? "translateY(0)" : "translateY(20px)",
-        config: { tension: 100, friction: 20 },
-    });
-
-    const promptSpring = useSpring({
-        opacity: isAtBottom ? 1 : 0,
-        transform: isAtBottom ? "translateY(0)" : "translateY(20px)",
-        config: { tension: 200, friction: 20 },
-    });
 
     return (
         <>
@@ -121,19 +58,21 @@ const Home: React.FC = () => {
                 <meta property="og:url" content="https://kimjiyun.site" />
                 <meta name="twitter:card" content="summary_large_image" />
             </Head>
-            <HomeWrapper style={{ backgroundColor, color }}>
-                <AnimatedBackground />
-                <ScrollGuideText>아래로 스크롤</ScrollGuideText>
+            <HomeWrapper>
                 <AnimatedText>
                     <TypingText>{typedText}</TypingText>
                 </AnimatedText>
                 <HeroSubText>
-                    사용자 경험을 설계하고 구현하는 프론트엔드 개발자 김지윤
+                    사용자 경험을 설계하고 구현하는 프론트엔드 개발자, 김지윤입니다.
                 </HeroSubText>
-                <PortfolioText style={portfolioSpring}>
-                    김지윤의 포트폴리오입니다.
-                </PortfolioText>
-                <PromptText style={promptSpring}>SCROLL TO EXPLORE</PromptText>
+                <HeroActions>
+                    <HeroPrimaryButton href="/projects">
+                        프로젝트 보기
+                    </HeroPrimaryButton>
+                    <HeroSecondaryButton href="/about">
+                        소개
+                    </HeroSecondaryButton>
+                </HeroActions>
             </HomeWrapper>
         </>
     );

@@ -1,54 +1,48 @@
 import styled from "styled-components";
 
-// 공통 색상 정의
-const colors = {
-    darkBlue: "var(--color-dark-blue)",
-    mediumBlue: "var(--color-medium-blue)",
-    lightestBlue: "var(--color-lightest-blue)",
-    brightestBlue: "var(--color-brightest-blue)",
-};
-
 export const Section = styled.section`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 24px;
-    margin: 16px 0;
-    border-radius: 12px;
-    background: var(--color-lightest-blue);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-    min-height: 300px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-radius: var(--radius);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    min-height: 200px;
     width: 100%;
-
-    &:hover {
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 `;
 
 export const SectionTitle = styled.h2`
-    font-size: 2rem;
-    font-weight: bold;
-    color: ${colors.darkBlue};
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-fg);
     margin-bottom: 1rem;
     text-align: center;
-    font-family: "SBAggroB";
+    letter-spacing: -0.02em;
 `;
 
 export const List = styled.ul`
     list-style: none;
+    width: 100%;
 
     li {
-        color: ${colors.mediumBlue};
-        margin: 1rem;
-        font-size: 1rem;
+        color: var(--color-muted-fg);
+        margin: 0.75rem 0;
+        font-size: 0.9rem;
+        padding: 0.75rem;
+        border-radius: calc(var(--radius) - 2px);
+        border: 1px solid var(--color-border);
+        background: var(--color-bg);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     strong {
-        color: ${colors.darkBlue};
-        font-weight: bold;
-        font-size: 1.2rem;
+        color: var(--color-fg);
+        font-weight: 600;
+        font-size: 0.95rem;
     }
 `;
 
@@ -57,19 +51,9 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100px;
-    padding: 20px;
-    border-radius: 12px;
-    background: linear-gradient(
-        135deg,
-        ${colors.lightestBlue},
-        ${colors.brightestBlue}
-    );
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-
-    &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    }
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    background: var(--color-muted);
+    border: 1px solid var(--color-border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 `;

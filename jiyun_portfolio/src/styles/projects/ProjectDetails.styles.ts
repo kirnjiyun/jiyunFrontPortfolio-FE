@@ -1,134 +1,98 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    padding: 20px;
+    padding: 1.5rem;
     max-width: 900px;
     margin: 0 auto;
-    background: linear-gradient(
-        120deg,
-        var(--color-lightest-blue),
-        var(--color-brightest-blue)
-    );
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 1s ease-in-out;
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 `;
+
 export const HeroSection = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-dark-blue);
-    height: 100vh;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    min-height: 40vh;
+    padding-top: 64px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 `;
 
 export const Title = styled.h1`
-    font-size: clamp(2rem, 8vw, 6rem);
-    background-color: var(--color-dark-blue);
-    color: var(--color-lightest-blue);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    color: var(--color-fg);
     margin: 0;
     white-space: nowrap;
     text-align: center;
-    animation: zoomIn 1.5s ease-out forwards; /* forwards로 애니메이션 마지막 상태 유지 */
-
-    @keyframes zoomIn {
-        0% {
-            transform: scale(0.5); /* 시작 크기 */
-            opacity: 0; /* 시작 상태: 투명 */
-        }
-        70% {
-            transform: scale(1.5); /* 최대 확대 */
-            opacity: 1; /* 완전히 나타남 */
-        }
-        100% {
-            transform: scale(1.2); /* 살짝 줄어든 상태로 멈춤 */
-            opacity: 1;
-        }
-    }
+    letter-spacing: -0.03em;
 `;
 
 export const Info = styled.p`
-    font-size: 1rem;
-    margin-bottom: 10px;
+    font-size: 0.9rem;
+    margin-bottom: 0.625rem;
     line-height: 1.6;
+    color: var(--color-muted-fg);
+
     strong {
-        color: var(--color-medium-blue);
-        font-size: 1.2rem;
-    }
-    @media (max-width: 768px) {
-        text-align: center;
+        color: var(--color-fg);
+        font-weight: 600;
+        font-size: 0.95rem;
     }
 `;
 
 export const StyledLink = styled.a`
-    color: var(--color-medium-blue);
+    color: var(--color-fg);
     text-decoration: none;
+    transition: opacity 0.15s ease;
+
     &:hover {
         text-decoration: underline;
-    }
-    @media (max-width: 768px) {
-        display: inline-block;
-        text-align: center;
-        margin: 0 auto;
+        opacity: 0.8;
     }
 `;
 
 export const Features = styled.div`
-    margin-top: 20px;
+    margin-top: 1.25rem;
+
     ul {
-        margin-top: 10px;
-        padding-left: 20px;
-        @media (max-width: 768px) {
-            padding-left: 0;
-            text-align: center;
-            list-style-position: inside;
-        }
-    }
-    @media (max-width: 768px) {
-        text-align: center;
+        margin-top: 0.625rem;
+        padding-left: 1.25rem;
     }
 `;
 
 export const FeatureItem = styled.li`
-    font-size: 1rem;
-    margin-bottom: 5px;
+    font-size: 0.9rem;
+    margin-bottom: 0.375rem;
     list-style: disc;
-    color: #555;
+    color: var(--color-muted-fg);
+    transition: color 0.15s ease;
+
     &:hover {
-        color: var(--color-medium-blue);
-        transform: scale(1.02);
-        transition: all 0.3s ease-in-out;
-    }
-    @media (max-width: 768px) {
-        text-align: center;
-        margin-left: 0;
+        color: var(--color-fg);
     }
 `;
 
 export const Screenshots = styled.div`
-    margin-top: 30px;
+    margin-top: 1.5rem;
 `;
 
 export const ScreenshotTitle = styled.h2`
-    font-size: 1.5rem;
-    color: #333;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-fg);
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.01em;
 `;
 
 export const Gallery = styled.div`
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 0.75rem;
     justify-content: center;
 `;
 
@@ -136,23 +100,20 @@ export const Screenshot = styled.img`
     width: 200px;
     height: auto;
     display: block;
-    border: 2px solid #ccc;
-    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
 `;
+
 import { keyframes } from "styled-components";
 
 const slideIn = keyframes`
-    from {
-        transform: translateX(-100%);
-    }
-    to {
-        transform: translateX(0);
-    }
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
 `;
 
 export const ScreenshotImage = styled.img`
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
-    animation: ${slideIn} 0.5s ease-in-out;
+    animation: ${slideIn} 0.3s ease-out;
 `;

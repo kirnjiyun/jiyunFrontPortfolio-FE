@@ -8,6 +8,7 @@ import Footer from "../components/globalCompo/Footer";
 import Navbar from "../components/globalCompo/Navbar";
 import MaintenancePage from "../components/MaintenancePage";
 import { MAINTENANCE_MODE } from "../lib/maintenance";
+import { ThemeProvider } from "../lib/ThemeContext";
 
 export default function App({ Component, pageProps }: AppProps) {
     const [queryClient] = useState(() => new QueryClient());
@@ -15,16 +16,18 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
         <QueryClientProvider client={queryClient}>
             <HydrationBoundary state={pageProps.dehydratedState}>
-                <GlobalStyle />
-                {MAINTENANCE_MODE ? (
-                    <MaintenancePage />
-                ) : (
-                    <>
-                        <Navbar />
-                        <Component {...pageProps} />
-                        <Footer />
-                    </>
-                )}
+                <ThemeProvider>
+                    <GlobalStyle />
+                    {MAINTENANCE_MODE ? (
+                        <MaintenancePage />
+                    ) : (
+                        <>
+                            <Navbar />
+                            <Component {...pageProps} />
+                            <Footer />
+                        </>
+                    )}
+                </ThemeProvider>
             </HydrationBoundary>
         </QueryClientProvider>
     );

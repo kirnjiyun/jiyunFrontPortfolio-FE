@@ -4,87 +4,72 @@ export const FilterContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
-    padding: 1.05rem 1.4rem;
-    background-color: rgba(255, 255, 255, 0.86);
+    gap: 1.5rem;
+    padding: 0.875rem 1.25rem;
+    background-color: var(--color-card);
     border: 1px solid var(--color-border);
-    border-radius: 14px;
+    border-radius: var(--radius);
     margin: 1.5rem auto;
     max-width: 900px;
-    box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(10px);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 
     @media (max-width: 576px) {
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.75rem;
         margin: 1rem;
     }
 `;
 
 export const FilterLabel = styled.label`
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 500;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--color-text-primary);
+    color: var(--color-fg);
+    cursor: pointer;
 `;
 
 export const FilterSelect = styled.select`
-    padding: 0.55rem 0.95rem;
+    padding: 0.5rem 0.75rem;
     border: 1px solid var(--color-border);
-    border-radius: 10px;
-    font-size: 1rem;
-    color: var(--color-text-secondary);
-    background-color: var(--color-surface);
-    transition: border-color 0.3s;
+    border-radius: calc(var(--radius) - 2px);
+    font-size: 0.875rem;
+    color: var(--color-fg);
+    background-color: var(--color-bg);
+    transition: border-color 0.15s ease;
 
     &:hover {
-        border-color: var(--color-medium-blue);
+        border-color: var(--color-ring);
     }
 
     &:focus {
         outline: none;
-        border-color: var(--color-dark-blue);
+        border-color: var(--color-ring);
+        box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
     }
 `;
 
 export const FilterCheckbox = styled.input`
-    accent-color: var(--color-dark-blue);
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     cursor: pointer;
+    accent-color: var(--color-primary);
 `;
 
 export const ProjectTransitionStyles = styled.div`
     display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(400px, 1fr)
-    ); /* 카드 가로 크기에 맞게 조정 */
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
     margin: 0 auto;
-    padding: 1rem;
-    max-width: 1280px;
+    padding: 1.5rem;
+    max-width: 1200px;
     justify-items: center;
 
-    /* 화면 너비 1220px 이하 → 2열 */
-    @media (max-width: 1220px) {
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        margin: 0 auto;
-    }
-
-    /* 화면 너비 900px 이하 → 1열 */
-    @media (max-width: 900px) {
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        margin: 0 auto;
-    }
-
-    /* 화면 너비 576px 이하 → 1열 */
     @media (max-width: 576px) {
         grid-template-columns: 1fr;
-        margin: 0 15px;
-        gap: 12px;
+        padding: 1rem;
+        gap: 1rem;
     }
 
     > div {

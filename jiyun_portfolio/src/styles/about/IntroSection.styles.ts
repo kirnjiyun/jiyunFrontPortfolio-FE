@@ -1,34 +1,22 @@
 import styled from "styled-components";
 import { animated } from "react-spring";
 
-// 공통 색상 정의
-const colors = {
-    darkBlue: "var(--color-dark-blue)",
-    mediumBlue: "var(--color-medium-blue)",
-    lightestBlue: "var(--color-lightest-blue)",
-    brightestBlue: "var(--color-brightest-blue)",
-};
-
 export const MainSection = styled.div`
     width: 100%;
-    height: 200%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: ${colors.lightestBlue};
+    background: var(--color-bg);
     position: relative;
     overflow: hidden;
+    transition: background-color 0.3s ease;
+
     @media (max-width: 768px) {
-        height: auto;
         padding: 1.5rem 0.5rem;
-    }
-    @media (max-width: 480px) {
-        padding: 1rem 0.2rem;
     }
 `;
 
-// 스크롤 텍스트 컨테이너
 export const ScrollTextContainer = styled.div`
     position: absolute;
     top: 30%;
@@ -38,63 +26,49 @@ export const ScrollTextContainer = styled.div`
     align-items: center;
 `;
 
-// 어두운 텍스트 스타일
 export const ScrollText = styled(animated.div)`
-    font-size: 5rem;
-    font-weight: bold;
-    color: ${colors.darkBlue};
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-fg);
     white-space: nowrap;
+    opacity: 0.08;
+    letter-spacing: -0.02em;
+
     @media (max-width: 768px) {
-        font-size: 2.2rem;
-    }
-    @media (max-width: 480px) {
-        font-size: 1.2rem;
+        font-size: 2rem;
     }
 `;
 
-// 밝은 텍스트 스타일
 export const ScrollTextLight = styled(animated.div)`
-    font-size: 5rem;
-    font-weight: bold;
-    color: ${colors.brightestBlue};
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-muted-fg);
     white-space: nowrap;
+    opacity: 0.15;
+    letter-spacing: -0.02em;
+
     @media (max-width: 768px) {
-        font-size: 2.2rem;
-    }
-    @media (max-width: 480px) {
-        font-size: 1.2rem;
+        font-size: 2rem;
     }
 `;
 
-// 아래 일반 섹션
 export const Section = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 24px;
-    margin: 16px 0;
-    border-radius: 12px;
-    background: var(--color-lightest-blue);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-radius: var(--radius);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 
     @media (min-width: 769px) {
         flex-direction: row;
-        padding: 48px;
-    }
-    &:hover {
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-    @media (max-width: 768px) {
-        padding: 16px 4px;
-        margin: 8px 0;
-    }
-    @media (max-width: 480px) {
-        padding: 8px 2px;
+        padding: 2.5rem;
     }
 `;
 
-// 텍스트 컨테이너
 export const TextContainer = styled.div`
     flex: 1;
     display: flex;
@@ -102,69 +76,66 @@ export const TextContainer = styled.div`
     justify-content: center;
 `;
 
-// 섹션 제목 스타일
 export const Title = styled.h2`
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: 600;
     margin-bottom: 1rem;
-    color: ${colors.darkBlue};
-    font-family: "SBAggroB";
+    color: var(--color-fg);
+    letter-spacing: -0.02em;
     text-align: center;
 `;
 
-// 본문 텍스트 스타일
 export const Paragraph = styled.p`
-    margin: 24px 12px;
-    font-size: 18px;
+    margin: 1rem 0;
+    font-size: 0.95rem;
     line-height: 1.8;
+    color: var(--color-muted-fg);
 
-    color: ${colors.mediumBlue};
     @media (max-width: 768px) {
-        font-size: 1rem;
-        margin-top: 12px;
-        margin-bottom: 12px;
-    }
-    @media (max-width: 480px) {
         font-size: 0.9rem;
     }
 `;
-// 추가된 스타일 (기본 스타일 파일 하단에 추가)
+
 export const InfoContainer = styled.div`
-    margin-top: 16px;
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
 `;
 
 export const InfoItem = styled.p`
-    font-size: 16px;
-    color: ${colors.darkBlue};
+    font-size: 0.9rem;
+    color: var(--color-fg);
 `;
 
 export const InfoLink = styled.a`
-    color: ${colors.darkBlue};
+    color: var(--color-fg);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
+    transition: opacity 0.15s ease;
 
     &:hover {
         text-decoration: underline;
+        opacity: 0.8;
     }
 `;
 
 export const TechStack = styled.p`
-    font-size: 16px;
-    color: ${colors.mediumBlue};
-    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--color-muted-fg);
+    margin-top: 0.5rem;
 `;
+
 export const ContentContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: stretch;
         width: 100%;
-        gap: 12px;
-        padding: 16px;
+        gap: 0.75rem;
+        padding: 1rem;
     }
 `;

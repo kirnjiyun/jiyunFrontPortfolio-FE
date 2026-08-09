@@ -1,600 +1,489 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css, keyframes } from "styled-components";
+import type { TimelineEventType } from "../../data/timelineEvents";
 
 /* ─── Animations ─────────────────────────────────────────────── */
 
 const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 `;
 
-const slideUp = keyframes`
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+const scaleIn = keyframes`
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
 `;
 
-const blink = keyframes`
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+const tooltipIn = keyframes`
+  from { opacity: 0; transform: translate(-50%, -100%) translateY(4px); }
+  to   { opacity: 1; transform: translate(-50%, -100%) translateY(0); }
 `;
 
-const pixelBob = keyframes`
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-5px); }
+const tooltipInBelow = keyframes`
+  from { opacity: 0; transform: translate(-50%, 0) translateY(-4px); }
+  to   { opacity: 1; transform: translate(-50%, 0) translateY(0); }
 `;
 
-const activePulse = keyframes`
-  0%, 100% { box-shadow: 0 0 0 0 rgba(111,255,233,0.5), 3px 3px 0 #0d1321; }
-  50%       { box-shadow: 0 0 0 6px rgba(111,255,233,0), 3px 3px 0 #0d1321; }
-`;
+/* ─── 타입별 색상 ─────────────────────────────────────────────── */
+
+const TYPE_HEX: Record<TimelineEventType, string> = {
+    education: "#1e71c0",
+    work: "#b84869",
+    etc: "#a68a00",
+};
+
+export const typeColor = (type: TimelineEventType, alpha = 1) =>
+    `color-mix(in srgb, ${TYPE_HEX[type]} ${alpha * 100}%, transparent)`;
+
+/* ─── 차트 레이아웃 상수 (컴포넌트와 공유) ────────────────────── */
+
+export const LANE_HEIGHT = 52;
+export const BAR_HEIGHT = 16;
+export const AXIS_HEIGHT = 32;
+/** 막대 끝/‘현재’ 라벨이 잘리지 않도록 좌우로 확보하는 여백 */
+export const CHART_SIDE_PADDING = 40;
 
 /* ─── IntroButton ─────────────────────────────────────────────── */
 
 export const IntroButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem 0 0.5rem;
+    display: flex;
+    justify-content: center;
 `;
 
 export const IntroBtn = styled.button`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.65rem 1.5rem;
-  font-family: 'SBAggroB', monospace;
-  font-size: 0.9rem;
-  letter-spacing: 0.06em;
-  color: var(--color-dark-blue);
-  background: var(--color-brightest-blue);
-  border: 2px solid var(--color-dark-blue);
-  border-radius: 4px;
-  cursor: pointer;
-  /* pixel shadow */
-  box-shadow: 3px 3px 0 var(--color-dark-blue);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
-  image-rendering: pixelated;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 220px;
+    white-space: nowrap;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-primary-fg);
+    background: var(--color-primary);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: opacity 0.15s ease;
 
-  &:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 5px 5px 0 var(--color-dark-blue);
-    background: #3de8d0;
-  }
-  &:active {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0 var(--color-dark-blue);
-  }
-  &:focus-visible {
-    outline: 3px solid var(--color-dark-blue);
-    outline-offset: 3px;
-  }
+    &:hover {
+        opacity: 0.9;
+    }
 
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
+    &:focus-visible {
+        outline: none;
+        box-shadow:
+            0 0 0 2px var(--color-bg),
+            0 0 0 4px var(--color-ring);
+    }
 `;
 
 /* ─── Modal ──────────────────────────────────────────────────── */
 
 export const ModalOverlay = styled.div`
-  position: fixed;
-  inset: 0;
-  background: rgba(5, 10, 20, 0.88);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 1rem;
-  animation: ${fadeIn} 0.18s ease;
-  backdrop-filter: blur(2px);
+    position: fixed;
+    inset: 0;
+    background: hsl(240 10% 3.9% / 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+    animation: ${fadeIn} 0.15s ease;
+    backdrop-filter: blur(4px);
 
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+    }
 `;
 
 export const ModalContainer = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 880px;
-  background: #080e1a;
-  /* pixel-border effect */
-  border: 2px solid var(--color-brightest-blue);
-  box-shadow:
-    0 0 0 1px #080e1a,
-    0 0 0 3px var(--color-medium-blue),
-    0 28px 60px rgba(0, 0, 0, 0.6);
-  border-radius: 6px;
-  padding: 1.8rem 2rem;
-  color: var(--color-lightest-blue);
+    position: relative;
+    width: 100%;
+    max-width: 940px;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem;
+    color: var(--color-fg);
+    animation: ${scaleIn} 0.18s ease;
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease;
 
-  &:focus {
-    outline: none;
-  }
+    &:focus {
+        outline: none;
+    }
 
-  @media (max-width: 600px) {
-    padding: 1.2rem 1rem;
-  }
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+    }
+
+    @media (max-width: 600px) {
+        padding: 1.125rem 1rem;
+    }
 `;
 
 export const ModalHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.4rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid rgba(111, 255, 233, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.875rem;
+    border-bottom: 1px solid var(--color-border);
+`;
+
+export const ModalTitleGroup = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
 `;
 
 export const ModalTitle = styled.h2`
-  font-family: 'SBAggroB', sans-serif;
-  font-size: 1rem;
-  letter-spacing: 0.12em;
-  color: var(--color-brightest-blue);
-  margin: 0;
-  /* blinking cursor decorative */
-  &::after {
-    content: '_';
-    animation: ${blink} 1s step-start infinite;
-    margin-left: 2px;
-  }
+    margin: 0;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-fg);
+`;
+
+export const ModalSubtitle = styled.p`
+    font-size: 0.78rem;
+    color: var(--color-muted-fg);
+    margin: 0;
 `;
 
 export const CloseButton = styled.button`
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: 2px solid #3e5c76;
-  border-radius: 3px;
-  color: #748cab;
-  font-size: 0.9rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: border-color 0.12s, color 0.12s;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) - 2px);
+    color: var(--color-muted-fg);
+    font-size: 0.875rem;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
 
-  &:hover {
-    border-color: var(--color-brightest-blue);
-    color: var(--color-brightest-blue);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--color-brightest-blue);
-    outline-offset: 2px;
-  }
+    &:hover {
+        background: var(--color-accent);
+        color: var(--color-fg);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow:
+            0 0 0 2px var(--color-bg),
+            0 0 0 4px var(--color-ring);
+    }
 `;
 
-export const KeyboardHelpRow = styled.p`
-  font-size: 0.7rem;
-  color: #3e5c76;
-  text-align: center;
-  margin-top: 1rem;
-  letter-spacing: 0.05em;
-  font-family: monospace;
+/* ─── Legend ─────────────────────────────────────────────────── */
 
-  span {
-    display: inline-block;
-    padding: 1px 5px;
-    border: 1px solid #3e5c76;
-    border-radius: 2px;
-    margin: 0 2px;
-    color: #748cab;
-  }
-
-  @media (max-width: 600px) {
-    display: none;
-  }
+export const Legend = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    margin-bottom: 0.25rem;
 `;
 
-/* ─── TimelineStage ──────────────────────────────────────────── */
+export const LegendItem = styled.span<{ $type: TimelineEventType }>`
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: ${(p) => (p.$type === "work" ? "0.864rem" : "0.72rem")};
+    color: var(--color-muted-fg);
+`;
 
-interface StageWrapperProps {
-  $blurred?: boolean;
-}
+export const LegendSwatch = styled.span<{ $type: TimelineEventType }>`
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    background: ${(p) => typeColor(p.$type, 0.85)};
+`;
 
-export const StageWrapper = styled.div<StageWrapperProps>`
-  position: relative;
-  width: 100%;
-  height: 200px;
-  background:
-    linear-gradient(180deg, #0a1628 0%, #0d1f35 70%, #112240 100%);
-  border: 2px solid #1d3a5c;
-  border-radius: 6px;
-  overflow: visible;
-  transition: filter 0.2s ease;
-  filter: ${(p) => (p.$blurred ? 'blur(2px) brightness(0.6)' : 'none')};
+/* ─── Chart ──────────────────────────────────────────────────── */
 
-  /* pixel-style ground line */
-  &::after {
-    content: '';
+export const ChartScroll = styled.div`
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+
+    /* 모바일에서 가로 스크롤로 전체 기간 확인 */
+    @media (max-width: 700px) {
+        padding-bottom: 0.5rem;
+    }
+`;
+
+export const ChartWrapper = styled.div`
+    position: relative;
+    width: 100%;
+    min-width: 660px;
+    padding: 0.5rem ${CHART_SIDE_PADDING}px 0;
+`;
+
+export const ChartBody = styled.div`
+    position: relative;
+    width: 100%;
+`;
+
+export const GridLine = styled.div`
     position: absolute;
+    top: 0;
     bottom: 0;
+    width: 1px;
+    background: var(--color-border);
+    opacity: 0.7;
+`;
+
+export const NowLine = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-muted-fg);
+    opacity: 0.55;
+`;
+
+/* 한 이벤트(레인) 그룹 */
+export const BarRow = styled.div`
+    position: absolute;
     left: 0;
     right: 0;
-    height: 28px;
-    background: repeating-linear-gradient(
-      90deg,
-      #112240 0px,
-      #112240 8px,
-      #0d1f35 8px,
-      #0d1f35 16px
-    );
-    border-top: 2px solid #1d3a5c;
-    border-radius: 0 0 4px 4px;
-  }
-
-  @media (max-width: 600px) {
-    height: 160px;
-  }
+    height: ${LANE_HEIGHT}px;
 `;
 
-export const TrackRail = styled.div`
-  position: absolute;
-  top: calc(50% - 10px);
-  left: 3%;
-  right: 3%;
-  height: 3px;
-  background: repeating-linear-gradient(
-    90deg,
-    #748cab 0px,
-    #748cab 12px,
-    transparent 12px,
-    transparent 22px
-  );
-  border-radius: 2px;
-  z-index: 1;
+export const BarLabel = styled.div`
+    position: absolute;
+    bottom: ${BAR_HEIGHT + 6}px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    white-space: nowrap;
+    pointer-events: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-fg);
 `;
 
-/* ─── PlayerSprite ───────────────────────────────────────────── */
-
-interface PlayerProps {
-  $position: number;
-  $isMoving: boolean;
-}
-
-export const PlayerWrapper = styled.div<PlayerProps>`
-  position: absolute;
-  top: calc(50% - 10px);
-  left: ${(p) => p.$position}%;
-  transform: translate(-50%, -100%);
-  z-index: 10;
-  transition: left 0.1s linear;
-
-  animation: ${pixelBob} 0.7s ease-in-out infinite;
-  animation-play-state: ${(p) => (p.$isMoving ? 'running' : 'paused')};
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-    transition: none;
-  }
+export const LabelChip = styled.span<{ $type: TimelineEventType }>`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    line-height: 1;
+    background: ${(p) => typeColor(p.$type, 0.16)};
+    border: 1px solid ${(p) => typeColor(p.$type, 0.45)};
 `;
 
-/* pixel art character: 24×28px hand-crafted with box-shadows */
-export const PixelCharacter = styled.div`
-  width: 8px;
-  height: 8px;
-  image-rendering: pixelated;
-  position: relative;
-
-  /* Head: 4px block, teal */
-  background: var(--color-brightest-blue);
-  box-shadow:
-    /* head row 1 */
-    0px 0px 0 2px var(--color-brightest-blue),
-    8px 0px 0 2px var(--color-brightest-blue),
-    /* eyes */
-    2px 4px 0 2px #0d1321,
-    6px 4px 0 2px #0d1321,
-    /* body */
-    0px 12px 0 2px #1d2d44,
-    8px 12px 0 2px #1d2d44,
-    4px 12px 0 2px #1d2d44,
-    /* legs */
-    2px 18px 0 2px #748cab,
-    6px 18px 0 2px #748cab;
+export const LabelPeriod = styled.span`
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--color-muted-fg);
 `;
 
-/* ─── EventNode ──────────────────────────────────────────────── */
+/* 기간 막대 */
+export const Bar = styled.button<{
+    $type: TimelineEventType;
+    $active: boolean;
+}>`
+    position: absolute;
+    bottom: 0;
+    height: ${BAR_HEIGHT}px;
+    min-width: 10px;
+    padding: 0;
+    border-radius: 5px;
+    border: 1px solid ${(p) => typeColor(p.$type, 0.55)};
+    background: ${(p) => typeColor(p.$type, p.$active ? 0.95 : 0.55)};
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 
-export type EventNodeStatus = 'inactive' | 'active' | 'viewed';
+    ${(p) =>
+        p.$active &&
+        css`
+            transform: scaleY(1.16);
+            box-shadow: 0 2px 10px ${typeColor(p.$type, 0.35)};
+        `}
 
-interface EventNodeProps {
-  $position: number;
-  $status: EventNodeStatus;
-}
-
-export const EventNodeWrapper = styled.button<EventNodeProps>`
-  position: absolute;
-  top: calc(50% - 10px);
-  left: ${(p) => p.$position}%;
-  transform: translate(-50%, -50%);
-  width: 38px;
-  height: 38px;
-  border-radius: 4px;
-  border: 2px solid;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  cursor: pointer;
-  z-index: 5;
-  background: transparent;
-  transition: transform 0.12s ease;
-  /* pixel shadow */
-  box-shadow: 3px 3px 0 #0d1321;
-
-  ${(p) =>
-    p.$status === 'active' &&
-    css`
-      border-color: var(--color-brightest-blue);
-      background: rgba(111, 255, 233, 0.12);
-      box-shadow: 3px 3px 0 #0d1321;
-      animation: ${activePulse} 1.6s ease infinite;
-    `}
-
-  ${(p) =>
-    p.$status === 'viewed' &&
-    css`
-      border-color: #748cab;
-      background: rgba(116, 140, 171, 0.15);
-      opacity: 0.75;
-    `}
-
-  ${(p) =>
-    p.$status === 'inactive' &&
-    css`
-      border-color: #1d3a5c;
-      background: #0a1628;
-      color: #3e5c76;
-      filter: grayscale(60%);
-    `}
-
-  &:hover,
-  &:focus-visible {
-    transform: translate(-50%, -65%);
-    filter: grayscale(0%);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--color-brightest-blue);
-    outline-offset: 3px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
-`;
-
-export const EventYearLabel = styled.span`
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.62rem;
-  font-family: monospace;
-  white-space: nowrap;
-  color: #748cab;
-  letter-spacing: 0.05em;
-  pointer-events: none;
-`;
-
-/* ─── InteractionHint ────────────────────────────────────────── */
-
-export const HintBadge = styled.div`
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #080e1a;
-  border: 1px solid var(--color-brightest-blue);
-  color: var(--color-brightest-blue);
-  font-size: 0.7rem;
-  font-family: monospace;
-  letter-spacing: 0.08em;
-  padding: 4px 12px;
-  border-radius: 3px;
-  white-space: nowrap;
-  z-index: 20;
-  pointer-events: none;
-  animation: ${fadeIn} 0.2s ease;
-  box-shadow: 2px 2px 0 var(--color-dark-blue);
-
-  span {
-    background: rgba(111, 255, 233, 0.15);
-    padding: 1px 5px;
-    border-radius: 2px;
-    border: 1px solid rgba(111, 255, 233, 0.3);
-    margin: 0 1px;
-  }
-
-  /* blinking dot indicator */
-  &::before {
-    content: '▶';
-    margin-right: 6px;
-    animation: ${blink} 0.8s step-start infinite;
-    font-size: 0.6rem;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-    &::before {
-      animation: none;
+    &:focus-visible {
+        outline: none;
+        box-shadow:
+            0 0 0 2px var(--color-bg),
+            0 0 0 4px var(--color-ring);
     }
-  }
 `;
 
-/* ─── MoveButtons ────────────────────────────────────────────── */
+/* 기간이 없는 시점 이벤트 */
+export const PointMarker = styled.button<{
+    $type: TimelineEventType;
+    $active: boolean;
+}>`
+    position: absolute;
+    bottom: 0;
+    width: ${BAR_HEIGHT}px;
+    height: ${BAR_HEIGHT}px;
+    padding: 0;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    border: 2px solid ${(p) => typeColor(p.$type, 0.75)};
+    background: ${(p) =>
+        p.$active ? typeColor(p.$type, 0.95) : "var(--color-card)"};
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
 
-export const MoveButtonRow = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.2rem;
+    ${(p) =>
+        p.$active &&
+        css`
+            transform: translateX(-50%) scale(1.15);
+        `}
+
+    &:focus-visible {
+        outline: none;
+        box-shadow:
+            0 0 0 2px var(--color-bg),
+            0 0 0 4px var(--color-ring);
+    }
 `;
 
-export const MoveBtn = styled.button`
-  padding: 0.45rem 1.4rem;
-  font-family: monospace;
-  font-size: 0.85rem;
-  background: #0d1f35;
-  color: #748cab;
-  border: 2px solid #1d3a5c;
-  border-radius: 3px;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  box-shadow: 2px 2px 0 #080e1a;
-  transition: background 0.1s, border-color 0.1s, color 0.1s, transform 0.1s;
+/* ─── Axis ───────────────────────────────────────────────────── */
 
-  &:hover,
-  &:focus-visible {
-    background: #1d2d44;
-    border-color: var(--color-brightest-blue);
-    color: var(--color-brightest-blue);
-    transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0 #080e1a;
-  }
-  &:active {
-    transform: translate(1px, 1px);
-    box-shadow: 0px 0px 0 #080e1a;
-  }
-  &:focus-visible {
-    outline: 2px solid var(--color-brightest-blue);
-    outline-offset: 2px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
+export const Axis = styled.div`
+    position: relative;
+    height: ${AXIS_HEIGHT}px;
+    border-top: 1px solid var(--color-border);
 `;
 
-/* ─── EventDetailPanel ───────────────────────────────────────── */
-
-export const DetailOverlay = styled.div`
-  position: absolute;
-  inset: -2px;
-  background: rgba(8, 14, 26, 0.75);
-  display: flex;
-  align-items: flex-end;
-  border-radius: 6px;
-  z-index: 30;
-  animation: ${fadeIn} 0.15s ease;
-  backdrop-filter: blur(1px);
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
+export const AxisTick = styled.span`
+    position: absolute;
+    top: 8px;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    color: var(--color-muted-fg);
+    white-space: nowrap;
 `;
 
-export const DetailCard = styled.div`
-  width: 100%;
-  background: #080e1a;
-  border: 2px solid var(--color-brightest-blue);
-  border-bottom: none;
-  border-radius: 6px 6px 0 0;
-  padding: 1.2rem 1.4rem 1rem;
-  animation: ${slideUp} 0.18s ease;
-  /* pixel inner glow */
-  box-shadow: inset 0 1px 0 rgba(111, 255, 233, 0.08);
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
-
-  @media (max-width: 600px) {
-    padding: 1rem 0.9rem 0.8rem;
-  }
+export const NowTick = styled.span`
+    position: absolute;
+    top: 6px;
+    transform: translateX(-50%);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    background: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 1px 7px;
+    white-space: nowrap;
 `;
 
-export const DetailHeader = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 0.7rem;
+/* ─── Tooltip ────────────────────────────────────────────────── */
+
+export const Tooltip = styled.div<{ $below: boolean }>`
+    position: absolute;
+    z-index: 40;
+    width: max-content;
+    max-width: 340px;
+    transform: ${(p) =>
+        p.$below ? "translate(-50%, 0)" : "translate(-50%, -100%)"};
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 0.75rem 0.875rem;
+    pointer-events: none;
+    animation: ${(p) => (p.$below ? tooltipInBelow : tooltipIn)} 0.13s ease;
+
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+    }
 `;
 
-export const TypeBadge = styled.span`
-  display: inline-block;
-  font-size: 0.65rem;
-  font-family: monospace;
-  letter-spacing: 0.06em;
-  color: var(--color-brightest-blue);
-  background: rgba(111, 255, 233, 0.1);
-  border: 1px solid rgba(111, 255, 233, 0.25);
-  padding: 1px 7px;
-  border-radius: 2px;
-  margin-bottom: 4px;
+export const TooltipHead = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-bottom: 0.3rem;
 `;
 
-export const DetailYear = styled.div`
-  font-family: monospace;
-  font-size: 0.72rem;
-  color: #748cab;
-  letter-spacing: 0.1em;
-  margin-bottom: 2px;
+export const TypeBadge = styled.span<{ $type: TimelineEventType }>`
+    display: inline-block;
+    font-size: ${(p) => (p.$type === "work" ? "0.78rem" : "0.65rem")};
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: ${(p) => typeColor(p.$type)};
+    background: ${(p) => typeColor(p.$type, 0.12)};
+    border: 1px solid ${(p) => typeColor(p.$type, 0.35)};
+    padding: 1px 7px;
+    border-radius: 999px;
 `;
 
-export const DetailTitle = styled.h3`
-  font-family: 'SBAggroB', sans-serif;
-  font-size: 1rem;
-  color: var(--color-lightest-blue);
-  margin: 0 0 0.1rem;
-  line-height: 1.3;
+export const TooltipPeriod = styled.span`
+    font-size: 0.7rem;
+    color: var(--color-muted-fg);
+    letter-spacing: 0.02em;
 `;
 
-export const DetailSubtitle = styled.p`
-  font-size: 0.78rem;
-  color: #748cab;
-  margin: 0 0 0.6rem;
+export const TooltipTitle = styled.h3`
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-fg);
+    letter-spacing: -0.01em;
+    margin: 0 0 0.1rem;
+    line-height: 1.35;
 `;
 
-export const DetailDescription = styled.p`
-  font-size: 0.83rem;
-  line-height: 1.75;
-  color: #8fa8c0;
-  margin: 0 0 0.8rem;
-  border-left: 2px solid rgba(111, 255, 233, 0.2);
-  padding-left: 0.8rem;
+export const TooltipSubtitle = styled.p`
+    font-size: 0.75rem;
+    color: var(--color-muted-fg);
+    margin: 0 0 0.45rem;
+`;
+
+export const TooltipDescription = styled.p`
+    font-size: 0.78rem;
+    line-height: 1.65;
+    color: var(--color-muted-fg);
+    margin: 0 0 0.55rem;
+    white-space: normal;
 `;
 
 export const TagList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
 `;
 
 export const Tag = styled.span`
-  font-size: 0.68rem;
-  font-family: monospace;
-  padding: 2px 8px;
-  border: 1px solid #1d3a5c;
-  border-radius: 2px;
-  color: #748cab;
-  background: #0d1f35;
-  letter-spacing: 0.04em;
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 1px 6px;
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) - 4px);
+    color: var(--color-muted-fg);
+    background: var(--color-muted);
 `;
 
-export const DetailCloseBtn = styled.button`
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: 2px solid #1d3a5c;
-  border-radius: 3px;
-  color: #748cab;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: border-color 0.1s, color 0.1s;
-
-  &:hover {
-    border-color: var(--color-brightest-blue);
-    color: var(--color-brightest-blue);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--color-brightest-blue);
-    outline-offset: 2px;
-  }
+export const HelpText = styled.p`
+    margin-top: 0.875rem;
+    font-size: 0.72rem;
+    color: var(--color-muted-fg);
+    text-align: center;
 `;

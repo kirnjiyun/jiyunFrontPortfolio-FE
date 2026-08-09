@@ -1,11 +1,14 @@
 import { createGlobalStyle } from "styled-components";
 
+// 주의: @import 는 createGlobalStyle 안에서 사용하지 않습니다.
+// (styled-components 의 CSSOM API 가 프로덕션에서 제대로 처리하지 못함)
+// 웹폰트는 _document.tsx 의 <link> 로 로드합니다.
 const GlobalStyle = createGlobalStyle`
 @font-face {
-     font-family: 'S-CoreDream-3Light';
-     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 @font-face {
     font-family: 'SBAggroB';
@@ -13,102 +16,180 @@ const GlobalStyle = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
 }
+
+/* ── shadcn/ui inspired design tokens ── */
 :root {
-  --color-dark-blue: #0d1321;
-  --color-medium-blue: #1d2d44;
-  --color-light-blue: #748cab;
-  --color-lightest-blue: #f7f9fc;
-  --color-brightest-blue: #6fffe9;
-  --color-surface: #ffffff;
-  --color-surface-soft: #edf2fb;
-  --color-border: #d8e1ec;
-  --color-text-primary: #0d1321;
-  --color-text-secondary: #3e5c76;
-  --shadow-sm: 0 8px 20px rgba(13, 19, 33, 0.06);
-  --shadow-md: 0 14px 34px rgba(13, 19, 33, 0.1);
-  --radius-lg: 18px;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+
+    /* semantic aliases */
+    --color-bg: hsl(var(--background));
+    --color-fg: hsl(var(--foreground));
+    --color-card: hsl(var(--card));
+    --color-card-fg: hsl(var(--card-foreground));
+    --color-primary: hsl(var(--primary));
+    --color-primary-fg: hsl(var(--primary-foreground));
+    --color-secondary: hsl(var(--secondary));
+    --color-secondary-fg: hsl(var(--secondary-foreground));
+    --color-muted: hsl(var(--muted));
+    --color-muted-fg: hsl(var(--muted-foreground));
+    --color-accent: hsl(var(--accent));
+    --color-accent-fg: hsl(var(--accent-foreground));
+    --color-border: hsl(var(--border));
+    --color-input: hsl(var(--input));
+    --color-ring: hsl(var(--ring));
+
+    /* legacy compatibility */
+    --color-dark-blue: hsl(var(--foreground));
+    --color-medium-blue: hsl(var(--muted-foreground));
+    --color-light-blue: hsl(240 5% 65%);
+    --color-lightest-blue: hsl(var(--secondary));
+    --color-brightest-blue: hsl(172 100% 70%);
+    --color-surface: hsl(var(--card));
+    --color-surface-soft: hsl(var(--muted));
+    --color-text-primary: hsl(var(--foreground));
+    --color-text-secondary: hsl(var(--muted-foreground));
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --radius-lg: var(--radius);
 }
 
+[data-theme="dark"] {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
 
-  * {
+    --color-bg: hsl(var(--background));
+    --color-fg: hsl(var(--foreground));
+    --color-card: hsl(var(--card));
+    --color-card-fg: hsl(var(--card-foreground));
+    --color-primary: hsl(var(--primary));
+    --color-primary-fg: hsl(var(--primary-foreground));
+    --color-secondary: hsl(var(--secondary));
+    --color-secondary-fg: hsl(var(--secondary-foreground));
+    --color-muted: hsl(var(--muted));
+    --color-muted-fg: hsl(var(--muted-foreground));
+    --color-accent: hsl(var(--accent));
+    --color-accent-fg: hsl(var(--accent-foreground));
+    --color-border: hsl(var(--border));
+    --color-input: hsl(var(--input));
+    --color-ring: hsl(var(--ring));
+
+    --color-dark-blue: hsl(var(--foreground));
+    --color-medium-blue: hsl(var(--muted-foreground));
+    --color-light-blue: hsl(240 5% 55%);
+    --color-lightest-blue: hsl(var(--secondary));
+    --color-brightest-blue: hsl(172 60% 50%);
+    --color-surface: hsl(var(--card));
+    --color-surface-soft: hsl(var(--muted));
+    --color-text-primary: hsl(var(--foreground));
+    --color-text-secondary: hsl(var(--muted-foreground));
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  html, body {
+}
+
+html, body {
     overflow-x: hidden;
     scroll-behavior: smooth;
-  }
+}
 
-  body {
-    font-family: 'S-CoreDream-3Light', 'SBAggroB','Pretendard', sans-serif;
-    background: radial-gradient(circle at 0% 0%, #ffffff 0%, #edf2fb 45%, #d9e4f5 100%);
-    color: var(--color-text-primary);
+body {
+    font-family: 'Inter', 'S-CoreDream-3Light', 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-fg);
     line-height: 1.6;
     min-height: 100vh;
-  }
+    transition: background-color 0.3s ease, color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-  ::selection {
-    background: rgba(111, 255, 233, 0.28);
-    color: var(--color-dark-blue);
-  }
+::selection {
+    background: hsl(240 5.9% 10% / 0.12);
+    color: var(--color-fg);
+}
 
-  a {
+[data-theme="dark"] ::selection {
+    background: hsl(0 0% 98% / 0.15);
+}
+
+a {
     text-decoration: none;
     color: inherit;
-  }
+}
 
-  button {
+button {
     font-family: inherit;
     cursor: pointer;
-  }
+}
 
-  img, video {
+img, video {
     max-width: 100%;
     height: auto;
     display: block;
-  }
+}
 
-  ::-webkit-scrollbar {
-    width: 11px;
-    height: 11px;
-  }
+/* Minimal scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #748cab, #3e5c76);
-    border-radius: 10px;
-    border: 2px solid #edf2fb;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #edf2fb;
-  }
-
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
     html {
-      font-size: 15px;
+        font-size: 15px;
     }
-    body {
-      font-size: 1rem;
-    }
-    h1 {
-      font-size: 2rem;
-    }
-    h2 {
-      font-size: 1.5rem;
-    }
-    h3 {
-      font-size: 1.2rem;
-    }
-    p, a, li, button {
-      font-size: 1rem;
-    }
-    section, main, header, footer {
-      padding-left: 12px;
-      padding-right: 12px;
-    }
-  }
+}
 `;
 
 export default GlobalStyle;

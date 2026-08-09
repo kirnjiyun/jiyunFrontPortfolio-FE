@@ -4,6 +4,20 @@ export const getBaseUrl = () =>
 /** SSG/ISR pages use this when the API is unreachable at build time (e.g. Vercel). */
 export const SSG_REVALIDATE_SECONDS = 3600;
 
+/**
+ * API 요청 타임아웃(ms).
+ * 백엔드가 응답하지 않을 때 기본 fetch 는 최대 300초까지 대기하므로
+ * 빌드/렌더가 멈추지 않도록 짧게 끊고 fallback 으로 넘어갑니다.
+ */
+const API_TIMEOUT_MS = Number(process.env.NEXT_PUBLIC_API_TIMEOUT_MS ?? 10000);
+
+function timeoutSignal(ms: number = API_TIMEOUT_MS) {
+    if (typeof AbortSignal !== "undefined" && "timeout" in AbortSignal) {
+        return AbortSignal.timeout(ms);
+    }
+    return undefined;
+}
+
 async function fetchJson(path: string) {
     return requestJson(path, { method: "GET" });
 }
@@ -36,6 +50,7 @@ async function requestJson(
         method,
         headers,
         body: payload !== undefined ? JSON.stringify(payload) : undefined,
+        signal: timeoutSignal(),
     });
 
     const data = await res
@@ -93,9 +108,15 @@ export async function fetchAboutDataForSSG() {
     try {
         const [introductionRes, educationRes, certificationRes] =
             await Promise.all([
-                fetch(`${baseUrl}/api/introductions`),
-                fetch(`${baseUrl}/api/educations`),
-                fetch(`${baseUrl}/api/certifications`),
+                fetch(`${baseUrl}/api/introductions`, {
+                    signal: timeoutSignal(),
+                }),
+                fetch(`${baseUrl}/api/educations`, {
+                    signal: timeoutSignal(),
+                }),
+                fetch(`${baseUrl}/api/certifications`, {
+                    signal: timeoutSignal(),
+                }),
             ]);
 
         if (
