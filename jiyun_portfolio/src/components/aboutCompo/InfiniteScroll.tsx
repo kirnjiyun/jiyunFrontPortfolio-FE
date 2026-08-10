@@ -4,35 +4,48 @@ import styled from "styled-components";
 
 export default function ScrollMoveText() {
     const [scrollY, setScrollY] = useState(0);
-    const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+    // window 를 렌더 중에 읽으면 서버/클라이언트 결과가 달라 하이드레이션이 어긋난다.
+    // 마운트 이후에 측정해 state 로 반영한다.
+    const [viewport, setViewport] = useState({ width: 0, isMobile: false });
 
     useEffect(() => {
-        const handleScroll = () => {
-            // 현재 스크롤 위치를 상태로 저장
-            setScrollY(window.scrollY);
-        };
-
-        if (typeof window !== "undefined") {
-            window.addEventListener("scroll", handleScroll);
-        }
-
-        return () => {
-            if (typeof window !== "undefined") {
-                window.removeEventListener("scroll", handleScroll);
-            }
-        };
+        const measure = () =>
+            setViewport({
+                width: window.innerWidth,
+                isMobile: window.innerWidth <= 768,
+            });
+        measure();
+        window.addEventListener("resize", measure, { passive: true });
+        return () => window.removeEventListener("resize", measure);
     }, []);
 
+    useEffect(() => {
+        // 스크롤 이벤트마다 setState 하면 리렌더 + 스프링 재계산이 몰려 버벅인다.
+        // rAF 로 프레임당 한 번만 반영한다.
+        let ticking = false;
+
+        const handleScroll = () => {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(() => {
+                setScrollY(window.scrollY);
+                ticking = false;
+            });
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const speed = viewport.isMobile ? 0.3 : 1;
+
     const leftScroll = useSpring({
-        transform: `translateX(-${scrollY * (isMobile ? 0.3 : 1)}px)`,
+        transform: `translateX(-${scrollY * speed}px)`,
         config: { tension: 200, friction: 20 },
     });
 
     const rightScroll = useSpring({
-        transform: `translateX(${
-            scrollY * (isMobile ? 0.3 : 1) -
-            (typeof window !== "undefined" ? window.innerWidth : 0)
-        }px)`,
+        transform: `translateX(${scrollY * speed - viewport.width}px)`,
         config: { tension: 200, friction: 20 },
     });
 

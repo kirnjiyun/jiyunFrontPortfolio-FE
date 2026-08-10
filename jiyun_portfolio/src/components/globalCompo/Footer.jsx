@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import Image from "next/image";
 
 const FooterWrap = styled.footer`
     width: 100%;
@@ -102,7 +103,12 @@ const Footer = () => {
                         aria-label="이메일"
                         title="이메일"
                     >
-                        <img src="/images/mailbox.png" alt="" />
+                        <Image
+                            src="/images/mailbox.png"
+                            alt=""
+                            width={18}
+                            height={18}
+                        />
                     </SocialLink>
                     <SocialLink
                         href="https://github.com/kirnjiyun"
@@ -111,7 +117,12 @@ const Footer = () => {
                         aria-label="깃허브"
                         title="깃허브"
                     >
-                        <img src="/images/github.png" alt="" />
+                        <Image
+                            src="/images/github.png"
+                            alt=""
+                            width={18}
+                            height={18}
+                        />
                     </SocialLink>
                 </SocialContainer>
                 <MenuContainer>

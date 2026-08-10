@@ -3,6 +3,18 @@ const { withSentryConfig } = require("@sentry/nextjs");
 const nextConfig = {
     // Next.js 설정
     reactStrictMode: true,
+    // 이미지 최적화: avif/webp 로 변환해 원본 PNG 대비 크게 줄인다.
+    images: {
+        formats: ["image/avif", "image/webp"],
+        // 백엔드에서 내려오는 썸네일 URL 을 next/image 로 최적화하려면
+        // 해당 호스트를 여기에 등록해야 한다.
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "jiyunfrontportfolio-be.onrender.com",
+            },
+        ],
+    },
     // Sentry 설정에서 예제 페이지 비활성화
     sentry: {
         disableServerWebpackPlugin: false,

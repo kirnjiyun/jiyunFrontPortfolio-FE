@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { useInView, animated, to } from "@react-spring/web";
 import {
     Container,
@@ -55,9 +56,12 @@ function Card({
                         ),
                     }}
                 >
-                    <img
+                    <Image
                         src={src}
                         alt={name}
+                        width={250}
+                        height={250}
+                        sizes="250px"
                         style={{
                             width: "250px",
                             height: "auto",

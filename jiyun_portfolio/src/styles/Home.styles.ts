@@ -1,8 +1,7 @@
-import styled, { keyframes } from "styled-components";
-import { animated } from "react-spring";
+import styled from "styled-components";
 import Link from "next/link";
 
-export const HomeWrapper = styled(animated.div)`
+export const HomeWrapper = styled.div`
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -17,10 +16,6 @@ export const HomeWrapper = styled(animated.div)`
     @media (max-width: 768px) {
         padding: 5rem 1.5rem 3rem;
     }
-`;
-
-export const AnimatedBackground = styled(animated.div)`
-    display: none;
 `;
 
 export const AnimatedText = styled.div`
@@ -63,53 +58,6 @@ export const HeroSubText = styled.p`
     letter-spacing: -0.01em;
     max-width: 600px;
     line-height: 1.6;
-`;
-
-export const PortfolioText = styled(animated.div)`
-    margin-top: 3rem;
-    text-align: center;
-    font-size: clamp(1.25rem, 3vw, 2rem);
-    font-weight: 600;
-    color: var(--color-fg);
-    letter-spacing: -0.02em;
-`;
-
-export const PromptText = styled(animated.div)`
-    margin-top: 2rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius);
-    color: var(--color-muted-fg);
-    border: 1px solid var(--color-border);
-    background: var(--color-card);
-`;
-
-const bounce = keyframes`
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(8px); }
-`;
-
-export const ArrowIndicator = styled(animated.div)``;
-
-export const ArrowImage = styled.img`
-    animation: ${bounce} 1.5s infinite;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    opacity: 0.5;
-`;
-
-export const ScrollGuideText = styled.div`
-    position: absolute;
-    bottom: 2rem;
-    font-size: 0.75rem;
-    color: var(--color-muted-fg);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    opacity: 0.6;
 `;
 
 /* CTA Buttons for hero */

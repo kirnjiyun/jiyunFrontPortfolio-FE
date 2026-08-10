@@ -1,8 +1,9 @@
+// 이 파일은 _app 에 렌더되는 Navbar 가 쓰므로 공통 청크에 포함된다.
+// 무거운 라이브러리(react-spring 등)를 import 하지 않도록 주의할 것.
 import styled from "styled-components";
-import { animated } from "react-spring";
 import Link from "next/link";
 
-export const NavbarWrapper = styled(animated.nav)`
+export const NavbarWrapper = styled.nav`
     position: fixed;
     top: 0;
     left: 0;
@@ -153,8 +154,3 @@ export const MobileNavLink = styled(Link)`
     }
 `;
 
-/* Legacy exports for compatibility — no longer used */
-export const MenuButton = styled.div``;
-export const ModalCircle = styled(animated.div)``;
-export const MenuItem = styled(animated.div)``;
-export const Backdrop = styled(animated.div)``;

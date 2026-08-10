@@ -1,21 +1,14 @@
 import { createGlobalStyle } from "styled-components";
 
-// 주의: @import 는 createGlobalStyle 안에서 사용하지 않습니다.
+// 폰트 정책
+// - 라틴: Inter 를 next/font 로 self-host ($sansFont 로 주입)
+// - 한글: 시스템 폰트 스택 (다운로드 0KB, 굵기별 실제 웨이트 제공)
+//   기존 S-CoreDream-3Light 는 woff 351KB 로 JS 전체보다 무거웠고,
+//   Light 단일 웨이트라 굵은 글씨가 합성돼 뭉개졌다.
+//   SBAggroB(236KB)는 선언만 있고 쓰이는 곳이 없어 제거했다.
+// 주의: @import 는 createGlobalStyle 안에서 쓰지 않는다
 // (styled-components 의 CSSOM API 가 프로덕션에서 제대로 처리하지 못함)
-// 웹폰트는 _document.tsx 의 <link> 로 로드합니다.
-const GlobalStyle = createGlobalStyle`
-@font-face {
-    font-family: 'S-CoreDream-3Light';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'SBAggroB';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+const GlobalStyle = createGlobalStyle<{ $sansFont?: string }>`
 
 /* ── shadcn/ui inspired design tokens ── */
 :root {
@@ -134,7 +127,9 @@ html, body {
 }
 
 body {
-    font-family: 'Inter', 'S-CoreDream-3Light', 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: ${(p) => p.$sansFont ?? "'Inter'"}, -apple-system, BlinkMacSystemFont,
+        'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic', 'Noto Sans KR',
+        'Segoe UI', Roboto, sans-serif;
     background-color: var(--color-bg);
     color: var(--color-fg);
     line-height: 1.6;

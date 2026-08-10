@@ -45,21 +45,8 @@ class MyDocument extends Document {
     render() {
         return (
             <Html lang="ko">
-                <Head>
-                    <link
-                        rel="preconnect"
-                        href="https://fonts.googleapis.com"
-                    />
-                    <link
-                        rel="preconnect"
-                        href="https://fonts.gstatic.com"
-                        crossOrigin="anonymous"
-                    />
-                    <link
-                        rel="stylesheet"
-                        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-                    />
-                </Head>
+                {/* 폰트는 _app.tsx 의 next/font 가 self-host 로 처리한다 */}
+                <Head />
                 <body>
                     <Main />
                     <NextScript />
