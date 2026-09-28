@@ -1,99 +1,33 @@
-import React, { useState, useEffect } from "react";
-import {
-    NavbarWrapper,
-    Logo,
-    NavLinks,
-    NavLink,
-    NavActions,
-    ThemeToggle,
-    MobileMenuButton,
-    MobileMenu,
-    MobileNavLink,
-} from "../../styles/Navbar.styles";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useTheme, ENABLE_DARK_MODE } from "../../lib/ThemeContext";
+import { NavbarWrapper, Logo, NavLinks, NavLink, NavActions, MobileMenuButton, MobileMenu, MobileNavLink } from "../../styles/Navbar.styles";
 
-const menuItems = [
-    { label: "Home", path: "/" },
-    { label: "Projects", path: "/projects" },
-    { label: "About", path: "/about" },
-];
-
-const Navbar: React.FC = () => {
+const menuItems = [{ label: "projects", path: "/projects" }, { label: "about", path: "/about" }];
+export default function Navbar() {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const { theme, toggleTheme } = useTheme();
+    const menuButton = useRef<HTMLButtonElement>(null);
     const router = useRouter();
-
+    useEffect(() => { setMobileOpen(false); }, [router.asPath]);
     useEffect(() => {
-        setMobileOpen(false);
-    }, [router.pathname]);
-
-    useEffect(() => {
-        const closeOnEsc = (e: KeyboardEvent) => {
-            if (e.key === "Escape") setMobileOpen(false);
+        const close = (event: KeyboardEvent) => {
+            if (event.key === "Escape" && mobileOpen) { setMobileOpen(false); menuButton.current?.focus(); }
         };
-        window.addEventListener("keydown", closeOnEsc);
-        return () => window.removeEventListener("keydown", closeOnEsc);
-    }, []);
-
+        window.addEventListener("keydown", close);
+        return () => window.removeEventListener("keydown", close);
+    }, [mobileOpen]);
+    const active = (path: string) => router.pathname.startsWith(path);
     return (
         <>
-            <NavbarWrapper>
-                <Link href="/">
-                    <Logo>JY.</Logo>
-                </Link>
-
-                <NavLinks>
-                    {menuItems.map((item) => (
-                        <NavLink
-                            key={item.label}
-                            href={item.path}
-                            className={
-                                router.pathname === item.path ? "active" : ""
-                            }
-                        >
-                            {item.label}
-                        </NavLink>
-                    ))}
-                </NavLinks>
-
-                <NavActions>
-                    {ENABLE_DARK_MODE && (
-                        <ThemeToggle
-                            onClick={toggleTheme}
-                            aria-label="테마 전환"
-                            title={
-                                theme === "light"
-                                    ? "다크 모드로 전환"
-                                    : "라이트 모드로 전환"
-                            }
-                        >
-                            {theme === "light" ? "☽" : "☀"}
-                        </ThemeToggle>
-                    )}
-                    <MobileMenuButton
-                        onClick={() => setMobileOpen(!mobileOpen)}
-                        aria-label="메뉴 열기"
-                    >
-                        {mobileOpen ? "✕" : "☰"}
-                    </MobileMenuButton>
-                </NavActions>
+            <NavbarWrapper aria-label="주 메뉴">
+                <Link href="/" aria-label="김지윤 포트폴리오 홈"><Logo>kim jiyun</Logo></Link>
+                <NavLinks>{menuItems.map(item => <NavLink key={item.path} href={item.path} aria-current={active(item.path) ? "page" : undefined}>{item.label}</NavLink>)}</NavLinks>
+                <NavActions><MobileMenuButton ref={menuButton} onClick={() => setMobileOpen(open => !open)} aria-label={mobileOpen ? "메뉴 닫기" : "메뉴 열기"} aria-expanded={mobileOpen} aria-controls="mobile-navigation">{mobileOpen ? "close −" : "menu +"}</MobileMenuButton></NavActions>
             </NavbarWrapper>
-
-            <MobileMenu $open={mobileOpen}>
-                {menuItems.map((item) => (
-                    <MobileNavLink
-                        key={item.label}
-                        href={item.path}
-                        onClick={() => setMobileOpen(false)}
-                    >
-                        {item.label}
-                    </MobileNavLink>
-                ))}
+            <MobileMenu id="mobile-navigation" $open={mobileOpen}>
+                <MobileNavLink href="/" onClick={() => setMobileOpen(false)}>home ↗</MobileNavLink>
+                {menuItems.map(item => <MobileNavLink key={item.path} href={item.path} aria-current={active(item.path) ? "page" : undefined} onClick={() => setMobileOpen(false)}>{item.label} ↗</MobileNavLink>)}
             </MobileMenu>
         </>
     );
-};
-
-export default Navbar;
+}

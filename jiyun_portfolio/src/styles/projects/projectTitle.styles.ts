@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const PageContainer = styled.div`
     width: 100%;
     min-height: 100vh;
-    background: var(--color-bg);
+    background: transparent;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -64,35 +64,35 @@ export const ArrowSymbol = styled.span`
 
 export const ContentWrapper = styled.div`
     width: 100%;
-    max-width: 1000px;
-    margin: 6rem auto 2rem;
-    background-color: var(--color-card);
-    border-radius: var(--radius);
-    border: 1px solid var(--color-border);
-    padding: 3rem;
+    margin: 6rem auto 4rem;
+    padding: 3rem var(--page-gutter);
     position: relative;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 
     @media (max-width: 600px) {
         margin: 5rem auto 1.5rem;
-        padding: 1.25rem;
+        padding: 2.5rem var(--page-gutter);
     }
 `;
 
 export const ProjectHeader = styled.div`
-    text-align: center;
-    margin-bottom: 2.5rem;
+    text-align: left;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
 `;
 
 export const ProjectTitle = styled.h1`
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-size: clamp(48px, 8vw, 132px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.06em;
+    overflow-wrap: anywhere;
     color: var(--color-fg);
     margin-bottom: 0.5rem;
 
     @media (max-width: 600px) {
-        font-size: 1.5rem;
+        font-size: clamp(36px, 10vw, 60px);
     }
 `;
 
@@ -104,7 +104,7 @@ export const ProjectSubtitle = styled.div`
 `;
 
 export const ThumbnailWrapper = styled.div`
-    margin-top: 1.5rem;
+    margin-top: 3rem;
     margin-bottom: 1.5rem;
     display: flex;
     justify-content: center;
@@ -112,7 +112,7 @@ export const ThumbnailWrapper = styled.div`
 
 export const ThumbnailImage = styled.img`
     width: 100%;
-    max-width: 600px;
+    max-width: 1200px;
     object-fit: cover;
     cursor: pointer;
     border-radius: var(--radius);
@@ -127,7 +127,7 @@ export const ThumbnailImage = styled.img`
 export const InfoSection = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
+    gap: clamp(2rem, 6vw, 6rem);
     align-items: start;
 
     @media (max-width: 768px) {
@@ -168,8 +168,9 @@ export const InfoGroup = styled.div`
 export const InfoLabel = styled.div`
     color: var(--color-muted-fg);
     margin-bottom: 0.375rem;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 0.8rem;
+    font-family: var(--font-mono);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 `;
@@ -203,10 +204,10 @@ export const TechBadge = styled.span`
 `;
 
 export const FeaturesCard = styled.div`
-    background-color: var(--color-muted);
-    padding: 1.5rem;
+    background-color: transparent;
+    padding: 1.5rem 0;
     border-radius: var(--radius);
-    border: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -214,7 +215,7 @@ export const FeaturesCard = styled.div`
     transition: background-color 0.3s ease, border-color 0.3s ease;
 
     @media (max-width: 768px) {
-        padding: 1rem;
+        padding: 1rem 0;
     }
 `;
 
@@ -248,15 +249,15 @@ export const FeatureItem = styled.li`
 `;
 
 export const LinkCard = styled.div`
-    background-color: var(--color-muted);
-    padding: 1.5rem;
+    background-color: transparent;
+    padding: 1.5rem 0;
     border-radius: var(--radius);
-    border: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border);
     width: 100%;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 
     @media (max-width: 768px) {
-        padding: 1rem;
+        padding: 1rem 0;
     }
 `;
 
@@ -282,6 +283,7 @@ export const LinkLabel = styled.span`
 
 export const LinkAnchor = styled.a`
     font-size: 0.875rem;
+    overflow-wrap: anywhere;
     color: var(--color-fg);
     text-decoration: none;
     transition: opacity 0.15s ease;

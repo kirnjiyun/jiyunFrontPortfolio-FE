@@ -1,190 +1,100 @@
 import { createGlobalStyle } from "styled-components";
 
-// 폰트 정책
-// - 라틴: Inter 를 next/font 로 self-host ($sansFont 로 주입)
-// - 한글: 시스템 폰트 스택 (다운로드 0KB, 굵기별 실제 웨이트 제공)
-//   기존 S-CoreDream-3Light 는 woff 351KB 로 JS 전체보다 무거웠고,
-//   Light 단일 웨이트라 굵은 글씨가 합성돼 뭉개졌다.
-//   SBAggroB(236KB)는 선언만 있고 쓰이는 곳이 없어 제거했다.
-// 주의: @import 는 createGlobalStyle 안에서 쓰지 않는다
-// (styled-components 의 CSSOM API 가 프로덕션에서 제대로 처리하지 못함)
 const GlobalStyle = createGlobalStyle<{ $sansFont?: string }>`
-
-/* ── shadcn/ui inspired design tokens ── */
-:root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
-    --radius: 0.5rem;
-
-    /* semantic aliases */
-    --color-bg: hsl(var(--background));
-    --color-fg: hsl(var(--foreground));
-    --color-card: hsl(var(--card));
-    --color-card-fg: hsl(var(--card-foreground));
-    --color-primary: hsl(var(--primary));
-    --color-primary-fg: hsl(var(--primary-foreground));
-    --color-secondary: hsl(var(--secondary));
-    --color-secondary-fg: hsl(var(--secondary-foreground));
-    --color-muted: hsl(var(--muted));
-    --color-muted-fg: hsl(var(--muted-foreground));
-    --color-accent: hsl(var(--accent));
-    --color-accent-fg: hsl(var(--accent-foreground));
-    --color-border: hsl(var(--border));
-    --color-input: hsl(var(--input));
-    --color-ring: hsl(var(--ring));
-
-    /* legacy compatibility */
-    --color-dark-blue: hsl(var(--foreground));
-    --color-medium-blue: hsl(var(--muted-foreground));
-    --color-light-blue: hsl(240 5% 65%);
-    --color-lightest-blue: hsl(var(--secondary));
-    --color-brightest-blue: hsl(172 100% 70%);
-    --color-surface: hsl(var(--card));
-    --color-surface-soft: hsl(var(--muted));
-    --color-text-primary: hsl(var(--foreground));
-    --color-text-secondary: hsl(var(--muted-foreground));
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --radius-lg: var(--radius);
-}
-
-[data-theme="dark"] {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-
-    --color-bg: hsl(var(--background));
-    --color-fg: hsl(var(--foreground));
-    --color-card: hsl(var(--card));
-    --color-card-fg: hsl(var(--card-foreground));
-    --color-primary: hsl(var(--primary));
-    --color-primary-fg: hsl(var(--primary-foreground));
-    --color-secondary: hsl(var(--secondary));
-    --color-secondary-fg: hsl(var(--secondary-foreground));
-    --color-muted: hsl(var(--muted));
-    --color-muted-fg: hsl(var(--muted-foreground));
-    --color-accent: hsl(var(--accent));
-    --color-accent-fg: hsl(var(--accent-foreground));
-    --color-border: hsl(var(--border));
-    --color-input: hsl(var(--input));
-    --color-ring: hsl(var(--ring));
-
-    --color-dark-blue: hsl(var(--foreground));
-    --color-medium-blue: hsl(var(--muted-foreground));
-    --color-light-blue: hsl(240 5% 55%);
-    --color-lightest-blue: hsl(var(--secondary));
-    --color-brightest-blue: hsl(172 60% 50%);
-    --color-surface: hsl(var(--card));
-    --color-surface-soft: hsl(var(--muted));
-    --color-text-primary: hsl(var(--foreground));
-    --color-text-secondary: hsl(var(--muted-foreground));
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body {
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: ${(p) => p.$sansFont ?? "'Inter'"}, -apple-system, BlinkMacSystemFont,
-        'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic', 'Noto Sans KR',
-        'Segoe UI', Roboto, sans-serif;
-    background-color: var(--color-bg);
-    color: var(--color-fg);
-    line-height: 1.6;
-    min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-::selection {
-    background: hsl(240 5.9% 10% / 0.12);
-    color: var(--color-fg);
-}
-
-[data-theme="dark"] ::selection {
-    background: hsl(0 0% 98% / 0.15);
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-button {
-    font-family: inherit;
-    cursor: pointer;
-}
-
-img, video {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* Minimal scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.3);
-    border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--muted-foreground) / 0.5);
-}
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-@media (max-width: 768px) {
-    html {
-        font-size: 15px;
+    :root {
+        --background: 60 12% 97%;
+        --foreground: 60 5% 9%;
+        --card: 60 12% 97%;
+        --card-foreground: 60 5% 9%;
+        --popover: 60 12% 97%;
+        --popover-foreground: 60 5% 9%;
+        --primary: 60 5% 9%;
+        --primary-foreground: 60 12% 97%;
+        --secondary: 60 6% 92%;
+        --secondary-foreground: 60 5% 9%;
+        --muted: 60 6% 92%;
+        --muted-foreground: 60 3% 39%;
+        --accent: 60 6% 90%;
+        --accent-foreground: 60 5% 9%;
+        --destructive: 0 70% 42%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 60 4% 80%;
+        --input: 60 4% 80%;
+        --ring: 60 5% 9%;
+        --radius: 0px;
+        --radius-lg: 0px;
+        --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+        --page-gutter: clamp(20px, 3vw, 48px);
+        --color-bg: hsl(var(--background));
+        --color-fg: hsl(var(--foreground));
+        --color-card: hsl(var(--card));
+        --color-card-fg: hsl(var(--card-foreground));
+        --color-primary: hsl(var(--primary));
+        --color-primary-fg: hsl(var(--primary-foreground));
+        --color-secondary: hsl(var(--secondary));
+        --color-secondary-fg: hsl(var(--secondary-foreground));
+        --color-muted: hsl(var(--muted));
+        --color-muted-fg: hsl(var(--muted-foreground));
+        --color-accent: hsl(var(--accent));
+        --color-accent-fg: hsl(var(--accent-foreground));
+        --color-border: hsl(var(--border));
+        --color-input: hsl(var(--input));
+        --color-ring: hsl(var(--ring));
+        --color-dark-blue: var(--color-fg);
+        --color-medium-blue: var(--color-muted-fg);
+        --color-light-blue: hsl(60 3% 60%);
+        --color-lightest-blue: var(--color-secondary);
+        --color-brightest-blue: var(--color-fg);
+        --color-surface: var(--color-card);
+        --color-surface-soft: var(--color-muted);
+        --color-text-primary: var(--color-fg);
+        --color-text-secondary: var(--color-muted-fg);
+        --shadow-sm: none;
+        --shadow-md: none;
     }
-}
+    [data-theme="dark"] {
+        --background: 60 5% 9%;
+        --foreground: 60 12% 95%;
+        --card: 60 5% 9%;
+        --card-foreground: 60 12% 95%;
+        --primary: 60 12% 95%;
+        --primary-foreground: 60 5% 9%;
+        --secondary: 60 3% 16%;
+        --secondary-foreground: 60 12% 95%;
+        --muted: 60 3% 16%;
+        --muted-foreground: 60 3% 65%;
+        --accent: 60 3% 20%;
+        --accent-foreground: 60 12% 95%;
+        --border: 60 3% 26%;
+        --input: 60 3% 26%;
+        --ring: 60 12% 95%;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body {
+        font-family: ${(p) => p.$sansFont ?? "Arial"}, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+        background-color: var(--color-bg);
+        background-image: linear-gradient(to right, transparent calc(100% - 1px), hsl(var(--border) / 0.45) 0);
+        background-size: 25% 100%;
+        color: var(--color-fg);
+        line-height: 1.6;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    ::selection { background: var(--color-fg); color: var(--color-bg); }
+    a { text-decoration: none; color: inherit; }
+    button, input, select, textarea { font: inherit; }
+    button, select { cursor: pointer; }
+    a, button { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 2px solid var(--color-ring); outline-offset: 5px; }
+    img, video { max-width: 100%; height: auto; display: block; }
+    .skip-link { position: fixed; top: -100px; left: 20px; z-index: 1000; background: var(--color-fg); color: var(--color-bg); padding: 12px 18px; }
+    .skip-link:focus { top: 10px; }
+    @media (max-width: 700px) { body { background-size: 50% 100%; } }
+    @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    }
 `;
-
 export default GlobalStyle;

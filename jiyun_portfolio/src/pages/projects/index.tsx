@@ -1,197 +1,83 @@
-import React, { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import Head from "next/head";
-import { HeroSection, Title } from "@/styles/about/AboutPageStyles";
 import ProjectContainer from "@/components/projectsCompo/ProjectContainer";
-import {
-    ScrollSection,
-    FilterContainer,
-    FilterLabel,
-    FilterCheckbox,
-    ProjectTransitionStyles,
-} from "@/styles/projects/ProjectIndex.styles";
-import ScrollTriggered from "@/components/projectsCompo/ScrollTrigger";
 import FilterSelect from "@/components/projectsCompo/FilterSelect";
 import { useQuery } from "@tanstack/react-query";
+import { fetchProjects, fetchProjectsForSSG, SSG_REVALIDATE_SECONDS } from "@/lib/api";
 import {
-    fetchProjects,
-    fetchProjectsForSSG,
-    SSG_REVALIDATE_SECONDS,
-} from "@/lib/api";
-import styled from "styled-components";
-import { animated, useTransition } from "react-spring";
-
-// Skeleton UI 스타일 컴포넌트
-const SkeletonCard = styled.div`
-    width: 100%;
-    max-width: 400px;
-    height: 350px;
-    background: var(--color-muted);
-    border-radius: var(--radius);
-    border: 1px solid var(--color-border);
-    animation: pulse 1.5s infinite ease-in-out;
-    margin: 0 auto;
-
-    @keyframes pulse {
-        0% { opacity: 1; }
-        50% { opacity: 0.5; }
-        100% { opacity: 1; }
-    }
-
-    @media (max-width: 576px) {
-        max-width: 300px;
-        height: 300px;
-    }
-`;
-
-const SkeletonWrapper = styled.div`
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 1.5rem;
-    margin: 0 auto;
-    padding: 1.5rem;
-    max-width: 1200px;
-    justify-items: center;
-
-    @media (max-width: 576px) {
-        grid-template-columns: 1fr;
-        padding: 1rem;
-        gap: 1rem;
-    }
-`;
+    ProjectsPage as Page, HeroSection, Eyebrow, Title, HeroDescription,
+    FilterContainer, ResultCount, FilterLabel, FilterCheckbox,
+    ProjectTransitionStyles, StateMessage, SkeletonRow,
+} from "@/styles/projects/ProjectIndex.styles";
 
 export default function ProjectsPage({ initialProjects }) {
-    const {
-        data: projectsData,
-        isLoading,
-        error,
-    } = useQuery({
+    const { data: projectsData = [], isLoading, error, refetch, isFetching } = useQuery({
         queryKey: ["projects"],
         queryFn: fetchProjects,
         initialData: initialProjects,
     });
-
-    const [filteredProjects, setFilteredProjects] = useState(
-        projectsData || []
-    );
-    const [filterOptions, setFilterOptions] = useState({
-        isMajor: false,
-        category: "",
-    });
-
-    const categoryOptions = [
-        { value: "", label: "전체" },
-        { value: "개인", label: "개인" },
-        { value: "팀", label: "팀" },
-    ];
-
-    useEffect(() => {
-        if (!projectsData) return;
-        let filtered = projectsData;
-
-        if (filterOptions.isMajor) {
-            filtered = filtered.filter((project) => project.isMajor === true);
-        }
-
-        if (filterOptions.category) {
-            filtered = filtered.filter(
-                (project) =>
-                    project.category &&
-                    project.category.trim().toLowerCase() ===
-                        filterOptions.category.trim().toLowerCase()
-            );
-        }
-
-        setFilteredProjects(filtered);
-    }, [filterOptions, projectsData]);
-
-    const handleFilterChange = (key, value) => {
-        setFilterOptions((prev) => ({
-            ...prev,
-            [key]: value,
-        }));
-    };
-
-    const renderSkeleton = () => (
-        <SkeletonWrapper>
-            {Array(6)
-                .fill(3)
-                .map((_, idx) => (
-                    <SkeletonCard key={idx} />
-                ))}
-        </SkeletonWrapper>
-    );
-
-    const transitions = useTransition(filteredProjects, {
-        keys: (item: any) => item.id || item.title || item.name,
-        from: { opacity: 0, transform: "translateY(18px) scale(0.98)" },
-        enter: { opacity: 1, transform: "translateY(0px) scale(1)" },
-        leave: { opacity: 0, transform: "translateY(10px) scale(0.98)" },
-        config: { tension: 230, friction: 23 },
-        trail: 45,
-    });
+    const [filterOptions, setFilterOptions] = useState({ isMajor: false, category: "" });
+    const filteredProjects = useMemo(() => projectsData.filter((project) => (
+        (!filterOptions.isMajor || project.isMajor === true) &&
+        (!filterOptions.category || project.category?.trim().toLowerCase() === filterOptions.category.toLowerCase())
+    )), [projectsData, filterOptions]);
 
     return (
         <>
             <Head>
                 <title>Projects | 김지윤 포트폴리오</title>
-                <meta
-                    name="description"
-                    content="프론트엔드 개발자 김지윤의 프로젝트 모음입니다. 다양한 개인 및 팀 프로젝트를 확인하세요."
-                />
-                <meta
-                    name="keywords"
-                    content="프론트엔드 프로젝트, 팀 프로젝트, 개인 프로젝트, 포트폴리오"
-                />
-                <meta name="author" content="김지윤" />
+                <meta name="description" content="프론트엔드 개발자 김지윤의 개인 및 팀 프로젝트를 만나보세요." />
             </Head>
-
-            <HeroSection>
-                <Title>Projects</Title>
-            </HeroSection>
-            <ScrollSection>
-                <ScrollTriggered />
-            </ScrollSection>
-            <FilterContainer>
-                <FilterLabel>
-                    <FilterCheckbox
-                        type="checkbox"
-                        checked={filterOptions.isMajor}
-                        onChange={(e) =>
-                            handleFilterChange("isMajor", e.target.checked)
-                        }
+            <Page>
+                <HeroSection>
+                    <Eyebrow>Index / 02 — Selected work</Eyebrow>
+                    <Title>projects.</Title>
+                    <HeroDescription>아이디어를 화면으로, 경험을 코드로.<br />직접 고민하고 만들어 온 프로젝트를 소개합니다.</HeroDescription>
+                </HeroSection>
+                <FilterContainer>
+                    <ResultCount aria-live="polite">All projects ({String(filteredProjects.length).padStart(2, "0")})</ResultCount>
+                    <FilterLabel>
+                        <FilterCheckbox
+                            type="checkbox"
+                            checked={filterOptions.isMajor}
+                            onChange={(event) => setFilterOptions((prev) => ({ ...prev, isMajor: event.target.checked }))}
+                        />
+                        주요 프로젝트
+                    </FilterLabel>
+                    <FilterSelect
+                        value={filterOptions.category}
+                        options={[{ value: "", label: "전체 유형" }, { value: "개인", label: "개인" }, { value: "팀", label: "팀" }]}
+                        onChange={(category) => setFilterOptions((prev) => ({ ...prev, category }))}
                     />
-                    중요한 프로젝트만
-                </FilterLabel>
-
-                <FilterSelect
-                    value={filterOptions.category}
-                    options={categoryOptions}
-                    onChange={(value) => handleFilterChange("category", value)}
-                />
-            </FilterContainer>
-            <ProjectTransitionStyles>
-                {isLoading ? (
-                    renderSkeleton()
-                ) : error ? (
-                    <p>Error loading projects: {error.message}</p>
-                ) : filteredProjects.length > 0 ? (
-                    transitions((style, project) => (
-                        <animated.div style={style}>
-                            <ProjectContainer projectsData={[project]} />
-                        </animated.div>
-                    ))
-                ) : (
-                    <p>필터링된 프로젝트가 없습니다.</p>
-                )}
-            </ProjectTransitionStyles>
+                </FilterContainer>
+                <ProjectTransitionStyles>
+                    {isLoading ? (
+                        <div role="status" aria-label="프로젝트를 불러오는 중">
+                            <SkeletonRow /><SkeletonRow />
+                        </div>
+                    ) : error && projectsData.length === 0 ? (
+                        <StateMessage role="status">
+                            <Eyebrow>Unable to load</Eyebrow>
+                            <h2>프로젝트를 불러오지 못했습니다.</h2>
+                            <p>잠시 후 다시 시도해 주세요.</p>
+                            <button type="button" onClick={() => refetch()} disabled={isFetching}>{isFetching ? "불러오는 중…" : "다시 불러오기 ↗"}</button>
+                        </StateMessage>
+                    ) : filteredProjects.length > 0 ? (
+                        <ProjectContainer projectsData={filteredProjects} />
+                    ) : (
+                        <StateMessage role="status">
+                            <Eyebrow>No projects to display</Eyebrow>
+                            <h2>{projectsData.length ? "조건에 맞는 프로젝트가 없습니다." : "등록된 프로젝트가 없습니다."}</h2>
+                            {projectsData.length > 0 && <button type="button" onClick={() => setFilterOptions({ isMajor: false, category: "" })}>전체 프로젝트 보기 ↗</button>}
+                        </StateMessage>
+                    )}
+                </ProjectTransitionStyles>
+            </Page>
         </>
     );
 }
 
 export async function getStaticProps() {
     const projectsData = await fetchProjectsForSSG();
-    return {
-        props: { initialProjects: projectsData },
-        revalidate: SSG_REVALIDATE_SECONDS,
-    };
+    return { props: { initialProjects: projectsData }, revalidate: SSG_REVALIDATE_SECONDS };
 }

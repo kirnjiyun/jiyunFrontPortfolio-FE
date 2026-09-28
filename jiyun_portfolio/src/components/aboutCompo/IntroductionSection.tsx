@@ -1,56 +1,47 @@
 import React from "react";
-import { useSpring, useInView } from "react-spring";
 import * as S from "../../styles/about/IntroSection.styles";
 
-export default function IntroductionSection({ introductionData }) {
-    const [ref, inView] = useInView({
-        triggerOnce: true,
-        threshold: 0.5,
-    } as any);
+const fallbackIntroduction = {
+    name: "김지윤",
+    email: "kimjiyunee@naver.com",
+    github: "https://github.com/kirnjiyun",
+    description: "사용자 경험을 설계하고 구현하는 프론트엔드 개발자, 김지윤입니다.",
+};
 
-    const darkTextStyle = useSpring({
-        transform: inView ? "translateX(0%)" : "translateX(-100%)",
-        opacity: inView ? 1 : 0,
-    });
+export default function IntroductionSection({ introductionData }) {
+    const name = introductionData?.name || fallbackIntroduction.name;
+    const email = introductionData?.email || fallbackIntroduction.email;
+    const github = introductionData?.github || fallbackIntroduction.github;
+    const description = introductionData?.description || fallbackIntroduction.description;
+    const techStack = Array.isArray(introductionData?.techStack) ? introductionData.techStack : [];
 
     return (
-        <S.MainSection ref={ref}>
-            <S.Section>
-                <S.TextContainer>
-                    <S.Title>Introduction</S.Title>
-                    <S.ContentContainer>
-                        {/* 이미지 제거됨 */}
-                        <S.InfoContainer>
-                            <S.InfoItem>
-                                🙋🏻‍♀️ 이름 : {introductionData?.name}
-                            </S.InfoItem>
-                            <S.InfoItem>
-                                📧 이메일 :{" "}
-                                <S.InfoLink
-                                    href={`mailto:${introductionData?.email}`}
-                                >
-                                    {introductionData?.email}
-                                </S.InfoLink>
-                            </S.InfoItem>
-                            <S.InfoItem>
-                                🖥 깃허브 :{" "}
-                                <S.InfoLink
-                                    href={introductionData?.github}
-                                    target="_blank"
-                                >
-                                    {introductionData?.github}
-                                </S.InfoLink>
-                            </S.InfoItem>
-                            <S.TechStack>
-                                🛠 사용 기술:{" "}
-                                {introductionData?.techStack?.join(", ")}
-                            </S.TechStack>
-                        </S.InfoContainer>
-                    </S.ContentContainer>
-
-                    <S.Paragraph>{introductionData?.description}</S.Paragraph>
-                </S.TextContainer>
-            </S.Section>
+        <S.MainSection aria-labelledby="introduction-title">
+            <S.Title id="introduction-title">01 / Introduction</S.Title>
+            <S.TextContainer>
+                <S.Paragraph>{description}</S.Paragraph>
+                <S.InfoContainer>
+                    <S.InfoItem><dt>Name</dt><dd>{name}</dd></S.InfoItem>
+                    <S.InfoItem>
+                        <dt>Email</dt>
+                        <dd><S.InfoLink href={`mailto:${email}`}>{email}<span aria-hidden="true">↗</span></S.InfoLink></dd>
+                    </S.InfoItem>
+                    <S.InfoItem>
+                        <dt>Github</dt>
+                        <dd>
+                            <S.InfoLink href={github} target="_blank" rel="noopener noreferrer">
+                                {github.replace(/^https?:\/\//, "")}<span aria-hidden="true">↗</span>
+                            </S.InfoLink>
+                        </dd>
+                    </S.InfoItem>
+                </S.InfoContainer>
+                {techStack.length > 0 && (
+                    <S.TechStack>
+                        <span>Toolkit</span>
+                        <ul>{techStack.map((technology, index) => <li key={`${technology}-${index}`}>{technology}</li>)}</ul>
+                    </S.TechStack>
+                )}
+            </S.TextContainer>
         </S.MainSection>
     );
 }

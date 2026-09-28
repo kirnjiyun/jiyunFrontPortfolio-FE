@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import IntroductionSection from "../../components/aboutCompo/IntroductionSection";
 import CertificationSection from "../../components/aboutCompo/CertificationSection";
 import EducationSection from "../../components/aboutCompo/EducationSection";
@@ -8,8 +8,10 @@ import {
     HeroSection,
     Title,
     Section,
+    Eyebrow,
+    PageMeta,
+    TimelineAction,
 } from "../../styles/about/AboutPageStyles";
-import InfiniteScrollText from "@/components/aboutCompo/InfiniteScroll";
 import {
     fetchAboutDataForSSG,
     SSG_REVALIDATE_SECONDS,
@@ -36,7 +38,6 @@ export default function AboutPage({
 }) {
     return (
         <>
-            {" "}
             <Head>
                 <title>About Me | 김지윤 포트폴리오</title>
                 <meta
@@ -50,12 +51,17 @@ export default function AboutPage({
                 <meta name="author" content="김지윤" />
             </Head>
             <HeroSection>
-                <Title>ABOUT ME</Title>
+                <Eyebrow>Profile / Jiyun Kim</Eyebrow>
+                <Title>about me.</Title>
             </HeroSection>
-            <InfiniteScrollText />
+            <PageMeta>
+                <p>Frontend developer</p>
+                <p>생각을 화면으로, 경험을 코드로.</p>
+                <p>Scroll to explore ↓</p>
+            </PageMeta>
             <Section>
-                <IntroButton />
                 <IntroductionSection introductionData={introductionData} />
+                <TimelineAction><IntroButton /></TimelineAction>
                 <EducationSection educationData={educationData} />
                 <CertificationSection certificationData={certificationData} />
             </Section>

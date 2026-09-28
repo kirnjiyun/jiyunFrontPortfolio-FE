@@ -1,87 +1,89 @@
 import styled from "styled-components";
 import Image from "next/image";
 
-export const Title = styled.h1`
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 700;
-    color: var(--color-fg);
-    margin: 0;
-    white-space: nowrap;
-    text-align: center;
-    letter-spacing: -0.03em;
-`;
-
-export const TypingText = styled.div`
-    display: inline-block;
-    position: relative;
-    line-height: 1.2;
-    white-space: nowrap;
-
-    &::after {
-        content: "|";
-        position: absolute;
-        left: 100%;
-        margin-left: 0.2em;
-        color: var(--color-muted-fg);
-        font-size: inherit;
-        animation: blink 0.8s steps(2, start) infinite;
-    }
-
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
-    }
-`;
-
-export const HeroSection = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
-    min-height: 40vh;
-    padding-top: 64px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-`;
-
-export const IconContainer = styled.div`
-    margin-right: 20px;
-`;
-
-export const StyledImage = styled(Image)``;
-
-export const Section = styled.div`
+export const HeroSection = styled.header`
     display: flex;
     flex-direction: column;
-    padding: 2rem 2.5rem;
-    gap: 2rem;
-    background-color: var(--color-card);
-    color: var(--color-fg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    margin: 2rem auto;
-    max-width: 1000px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    justify-content: flex-end;
+    gap: clamp(48px, 7vw, 100px);
+    min-height: 430px;
+    padding: 132px var(--page-gutter) 42px;
+    border-bottom: 1px solid var(--color-border);
 
     @media (max-width: 768px) {
-        padding: 1.5rem 1rem;
-        margin: 1rem;
+        min-height: 330px;
+        padding-top: 120px;
+        padding-bottom: 28px;
     }
 `;
 
-export const SectionTitle = styled.h2`
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    text-align: center;
+export const Title = styled.h1`
+    font-size: clamp(76px, 15vw, 240px);
+    font-weight: 400;
+    line-height: 0.82;
+    letter-spacing: -0.085em;
+    text-transform: lowercase;
+    overflow-wrap: anywhere;
+    margin: 0 0 0 -0.055em;
     color: var(--color-fg);
-    letter-spacing: -0.02em;
+    @media (max-width: 480px) { font-size: clamp(64px, 19vw, 90px); }
 `;
 
-export const List = styled.ul`
-    list-style: none;
-    padding: 0;
-    line-height: 1.8;
-    font-size: 0.95rem;
-    color: var(--color-muted-fg);
+export const Eyebrow = styled.p`
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 `;
+
+export const Section = styled.div`
+    padding: 0 var(--page-gutter) 80px;
+    color: var(--color-fg);
+`;
+
+export const PageMeta = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    padding: 24px var(--page-gutter) 64px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    text-transform: uppercase;
+    > p:last-child { grid-column: 4; text-align: right; }
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr 1fr;
+        padding-bottom: 32px;
+        > p:last-child { grid-column: auto; text-align: left; }
+    }
+`;
+
+export const TimelineAction = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    padding: 0 0 80px;
+    > div { grid-column: 2 / -1; justify-content: flex-start; }
+    > div > button {
+        min-width: 0;
+        padding: 0 0 8px;
+        border: 0;
+        border-bottom: 1px solid var(--color-fg);
+        background: transparent;
+        color: var(--color-fg);
+        font-size: 13px;
+        border-radius: 0;
+    }
+    > div > button::after { content: "↗"; margin-left: 24px; }
+    @media (max-width: 768px) { display: block; padding-bottom: 48px; }
+`;
+
+export const TypingText = styled.div`display: inline-block;`;
+export const IconContainer = styled.div`margin-right: 20px;`;
+export const StyledImage = styled(Image)``;
+export const SectionTitle = styled.h2`
+    font-size: 14px;
+    font-family: var(--font-mono);
+    font-weight: 400;
+`;
+export const List = styled.ul`list-style: none; line-height: 1.8;`;
