@@ -1,0 +1,30 @@
+{
+  "reviewedAt": "2026-09-29",
+  "resume": "https://app.notion.com/p/8d8945ed17fb8233b0e081c7b28c04b8",
+  "experiences": "https://app.notion.com/p/My-Experiences-b86945ed17fb82918336810a712fdc9b",
+  "projects": {
+    "dailyq": "https://app.notion.com/p/DailyQ-1-3aa945ed17fb818e9377d23f5070c7ea",
+    "etps": "https://app.notion.com/p/ETPS-3aa945ed17fb811186bae14d63369bfe",
+    "kinu": "https://app.notion.com/p/KINU-100-3aa945ed17fb815fb265e55df2dd0cd2",
+    "nply": "https://app.notion.com/p/NPLY-3ab945ed17fb814b82ccf89e64229bda",
+    "roadkeeper": "https://app.notion.com/p/SI-3ab945ed17fb81d6a27ced7cdf6d9133",
+    "asan-data": "https://app.notion.com/p/3ab945ed17fb8023821ae091e2dbf397",
+    "goryeong-weather": "https://app.notion.com/p/2-3aa945ed17fb81a48638d675609fda4c",
+    "typescript-book": "https://app.notion.com/p/3aa945ed17fb81f88d01d2506fa4ee8f",
+    "miracle-bot": "https://app.notion.com/p/Discord-Bot-3ab945ed17fb81129e13c501f39cba9a",
+    "como": "https://app.notion.com/p/C-omo-400-3ab945ed17fb81168491e029f2d175aa",
+    "mirujima": "https://app.notion.com/p/CICD-3aa945ed17fb819d804fdc4db0a258d3",
+    "devworkshop-site": "https://app.notion.com/p/Lighthouse-100-3ab945ed17fb81a6939fdc076c060dc5",
+    "pharmzigi": "https://app.notion.com/p/AI-PHARMA-PHARMZIGI-3aa945ed17fb81439bbec10c0bf8c13f",
+    "deluxury": "https://app.notion.com/p/DELUXURY-3aa945ed17fb81c583bdea437bc27013",
+    "yunflix": "https://app.notion.com/p/YUNFLIX-AI-3aa945ed17fb81569d55c88c965baad2",
+    "palbokjeong": "https://app.notion.com/p/1-3aa945ed17fb81d29820f8a19445567a",
+    "chatgptdiet": "original-fe/src/data/projects.json",
+    "lolcham": "original-fe/src/data/projects.json",
+    "weathernow": "original-fe/src/data/projects.json",
+    "rockscissorpaper": "original-fe/src/data/projects.json",
+    "meowmeow": "original-fe/src/data/projects.json",
+    "workout": "original-fe/src/data/projects.json",
+    "feel-my-rhythm": "https://app.notion.com/p/Feel-My-Rhythm-SNS-3aa945ed17fb8116a07bf829d3dd8449"
+  }
+}
