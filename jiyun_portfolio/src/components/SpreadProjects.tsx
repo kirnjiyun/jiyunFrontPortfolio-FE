@@ -43,11 +43,13 @@ export default function SpreadProjects({ projects, label, expandKey = '' }: {
       const width = grid.clientWidth;
       const small = width < 600;
       const placements = cards.map((card, index) => {
-        const scale = Math.min((small ? 225 : 300) / card.offsetWidth, 0.9);
+        const art = card.querySelector<HTMLElement>('.project-art');
+        const artWidth = art?.offsetWidth || card.offsetWidth;
+        const scale = Math.min((small ? 225 : 300) / artWidth, 0.9);
         const visibleIndex = Math.min(index, 5);
         return {
-          x: width / 2 - card.offsetWidth * scale / 2 - card.offsetLeft + (visibleIndex % 2 ? 1 : -1) * visibleIndex * (small ? 5 : 9),
-          y: (small ? 62 : 72) - card.offsetTop + visibleIndex * 7,
+          x: width / 2 - artWidth * scale / 2 - card.offsetLeft - (art?.offsetLeft ?? 0) * scale + (visibleIndex % 2 ? 1 : -1) * visibleIndex * (small ? 5 : 9),
+          y: (small ? 62 : 72) - card.offsetTop - (art?.offsetTop ?? 0) * scale + visibleIndex * 7,
           scale,
           rotation: angles[visibleIndex],
         };
@@ -88,7 +90,7 @@ export default function SpreadProjects({ projects, label, expandKey = '' }: {
         })}
       </div>
       {!expanded && <button className="stack-cover" type="button" aria-controls={id} aria-expanded={false} onClick={() => { setExpanded(true); toggleRef.current?.focus({ preventScroll: true }); }}>
-        <span className="stack-caption"><span className="stack-count">{String(projects.length).padStart(2, '0')} PROJECTS</span><strong>클릭해서 펼쳐보세요 <span aria-hidden="true">↗</span></strong><span className="stack-hint">모여 있던 경험들이, 각자의 자리로.</span></span>
+        <span className="stack-caption"><span className="stack-count">{String(projects.length).padStart(2, '0')} PROJECTS</span><strong>클릭해서 펼쳐보세요 <span aria-hidden="true">↗</span></strong><span className="stack-hint">만들고 개선해온 서비스를 펼쳐보세요.</span></span>
       </button>}
     </div>
     <noscript><style>{'.spread-stage{height:auto!important;overflow:visible!important}.spread-cell{visibility:visible!important;transform:none!important;opacity:1!important}.spread-cell .project-card>*{opacity:1!important}.stack-cover,.spread-control{display:none!important}'}</style></noscript>

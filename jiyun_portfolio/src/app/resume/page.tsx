@@ -8,5 +8,5 @@ export default function Resume() { return <article className="page-content resum
     <section><h2>주요 프로젝트</h2>{featuredProjects.map(p => <article key={p.slug}><h3><Link href={`/projects/${p.slug}/`}>{p.name}</Link> · {p.role}</h3><p className="item-date">{p.period}</p><p>{p.summary}</p><ul>{p.actions.slice(0, 2).map(a => <li key={a}>{a}</li>)}</ul><p>{p.result}</p></article>)}</section>
     <section><h2>기술</h2>{profile.skills.map(s => <p key={s.name}><strong>{s.name}</strong> — {s.items.join(', ')}</p>)}</section>
     <section><h2>학력·교육</h2>{profile.education.map(e => <article key={e.name}><h3>{e.organization} · {e.name}</h3><p>{e.period} / {e.detail}</p></article>)}</section>
-    <section><h2>자격·어학</h2>{profile.certifications.map(c => <p key={c.name}>{c.name} — {c.detail} ({c.date})</p>)}</section><section><h2>출간·수상</h2>{profile.awards.map(a => <p key={a.slug}>{a.name} — {a.detail}</p>)}</section><p className="muted">최종 업데이트 {profile.updatedAt}</p>
+    <section><h2>자격·어학</h2>{profile.certifications.map(c => <p key={c.name}>{c.name} — {c.detail} ({c.date})</p>)}</section><section><h2>출간·수상</h2>{profile.awards.map(a => <p key={a.slug}>{a.name} — {a.detail}</p>)}</section><p className="muted">최종 업데이트 {profile.updatedAt.slice(0, 7).replace('-', '.')}</p>
   </article>; }

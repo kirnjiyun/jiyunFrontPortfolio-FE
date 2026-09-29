@@ -10,7 +10,7 @@ export default function ProjectCard({ project, index = 0, stacked = false }: { p
         <div className="art-bottom">{project.metric || project.role}<span>↗</span></div>
       </>}
     </div>
-    <div className="card-meta"><span>{project.category} · {project.period}</span><span className="card-arrow" aria-hidden="true">↗</span></div>
+    <div className="card-meta"><span className="project-number">{String(index + 1).padStart(2, '0')} /</span><span>{project.category} · {project.period}</span><span className="card-arrow" aria-hidden="true">↗</span></div>
     <h3>{project.name}</h3><p>{project.summary}</p>
     <div className="tags">{project.techStack.slice(0, 4).map(tech => <span key={tech}>{tech}</span>)}</div>
   </Link>;
